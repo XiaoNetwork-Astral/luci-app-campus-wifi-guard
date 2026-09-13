@@ -7,7 +7,7 @@ ng_probe_error() {
 }
 
 ng_probe() (
-	local role="$1" interface status device address timeout expected probe_dir url name code rc
+	local role="$1" interface status device address timeout expected probe_dir url name code rc internet_ok=0
 	. /usr/share/libubox/jshn.sh
 	config_get interface "$role" interface
 	if [ -z "$interface" ]; then ng_probe_error uplink_not_configured; exit 1; fi
@@ -43,6 +43,11 @@ ng_probe() (
 			json_add_boolean configured 0
 		else
 			json_add_boolean configured 1
+			if [ "$name" = portal ] && [ "$internet_ok" -eq 1 ]; then
+				json_add_string state skipped_online
+				json_close_object
+				continue
+			fi
 			# if! prevents a missing device from being interpreted as a DNS hostname.
 			# -q and --noproxy prevent user curl settings or proxy env from changing the path.
 			code="$(curl -q --ipv4 --noproxy '*' --interface "if!$device" \
@@ -53,6 +58,9 @@ ng_probe() (
 			json_add_int curl_exit "$rc"
 			json_add_int http_status "$code"
 			[ "$name" != internet ] || json_add_int expected_status "$expected"
+			if [ "$name" = internet ] && [ "$rc" -eq 0 ] && [ "$code" = "$expected" ]; then
+				internet_ok=1
+			fi
 		fi
 		json_close_object
 	done

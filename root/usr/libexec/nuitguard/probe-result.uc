@@ -9,6 +9,8 @@ for (let name in ['internet', 'portal']) {
 		probe.state = 'not_configured';
 		continue;
 	}
+	if (probe.state == 'skipped_online')
+		continue;
 	if (probe.curl_exit != 0) {
 		probe.state = 'transport_error';
 		continue;

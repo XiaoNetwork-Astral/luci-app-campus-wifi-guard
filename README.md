@@ -4,7 +4,7 @@
 
 当前为开发中的配置版本：可保存恢复策略和上联偏好，并通过 `nuitguard check-config` 校验配置、`nuitguard inspect` 读取设备概况。自动认证与网络切换尚未接入，不会启动网络守护进程。
 
-`nuitguard probe wired` 或 `nuitguard probe wifi` 会通过指定上联分别检查公网和 Portal。先在配置页填写公网检测地址；留空时会报告未配置。诊断使用 IPv4 并绑定所选接口的设备，DNS 使用系统解析器；未配置或未连接的上联会直接报错。Portal 结果仅表示发现候选登录地址，不触发认证或切换，输出不包含动态参数值。
+`nuitguard probe wired` 或 `nuitguard probe wifi` 会通过指定上联先检查公网。公网检测通过时跳过 Portal，因为已认证设备可能无法访问校园登录页；公网检测失败时再探测 Portal，分别报告结果。先在配置页填写公网检测地址；留空时会报告未配置并仅探测 Portal。诊断使用 IPv4 并绑定所选接口的设备，DNS 使用系统解析器；未配置或未连接的上联会直接报错。Portal 结果仅表示发现候选登录地址，不触发认证或切换，输出不包含动态参数值。
 
 在 OpenWrt 源码或匹配目标固件的 SDK 中，将本仓库放入 `package/luci-app-nuitguard`，安装 LuCI feed 后执行：
 
