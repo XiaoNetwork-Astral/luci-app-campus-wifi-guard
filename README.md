@@ -1,30 +1,91 @@
 # NuitGuard
 
-面向校园网的 OpenWrt LuCI 插件，提供自动认证、隐私 MAC、计划轮换及有线／Wi-Fi 上联切换。认证适配 Ruijie ePortal 的 `InterFace.do` 接口。
+English | [中文](README.zh.md)
 
-当前为开发版本：已实现恢复守护进程与 LuCI 页面，通过协议、状态机、隔离网络控制及进程生命周期测试；实际校园网认证和无线切换仍在验收。安装后默认关闭，请先填写配置。进入「服务 → NuitGuard」，选择上联、账号服务、密码、公网检测地址和恢复策略，再启用并保存应用。
+NuitGuard is a LuCI app for OpenWrt that automates campus network authentication and connection recovery through Ruijie ePortal.
 
-设置页使用 LuCI 原生表单，分为「基础设置」「上联网络」「故障恢复」「隐私与计划」「高级设置」。账号与公网检测位于基础设置，重试次数、切换策略和门户参数位于各自标签。不适用的参数会收起并保留已保存的值。状态页使用原生表格显示服务状态、上联和最近事件；每条上联提供检测及「更多操作」，暂停后的恢复按钮统一显示在服务状态中。
+It supports Ethernet or Wi-Fi preference, configurable failover and failback, private MAC addresses, and scheduled MAC rotation. Wi-Fi can use an existing client or an open network selected by the user.
 
-- 可选择有线或 Wi-Fi 优先，配置冷备／热备、备用连接次数、每次故障的切换预算和稳定回切条件。
-- Wi-Fi 可引用已有无线客户端，或在所选无线电上创建开放网络客户端。SSID 由用户扫描选择或手动填写；加密网络使用 OpenWrt 已有客户端配置。与本地 AP 共用无线电时，上联关联可能使 AP 跟随信道并短暂断开客户端。
-- 每条上联独立生成和保存随机的本地单播 MAC，不使用出厂 MAC 作为输入。支持固定、断网恢复和计划轮换，并限制轮换间隔和次数。
-- 明确的认证拒绝会暂停恢复；认证成功但公网失败时默认不继续轮换 MAC。自动重试受次数、退避和冷却限制，进程意外重启保留当前启动周期的恢复预算。
-- 密码保存在 `/etc/nuitguard/credentials.json`，权限为 `0600`；不进入 UCI、HTTP 进程参数、状态响应或日志。状态页提供检测、认证、MAC 轮换、线路切换、注销及恢复操作。手动注销会暂停自动恢复。
+## Development preview
 
-线路控制仅覆盖 IPv4。NuitGuard 使用独立路由表和指定设备的策略规则，保留主路由表中的局域网及其他具体网段路由；检测到现有策略路由规则或运行中的 mwan3／pbr 等管理器时拒绝接管。停止服务会恢复自身修改的配置与路由，遇到用户中途修改同一字段时保留用户修改，并报告恢复冲突。恢复记录位于 `/etc/nuitguard/`，不要在服务运行期间删除。
+Campus authentication and Wi-Fi failover are still undergoing end-to-end validation. The service is disabled by default.
 
-Portal 的动态参数由各上联实际发现，不复用电脑或另一条线路的上下文。认证目标必须与配置的门户来源地址相符。支持页面指定的明文表单模式和旧式 RSA 分块模式；RSA 模式对超出单字节范围的密码字符返回不支持，避免产生与门户旧脚本不一致的密文。
+## Install
 
-`nuitguard probe wired` 或 `nuitguard probe wifi` 会通过指定上联先检查公网。公网检测通过时跳过 Portal，因为已认证设备可能无法访问校园登录页；公网检测失败时再探测 Portal，分别报告结果。先在配置页填写公网检测地址；留空时会报告未配置并仅探测 Portal。诊断使用 IPv4 并绑定所选接口的设备，DNS 使用系统解析器；未配置或未连接的上联会直接报错。Portal 结果仅表示发现候选登录地址，不触发认证或切换，输出不包含动态参数值。
+### Build from source
 
-其他诊断命令：`nuitguard check-config` 校验配置，`nuitguard inspect` 查看设备概况，`nuitguard preflight` 检查上联与路由冲突，`nuitguard status` 输出过滤后的运行状态。正常使用 `/etc/init.d/nuitguard start|stop|restart` 管理服务；`nuitguard restore` 可在服务停止后重试恢复自身修改，不依赖当前配置是否有效。
-
-在 OpenWrt 源码或匹配目标固件的 SDK 中，将本仓库放入 `package/luci-app-nuitguard`，安装 LuCI feed 后执行：
+Use the OpenWrt source tree or SDK matching your router's firmware and target. From its root directory, run:
 
 ```sh
+./scripts/feeds update -a
+./scripts/feeds install -a
+git clone https://github.com/XiaoNetwork-Astral/luci-app-nuitguard.git package/luci-app-nuitguard
 make menuconfig
+```
+
+Select `luci-app-nuitguard`. For Simplified Chinese, also enable the LuCI Simplified Chinese translation and select `luci-i18n-nuitguard-zh-cn`.
+
+```sh
 make package/luci-app-nuitguard/compile V=s
 ```
 
-选择 `luci-app-nuitguard`；需要简体中文时，同时选择 LuCI 的简体中文翻译，构建独立的 `luci-i18n-nuitguard-zh-cn` 包。界面原文使用美式英语，显示语言遵循 LuCI 的语言设置。
+The packages are written to `bin/packages/`.
+
+### Install packages
+
+On OpenWrt using `apk`, copy the built main package to the router as `/tmp/luci-app-nuitguard.apk`, then run:
+
+```sh
+apk add --allow-untrusted /tmp/luci-app-nuitguard.apk
+```
+
+For Simplified Chinese, copy the matching translation package as `/tmp/luci-i18n-nuitguard-zh-cn.apk` and install it:
+
+```sh
+apk add --allow-untrusted /tmp/luci-i18n-nuitguard-zh-cn.apk
+```
+
+The main package uses English. The optional translation package follows the language selected in LuCI.
+
+## Configure
+
+Open **Services → NuitGuard → Settings**.
+
+| Tab | Settings |
+| --- | --- |
+| Basic settings | Campus username, password, account type, internet check URL and expected HTTP status. |
+| Uplink networks | Ethernet interface, Wi-Fi client or open SSID, preferred uplink, standby mode and private MAC per uplink. |
+| Recovery | Authentication retries, retry delays, cooldown, failover limits and return policy. |
+| Privacy and schedule | Fixed or rotating private MAC, rotation limits, and daily, weekly or interval schedules. |
+| Advanced settings | Portal discovery URL, expected portal origin, detailed timing and logging. |
+
+Set an internet check URL with a known successful response code before enabling the service. The default expected status is `204`; the URL is left blank. Successful internet access takes priority over portal availability, since an authenticated device may be unable to reach the login page.
+
+Choose **Student** or **Staff**, or enter the service value required by your campus. Leave the password field blank to keep a saved password. Review the portal addresses in **Advanced settings** if your campus uses different endpoints; the shipped defaults are in [the configuration file](root/etc/config/nuitguard).
+
+Enable NuitGuard and select **Save & Apply** to start recovery. Saving and applying later changes restarts the service.
+
+The **Status** page shows the service, uplinks and recent events. It provides connection checks and further actions for each uplink. Manual logout pauses automatic recovery until you select **Resume recovery**.
+
+## Commands
+
+Run these on the router:
+
+| Command | Purpose |
+| --- | --- |
+| `nuitguard check-config` | Validate the configuration. |
+| `nuitguard inspect` | Show the configured uplinks and device information. |
+| `nuitguard probe wired` / `nuitguard probe wifi` | Check internet access and discover the portal on the selected uplink without authenticating or switching. |
+| `nuitguard preflight` | Check uplink requirements and routing conflicts before starting. |
+| `nuitguard status` | Show the current service state. |
+| `nuitguard restore` | Retry restoration of NuitGuard's network changes while the service is stopped. |
+
+The init script `/etc/init.d/nuitguard` supports `start`, `stop` and `restart`. Starting requires NuitGuard to be enabled in its configuration.
+
+## Compatibility
+
+- **Uplinks:** Existing interfaces must use DHCP and belong to a WAN-style firewall zone with masquerading enabled and an input policy other than ACCEPT.
+- **IPv4:** Connection recovery manages IPv4. Connectivity probes bind to the selected uplink; DNS uses the system resolver.
+- **Portal:** Authentication targets Ruijie ePortal's `InterFace.do` API. The discovered portal must match the configured origin. Legacy RSA mode does not support password characters outside the single-byte range.
+- **Wi-Fi:** Encrypted networks must use an existing OpenWrt wireless client. A radio shared by a local access point and an uplink may change channel and briefly disconnect local clients.
+- **Routing:** NuitGuard refuses to take over when it finds existing policy routing rules or active managers such as mwan3 or pbr. Stopping the service restores its own changes; conflicting user edits are preserved.
