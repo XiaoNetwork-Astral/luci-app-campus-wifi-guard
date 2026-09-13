@@ -7,32 +7,125 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+msgid "1. Confirm the outage"
+msgstr "1. 确认断网"
+
+msgid "2. Retry authentication"
+msgstr "2. 重试认证"
+
+msgid "3. Switch and return"
+msgstr "3. 切换与返回"
+
+msgid "A network operation failed. The service stopped and attempted to restore its changes."
+msgstr "网络操作失败。服务已停止，并已尝试恢复其修改。"
+
+msgid "A radio shared with a local access point may change channel and briefly disconnect its clients when the uplink connects."
+msgstr "上联关联时，与本地 AP 共用的无线电可能切换信道，导致该 AP 的客户端短暂断开。"
+
+msgid "Accepted"
+msgstr "已接受"
+
+msgid "Account type"
+msgstr "账号类型"
+
+msgid "Add this uplink to make it available for recovery."
+msgstr "配置此上联后，可将其用于连接恢复。"
+
+msgid "Advanced settings"
+msgstr "高级设置"
+
 msgid "After stable recovery"
 msgstr "稳定恢复后返回"
 
 msgid "Allow failover"
 msgstr "允许故障切换"
 
-msgid "Authentication"
-msgstr "认证"
+msgid "Alternate"
+msgstr "备用"
+
+msgid "Alternate uplink attempt limit reached"
+msgstr "已达到备用线路尝试次数上限"
+
+msgid "Another action is already queued"
+msgstr "已有操作正在排队"
+
+msgid "Authenticating"
+msgstr "正在认证"
+
+msgid "Authentication attempt limit reached"
+msgstr "已达到认证尝试次数上限"
 
 msgid "Authentication attempts per MAC"
 msgstr "每个 MAC 的认证尝试次数"
 
+msgid "Authentication is sent only to this origin. Include the scheme and optional port, with no path."
+msgstr "仅向此来源地址提交认证。请包含协议和可选端口，不要包含路径。"
+
+msgid "Automatic recovery"
+msgstr "自动恢复"
+
+msgid "Basic settings"
+msgstr "基础设置"
+
+msgid "Campus Wi-Fi SSID"
+msgstr "校园 Wi-Fi 的 SSID"
+
+msgid "Campus account"
+msgstr "校园网账号"
+
+msgid "Campus credentials are missing"
+msgstr "尚未配置校园网凭据"
+
+msgid "Campus portal"
+msgstr "校园认证门户"
+
+msgid "Campus sign-in and automatic connection recovery. Start with your account and uplinks; tune recovery only when needed."
+msgstr "校园网认证与断线自动恢复。先配置账号和上联网络，再按需调整恢复策略。"
+
+msgid "Cancel"
+msgstr "取消"
+
 msgid "Check interval (seconds)"
 msgstr "检测间隔（秒）"
+
+msgid "Check now"
+msgstr "立即检测"
 
 msgid "Check timeout (seconds)"
 msgstr "检测超时（秒）"
 
+msgid "Checking internet access"
+msgstr "正在检测公网"
+
+msgid "Checking internet access after login"
+msgstr "正在验证登录后的公网连通性"
+
+msgid "Choose a campus account type, or enter a custom service value."
+msgstr "选择校园网账号类型，也可以填写自定义服务值。"
+
 msgid "Choose different interfaces for Ethernet and Wi-Fi."
 msgstr "有线与无线网络请选择不同接口。"
 
-msgid "Configuration preview. Automatic recovery is not available in this development build."
-msgstr "配置预览。此开发版本暂未提供自动恢复功能。"
+msgid "Choose the connection to use first, then configure Ethernet and Wi-Fi below."
+msgstr "选择优先使用的连接，并在下方配置有线和无线网络。"
+
+msgid "Configure an internet check URL before enabling recovery."
+msgstr "启用自动恢复前，请配置公网检测地址。"
+
+msgid "Configure uplink"
+msgstr "配置此上联"
+
+msgid "Configure your campus account and uplinks, then enable NuitGuard in Settings."
+msgstr "请在设置中配置校园网账号与上联网络，然后启用 NuitGuard。"
+
+msgid "Confirming an outage"
+msgstr "正在确认断网"
 
 msgid "Connect when needed"
 msgstr "需要时连接"
+
+msgid "Connecting"
+msgstr "正在连接"
 
 msgid "Connection attempts on the alternate uplink"
 msgstr "备用上联连接尝试次数"
@@ -40,11 +133,23 @@ msgstr "备用上联连接尝试次数"
 msgid "Connection timeout (seconds)"
 msgstr "连接超时（秒）"
 
-msgid "Connectivity checks"
-msgstr "连通性检测"
-
 msgid "Cooldown after repeated failure (seconds)"
 msgstr "连续失败后的冷却时间（秒）"
+
+msgid "Cooling down"
+msgstr "冷却中"
+
+msgid "Could not save the password."
+msgstr "无法保存密码。"
+
+msgid "Could not submit the action."
+msgstr "无法提交操作。"
+
+msgid "Create an open network client"
+msgstr "创建开放网络客户端"
+
+msgid "Created when connected"
+msgstr "连接时创建"
 
 msgid "Daily"
 msgstr "每天"
@@ -55,8 +160,23 @@ msgstr "星期"
 msgid "Debug"
 msgstr "调试"
 
+msgid "Detailed timing and limits"
+msgstr "详细时序与限制"
+
+msgid "Edit settings"
+msgstr "修改设置"
+
+msgid "Enable NuitGuard"
+msgstr "启用 NuitGuard"
+
+msgid "Enable a private MAC for each connection in Uplink networks. Choose here whether and when that address changes."
+msgstr "在「上联网络」中为各连接启用隐私 MAC，在这里选择是否轮换及轮换时机。"
+
 msgid "Enable scheduled rotation"
 msgstr "启用计划轮换"
+
+msgid "Enable the service in Settings and apply the configuration"
+msgstr "请在设置中启用服务并应用配置"
 
 msgid "Enter a time in HH:MM format."
 msgstr "请输入 HH:MM 格式的时间。"
@@ -67,17 +187,32 @@ msgstr "请输入 %s 到 %s 之间的整数。"
 msgid "Enter an HTTP or HTTPS URL without credentials or a fragment."
 msgstr "请输入不含用户名、密码或片段标识的 HTTP 或 HTTPS 地址。"
 
+msgid "Enter an HTTP or HTTPS origin without a path."
+msgstr "请输入不含路径的 HTTP 或 HTTPS 来源地址。"
+
+msgid "Enter an SSID of 1 to 32 bytes."
+msgstr "请输入长度为 1 至 32 字节的 SSID。"
+
+msgid "Enter the username, service and password before enabling recovery."
+msgstr "启用自动恢复前，请填写用户名、服务及密码。"
+
 msgid "Errors"
 msgstr "错误"
 
 msgid "Ethernet"
 msgstr "有线网络"
 
+msgid "Event"
+msgstr "事件"
+
 msgid "Every N hours"
 msgstr "每隔若干小时"
 
 msgid "Expected HTTP status"
 msgstr "预期 HTTP 状态码"
+
+msgid "Expected portal origin"
+msgstr "预期的认证门户来源地址"
 
 msgid "Extra rotations after authentication succeeds but internet fails"
 msgstr "认证成功但公网不通时额外轮换次数"
@@ -88,8 +223,17 @@ msgstr "开始恢复前连续检测失败次数"
 msgid "Failed portal checks before failover"
 msgstr "切换前连续 Portal 检测失败次数"
 
+msgid "Failover uses the other configured uplink. Return rules control when the preferred connection takes over again."
+msgstr "当前线路无法恢复时，尝试另一条已配置的上联；返回策略决定何时重新使用首选线路。"
+
 msgid "Failure confirmation interval (seconds)"
 msgstr "故障确认间隔（秒）"
+
+msgid "Find open networks"
+msgstr "查找开放网络"
+
+msgid "Finding the portal"
+msgstr "正在发现认证门户"
 
 msgid "Fixed private MAC"
 msgstr "固定隐私 MAC"
@@ -97,11 +241,26 @@ msgstr "固定隐私 MAC"
 msgid "Friday"
 msgstr "星期五"
 
+msgid "Idle"
+msgstr "空闲"
+
+msgid "In use"
+msgstr "正在使用"
+
 msgid "Information"
 msgstr "信息"
 
 msgid "Initial retry delay (seconds)"
 msgstr "初始重试间隔（秒）"
+
+msgid "Interface"
+msgstr "接口"
+
+msgid "Internet access check"
+msgstr "公网连通性检测"
+
+msgid "Internet access verified"
+msgstr "公网连通性已确认"
 
 msgid "Internet check URL"
 msgstr "公网检测地址"
@@ -109,23 +268,53 @@ msgstr "公网检测地址"
 msgid "Internet checks after authentication"
 msgstr "认证后的公网检测次数"
 
+msgid "Internet checks determine whether recovery is needed. A portal timeout alone does not mean the connection is offline."
+msgstr "根据公网检测判断是否需要恢复。仅登录页超时不会被判定为断网。"
+
 msgid "Interval (hours)"
 msgstr "间隔（小时）"
 
 msgid "Keep connected"
 msgstr "保持连接"
 
+msgid "Keep these values unless your campus uses a different portal."
+msgstr "校园认证门户未变化时，通常无需修改这些参数。"
+
+msgid "Keepalive was not confirmed; checking internet access"
+msgstr "保活未得到确认，正在检测公网"
+
+msgid "Last action: %s"
+msgstr "上次操作：%s"
+
+msgid "Leave blank to keep the saved password."
+msgstr "留空以保留已保存的密码。"
+
+msgid "Leave blank to use the account type selected in Basic settings."
+msgstr "留空即可使用「基础设置」中选择的账号类型。"
+
+msgid "Level"
+msgstr "级别"
+
+msgid "Limit attempts and wait between retries to avoid reconnecting continuously."
+msgstr "限制尝试次数并设置重试间隔，避免连续重复连接。"
+
+msgid "Live checks begin when NuitGuard is enabled."
+msgstr "启用 NuitGuard 后开始检测此连接。"
+
 msgid "Log level"
 msgstr "日志级别"
+
+msgid "Log out and pause"
+msgstr "注销并暂停"
 
 msgid "Log out before scheduled rotation"
 msgstr "计划轮换前注销"
 
+msgid "Login succeeded, but internet access failed"
+msgstr "认证成功，但公网不通"
+
 msgid "MAC policy"
 msgstr "MAC 策略"
-
-msgid "MAC privacy"
-msgstr "MAC 隐私"
 
 msgid "Manually"
 msgstr "手动返回"
@@ -148,32 +337,122 @@ msgstr "最短轮换间隔（秒）"
 msgid "Monday"
 msgstr "星期一"
 
+msgid "More actions"
+msgstr "更多操作"
+
+msgid "More than one portal context was found"
+msgstr "发现了多个不同的门户上下文"
+
 msgid "Network interface"
 msgstr "网络接口"
+
+msgid "Network name"
+msgstr "网络名称"
+
+msgid "Next rotation"
+msgstr "下次轮换"
+
+msgid "No events yet. Connection checks and recovery activity will appear here."
+msgstr "暂无事件。启用后的连接检测与恢复记录将显示在这里。"
+
+msgid "No open networks found. You can enter the SSID manually."
+msgstr "没有发现开放网络，可以手动填写 SSID。"
+
+msgid "No password saved"
+msgstr "尚未保存密码"
+
+msgid "No portal redirect found"
+msgstr "没有发现门户跳转"
+
+msgid "No usable authentication response received"
+msgstr "未收到可用的认证响应"
 
 msgid "Not configured"
 msgstr "未配置"
 
+msgid "Not enabled"
+msgstr "未启用"
+
+msgid "Not monitored"
+msgstr "尚未检测"
+
+msgid "Not started"
+msgstr "尚未启动"
+
 msgid "NuitGuard"
 msgstr "NuitGuard"
 
-msgid "Portal discovery attempts"
-msgstr "Portal 发现尝试次数"
+msgid "NuitGuard status"
+msgstr "NuitGuard 状态"
+
+msgid "Online"
+msgstr "在线"
+
+msgid "Optional access point BSSID"
+msgstr "可选的 AP BSSID"
+
+msgid "Optional service display name"
+msgstr "服务显示名称（可选）"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "Password is saved"
+msgstr "已保存密码"
+
+msgid "Paused"
+msgstr "已暂停"
+
+msgid "Paused after manual logout"
+msgstr "手动注销后已暂停"
 
 msgid "Portal discovery URL"
 msgstr "Portal 发现地址"
 
+msgid "Portal discovery attempts"
+msgstr "Portal 发现尝试次数"
+
 msgid "Portal failure check interval (seconds)"
 msgstr "Portal 故障检测间隔（秒）"
+
+msgid "Portal is available"
+msgstr "认证门户可用"
+
+msgid "Portal request failed"
+msgstr "认证门户请求失败"
+
+msgid "Preferred"
+msgstr "首选"
 
 msgid "Preferred uplink"
 msgstr "优先使用的上联"
 
+msgid "Privacy and schedule"
+msgstr "隐私与计划"
+
+msgid "Private MAC"
+msgstr "隐私 MAC"
+
+msgid "Private MAC policy"
+msgstr "隐私 MAC 策略"
+
+msgid "Queued"
+msgstr "已排队"
+
+msgid "Reauthentication, MAC changes, switching and logout may interrupt this connection. Logout pauses automatic recovery."
+msgstr "重新认证、更改 MAC、切换或注销可能中断该连接。注销后自动恢复将暂停。"
+
 msgid "Recent MAC addresses to avoid"
 msgstr "避开最近使用的 MAC 数量"
 
+msgid "Recent events"
+msgstr "最近事件"
+
 msgid "Recovery"
 msgstr "故障恢复"
+
+msgid "Recovery attempts / rotations"
+msgstr "恢复尝试次数 / 轮换次数"
 
 msgid "Recovery attempts per outage"
 msgstr "每次故障最多恢复尝试次数"
@@ -181,8 +460,32 @@ msgstr "每次故障最多恢复尝试次数"
 msgid "Recovery check interval (seconds)"
 msgstr "恢复检测间隔（秒）"
 
+msgid "Recovery is paused"
+msgstr "自动恢复已暂停"
+
+msgid "Refreshes every 5 seconds"
+msgstr "每 5 秒刷新"
+
+msgid "Remove saved password"
+msgstr "移除已保存的密码"
+
+msgid "Resume recovery"
+msgstr "恢复自动处理"
+
+msgid "Resume recovery before this action"
+msgstr "请先恢复自动处理，再执行此操作"
+
+msgid "Resuming"
+msgstr "正在恢复"
+
+msgid "Retry authentication"
+msgstr "重新尝试认证"
+
 msgid "Return to the preferred uplink"
 msgstr "返回首选上联"
+
+msgid "Rotate MAC and reconnect"
+msgstr "轮换 MAC 并重新连接"
 
 msgid "Rotate during recovery"
 msgstr "故障恢复时轮换"
@@ -193,11 +496,32 @@ msgstr "按计划轮换"
 msgid "Saturday"
 msgstr "星期六"
 
+msgid "Save and apply restarts NuitGuard with your configuration."
+msgstr "保存并应用后，NuitGuard 将按新配置重新启动。"
+
+msgid "Saved password"
+msgstr "已保存的密码"
+
+msgid "Saved password removed."
+msgstr "已移除保存的密码。"
+
+msgid "Scan"
+msgstr "扫描"
+
 msgid "Schedule"
 msgstr "计划任务"
 
 msgid "Schedule type"
 msgstr "计划类型"
+
+msgid "Select a campus network"
+msgstr "选择校园网络"
+
+msgid "Select a radio"
+msgstr "选择无线电"
+
+msgid "Select a radio first."
+msgstr "请先选择无线电。"
 
 msgid "Select an existing network interface."
 msgstr "请选择已有的网络接口。"
@@ -205,11 +529,23 @@ msgstr "请选择已有的网络接口。"
 msgid "Select an existing wireless client. Create one in Network → Wireless if needed."
 msgstr "选择已有无线客户端。如有需要，请在“网络 → 无线”中创建。"
 
-msgid "Service name"
-msgstr "服务名称"
+msgid "Service is running"
+msgstr "服务正在运行"
 
-msgid "Service value"
-msgstr "服务值"
+msgid "Service is stopped"
+msgstr "服务已停止"
+
+msgid "Service started"
+msgstr "服务已启动"
+
+msgid "Set up NuitGuard"
+msgstr "前往设置"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Some saved network settings could not be restored. Review the restoration journal."
+msgstr "部分网络设置未能恢复，请检查配置恢复记录。"
 
 msgid "Stable time before returning (seconds)"
 msgstr "返回前持续稳定时间（秒）"
@@ -217,8 +553,23 @@ msgstr "返回前持续稳定时间（秒）"
 msgid "Stable time to reset retry budgets (seconds)"
 msgstr "重置重试次数所需的稳定时间（秒）"
 
+msgid "Staff"
+msgstr "教职工"
+
 msgid "Standby mode"
 msgstr "待机模式"
+
+msgid "Starting"
+msgstr "正在启动"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Stopped"
+msgstr "已停止"
+
+msgid "Student"
+msgstr "学生"
 
 msgid "Successful checks before returning"
 msgstr "返回前连续检测成功次数"
@@ -226,8 +577,41 @@ msgstr "返回前连续检测成功次数"
 msgid "Sunday"
 msgstr "星期日"
 
+msgid "Switches this outage"
+msgstr "本次故障切换次数"
+
+msgid "The MAC policy, interval or rotation budget prevents this action"
+msgstr "MAC 策略、最短间隔或轮换次数限制阻止了此操作"
+
+msgid "The discovered portal does not match the configured origin"
+msgstr "发现的认证门户与预期来源地址不符"
+
+msgid "The portal RSA mode does not support these password characters"
+msgstr "认证门户的 RSA 模式不支持这些密码字符"
+
+msgid "The portal rejected authentication. Check the account before resuming."
+msgstr "认证门户拒绝了登录，请检查账号后再恢复自动处理。"
+
+msgid "The portal requires an additional authentication step"
+msgstr "认证门户要求额外的认证步骤"
+
+msgid "The selected service is not offered by the portal"
+msgstr "认证门户未提供所选服务"
+
+msgid "The service could not start. Check the configuration and preflight result."
+msgstr "服务未能启动，请检查配置和启动前检查结果。"
+
+msgid "The uplink has no usable IPv4 connection"
+msgstr "该上联没有可用的 IPv4 连接"
+
+msgid "This uplink is not configured"
+msgstr "尚未配置该上联"
+
 msgid "Thursday"
 msgstr "星期四"
+
+msgid "Time"
+msgstr "时间"
 
 msgid "Time (router time zone)"
 msgstr "时间（路由器时区）"
@@ -235,14 +619,50 @@ msgstr "时间（路由器时区）"
 msgid "Tuesday"
 msgstr "星期二"
 
-msgid "Uplinks"
+msgid "Unknown authentication response"
+msgstr "未知的认证响应"
+
+msgid "Unsupported portal authentication settings"
+msgstr "不支持此门户认证配置"
+
+msgid "Unsupported portal redirect"
+msgstr "不支持此门户跳转"
+
+msgid "Uplink"
 msgstr "上联"
+
+msgid "Uplink firewall zone"
+msgstr "上联防火墙区域"
+
+msgid "Uplink networks"
+msgstr "上联网络"
+
+msgid "Uplink preference"
+msgstr "连接偏好"
+
+msgid "Use a URL with a known response code. Successful internet access takes priority over portal availability."
+msgstr "填写响应状态码已知的检测地址。公网连通时，即使登录页无法访问也视为在线。"
 
 msgid "Use a private MAC address"
 msgstr "使用隐私 MAC"
 
+msgid "Use an existing wireless client"
+msgstr "使用已有无线客户端"
+
+msgid "Use selected network"
+msgstr "使用所选网络"
+
+msgid "Use this uplink"
+msgstr "使用此上联"
+
 msgid "Username"
 msgstr "用户名"
+
+msgid "Verify this uplink before switching"
+msgstr "请先验证该上联，再进行切换"
+
+msgid "Verifying internet access"
+msgstr "正在验证公网"
 
 msgid "Warnings"
 msgstr "警告"
@@ -261,6 +681,15 @@ msgstr "无线网络"
 
 msgid "Wireless client configuration"
 msgstr "无线客户端配置"
+
+msgid "Wireless configuration mode"
+msgstr "无线配置方式"
+
+msgid "Wireless radio"
+msgstr "无线电"
+
+msgid "Wireless scan failed."
+msgstr "无线扫描失败。"
 
 msgid "Zero disables automatic switching. The budget resets after a stable connection."
 msgstr "设为 0 禁用自动切换。连接持续稳定后重置次数。"

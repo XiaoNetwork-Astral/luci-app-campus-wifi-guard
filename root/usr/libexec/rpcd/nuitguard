@@ -1,0 +1,17 @@
+#!/usr/bin/ucode
+import * as fs from 'fs';
+import { status, queue_action } from '/usr/libexec/nuitguard/control.uc';
+import { save_password } from '/usr/libexec/nuitguard/credentials.uc';
+
+let methods = { status: {}, set_password: { password: '', clear: false }, action: { action: '', role: '' } };
+if (ARGV[0] == 'list') { printf('%J\n', methods); exit(0); }
+if (ARGV[0] != 'call' || !methods[ARGV[1]]) exit(1);
+try {
+	let input = json(fs.stdin.read('all') || '{}');
+	let result;
+	if (ARGV[1] == 'status') result = status();
+	else if (ARGV[1] == 'set_password') result = save_password(input.password, input.clear === true);
+	else result = queue_action(input.action, input.role);
+	printf('%J\n', result);
+}
+catch (error) { printf('%J\n', { error: 'request_failed' }); exit(1); }

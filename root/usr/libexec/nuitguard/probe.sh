@@ -7,9 +7,13 @@ ng_probe_error() {
 }
 
 ng_probe() (
-	local role="$1" interface status device address timeout expected probe_dir url name code rc internet_ok=0
+	local role="$1" interface mode status device address timeout expected probe_dir url name code rc internet_ok=0
 	. /usr/share/libubox/jshn.sh
 	config_get interface "$role" interface
+	if [ "$role" = wifi ]; then
+		config_get mode wifi mode
+		[ "$mode" != managed ] || interface=nuitguard_wifi
+	fi
 	if [ -z "$interface" ]; then ng_probe_error uplink_not_configured; exit 1; fi
 	status="$(ubus call "network.interface.$interface" status 2>/dev/null)"
 	if [ "$(printf '%s' "$status" | jsonfilter -e '@.up' 2>/dev/null)" != true ]; then

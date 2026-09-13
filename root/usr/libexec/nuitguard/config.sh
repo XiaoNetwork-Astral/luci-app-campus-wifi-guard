@@ -95,12 +95,31 @@ ng_config_validate() {
 	ng_config_uint main recent_mac_history 1 256
 	ng_config_uint main internet_expected_status 200 299
 	ng_config_url portal_probe_url 0
+	ng_config_url portal_origin 0
+	config_get kind main portal_origin
+	case "$kind" in
+		http://*|https://*)
+			kind="${kind#*://}"
+			case "$kind" in *[/?]*) ng_config_error 'main.portal_origin' ;; esac
+			;;
+	esac
 	ng_config_url internet_probe_url 1
 	for section in wired wifi; do
 		ng_config_name "$section" interface 1
 		ng_config_enum "$section" privacy_mac 0 1
 	done
 	ng_config_name wifi wifi_section 1
+	ng_config_enum wifi mode existing managed
+	ng_config_name wifi radio 1
+	ng_config_name wifi zone 0
+	config_get kind wifi bssid
+	[ -z "$kind" ] || printf '%s\n' "$kind" | LC_ALL=C awk 'NR == 1 && /^[0-9a-fA-F][0-9a-fA-F](:[0-9a-fA-F][0-9a-fA-F]){5}$/ { ok=1 } END { exit !(ok && NR == 1) }' || ng_config_error 'wifi.bssid'
+	config_get kind wifi mode
+	if [ "$kind" = managed ]; then
+		ng_config_name wifi radio 0
+		config_get kind wifi ssid
+		[ -n "$kind" ] && [ "${#kind}" -le 32 ] || ng_config_error 'wifi.ssid'
+	fi
 	config_get wired wired interface
 	config_get wifi wifi interface
 	[ -z "$wired" ] || [ "$wired" != "$wifi" ] || ng_config_error 'wired.interface equals wifi.interface'

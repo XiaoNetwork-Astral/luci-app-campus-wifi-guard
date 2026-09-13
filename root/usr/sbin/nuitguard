@@ -1,9 +1,16 @@
 #!/bin/sh
 
 case "$1:$#:$2" in
-	check-config:1:|inspect:1:|probe:2:wired|probe:2:wifi) ;;
-	*) printf '%s\n' 'Usage: nuitguard {check-config|inspect|probe wired|probe wifi}' >&2; exit 2 ;;
+	check-config:1:|inspect:1:|probe:2:wired|probe:2:wifi|preflight:1:|run:1:|restore:1:|status:1:) ;;
+	*) printf '%s\n' 'Usage: nuitguard {check-config|inspect|probe wired|probe wifi|preflight|run|restore|status}' >&2; exit 2 ;;
 esac
+
+if [ "$1" = status ]; then
+	exec ucode -e 'import {status} from "/usr/libexec/nuitguard/control.uc"; printf("%J\n", status());'
+fi
+if [ "$1" = restore ]; then
+	exec ucode /usr/libexec/nuitguard/engine.uc restore
+fi
 
 . /lib/functions.sh
 . /usr/libexec/nuitguard/config.sh
@@ -20,4 +27,5 @@ case "$1" in
 		. /usr/libexec/nuitguard/probe.sh
 		ng_probe "$2"
 		;;
+	preflight|run|restore) exec ucode /usr/libexec/nuitguard/engine.uc "$1" ;;
 esac

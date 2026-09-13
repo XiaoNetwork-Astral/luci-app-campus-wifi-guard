@@ -2,10 +2,12 @@
 	"luci-app-nuitguard": {
 		"description": "Configure NuitGuard",
 		"read": {
-			"uci": [ "nuitguard", "network", "wireless" ]
+			"uci": [ "nuitguard", "network", "wireless", "firewall" ],
+			"ubus": { "nuitguard": [ "status" ], "iwinfo": [ "scan" ] }
 		},
 		"write": {
-			"uci": [ "nuitguard" ]
+			"uci": [ "nuitguard" ],
+			"ubus": { "nuitguard": [ "set_password", "action" ] }
 		}
 	}
 }

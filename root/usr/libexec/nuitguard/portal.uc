@@ -1,4 +1,5 @@
 // Pure protocol helpers. No requests, credential logging or JavaScript execution.
+import { encrypt_password } from './rsa.uc';
 
 export function encode_component(value) {
 	assert(type(value) == 'string', 'Expected a string field');
@@ -11,17 +12,22 @@ export function encode_component(value) {
 };
 
 export function login_body(account, context, page_info) {
-	// RSA-enabled deployments need the separate password transformation first.
-	assert(page_info.passwordEncrypt == 'false', 'Unsupported password encryption mode');
+	assert(page_info.passwordEncrypt == 'false' || page_info.passwordEncrypt == 'true', 'Unsupported password encryption mode');
 	assert(type(account.username) == 'string' && length(account.username), 'Missing username');
 	assert(type(account.password) == 'string' && length(account.password), 'Missing password');
 	assert(type(account.service_value) == 'string' && length(account.service_value), 'Missing service');
 	assert(type(context.query) == 'string' && length(context.query), 'Missing portal context');
+	let password = account.password;
+	if (page_info.passwordEncrypt == 'true') {
+		assert(context.params?.mac, 'Missing portal MAC context');
+		password = encrypt_password(password + '>' + context.params.mac,
+			page_info.publicKeyExponent, page_info.publicKeyModulus);
+	}
 	let fields = [
-		['userId', account.username], ['password', account.password],
+		['userId', account.username], ['password', password],
 		['service', account.service_value], ['queryString', context.query],
 		['operatorPwd', ''], ['operatorUserId', ''], ['validcode', ''],
-		['passwordEncrypt', 'false']
+		['passwordEncrypt', page_info.passwordEncrypt]
 	];
 	return join('&', map(fields, f => f[0] + '=' + encode_component(encode_component(f[1]))));
 };

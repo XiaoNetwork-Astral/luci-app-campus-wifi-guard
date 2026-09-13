@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case "$ACTION" in ifup|ifdown|ifupdate) ;; *) exit 0 ;; esac
+[ -d /var/run/nuitguard ] || exit 0
+. /lib/functions.sh
+config_load nuitguard
+config_get wired wired interface
+config_get wifi wifi interface
+config_get mode wifi mode
+[ "$mode" = managed ] && wifi=nuitguard_wifi
+case "$INTERFACE" in
+	"$wired"|"$wifi") umask 077; : > /var/run/nuitguard/wake ;;
+esac

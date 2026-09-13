@@ -1,0 +1,49 @@
+/* Inherit LuCI theme colors and controls; keep layout rules local to NuitGuard. */
+.ng-page { --ng-line: rgba(128, 128, 128, .25); --ng-tint: rgba(128, 128, 128, .055); }
+.ng-page p { line-height: 1.65; }
+.ng-page .ng-muted { opacity: .75; }
+.ng-settings .ng-group-heading { padding: 1.25rem 1.5rem .8rem; border-top: 1px solid var(--ng-line); margin-top: 1rem; }
+.ng-settings .ng-group-heading:first-child { border-top: 0; margin-top: 0; }
+.ng-settings .ng-group-heading strong { font-size: 1.05rem; }
+.ng-settings .ng-group-heading p { margin: .3rem 0 0; opacity: .75; font-size: .9rem; }
+.ng-settings .cbi-section .cbi-section { box-shadow: none; background: transparent; border: 0; margin: 1rem 0; padding: 0; }
+.ng-settings .cbi-section .cbi-section > h3 { background: transparent; border-top: 1px solid var(--ng-line); border-radius: 0; box-shadow: none; font-size: 1.05rem; padding: 1.25rem 1.5rem .8rem; margin: 0; }
+.ng-settings .cbi-section .cbi-section-descr { padding: 0 1.5rem; }
+.ng-settings .cbi-value { padding-top: .55rem; padding-bottom: .55rem; }
+.ng-settings .cbi-value-description { max-width: 40rem; line-height: 1.6; }
+.ng-summary, .ng-card, .ng-events { border: 1px solid var(--ng-line); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.25rem; background: var(--ng-tint); }
+.ng-summary-top, .ng-card-heading { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.ng-summary-top { align-items: flex-start; }
+.ng-summary-top p { margin: .5rem 0 0; }
+.ng-service-state { font-size: 1.3rem; }
+.ng-summary-facts { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; border-top: 1px solid var(--ng-line); margin: 1.25rem 0 0; padding-top: 1rem; }
+.ng-fact dt { font-size: .85rem; opacity: .7; margin-bottom: .3rem; }
+.ng-fact dd { margin: 0; overflow-wrap: anywhere; }
+.ng-uplinks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+.ng-card { display: flex; flex-direction: column; min-width: 0; }
+.ng-card-heading strong { font-size: 1.1rem; }
+.ng-badge { font-size: .8rem; border: 1px solid var(--ng-line); border-radius: 4px; padding: .15rem .6rem; white-space: nowrap; }
+.ng-card-active { border-left: 3px solid var(--primary, #37a9cf); }
+.ng-path-state { font-size: 1.2rem; margin-top: 1.25rem; }
+.ng-card > p { margin: .4rem 0 1rem; }
+.ng-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0 0 1.25rem; }
+.ng-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
+.ng-card > .ng-actions { margin-top: auto; padding-top: .25rem; }
+.ng-page .ng-actions .btn { margin: 0; text-decoration: none; }
+.ng-more { width: 100%; }
+.ng-more summary { cursor: pointer; padding: .6rem 0; font-size: .9rem; }
+.ng-more-content { border-top: 1px solid var(--ng-line); padding-top: .6rem; }
+.ng-more-content p { font-size: .85rem; margin: 0 0 .8rem; }
+.ng-action-list { display: flex; flex-wrap: wrap; gap: .5rem; }
+.ng-events .ng-card-heading { margin-bottom: 1rem; }
+.ng-events .ng-card-heading span { font-size: .8rem; }
+.ng-table-scroll { overflow-x: auto; }
+.ng-events .table { margin-bottom: 0; }
+.ng-empty { text-align: center; padding: 1.75rem 1rem; margin: 0; opacity: .65; }
+@media (max-width: 700px) {
+	.ng-uplinks { grid-template-columns: 1fr; gap: 0; }
+	.ng-summary-top { flex-direction: column; }
+	.ng-summary, .ng-card, .ng-events { padding: 1.1rem; }
+	.ng-settings .ng-group-heading, .ng-settings .cbi-section .cbi-section > h3 { padding-left: 1rem; padding-right: 1rem; }
+	.ng-events .ng-card-heading { align-items: flex-start; flex-direction: column; gap: .4rem; }
+}
