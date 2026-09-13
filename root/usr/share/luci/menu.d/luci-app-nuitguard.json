@@ -1,0 +1,14 @@
+{
+	"admin/services/nuitguard": {
+		"title": "NuitGuard",
+		"order": 60,
+		"action": {
+			"type": "view",
+			"path": "nuitguard/settings"
+		},
+		"depends": {
+			"acl": [ "luci-app-nuitguard" ],
+			"uci": { "nuitguard": true }
+		}
+	}
+}

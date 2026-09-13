@@ -1,0 +1,11 @@
+{
+	"luci-app-nuitguard": {
+		"description": "Configure NuitGuard",
+		"read": {
+			"uci": [ "nuitguard", "network", "wireless" ]
+		},
+		"write": {
+			"uci": [ "nuitguard" ]
+		}
+	}
+}

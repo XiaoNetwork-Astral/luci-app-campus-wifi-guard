@@ -1,0 +1,265 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-app-nuitguard\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "After stable recovery"
+msgstr ""
+
+msgid "Allow failover"
+msgstr ""
+
+msgid "Authentication"
+msgstr ""
+
+msgid "Authentication attempts per MAC"
+msgstr ""
+
+msgid "Check interval (seconds)"
+msgstr ""
+
+msgid "Check timeout (seconds)"
+msgstr ""
+
+msgid "Choose different interfaces for Ethernet and Wi-Fi."
+msgstr ""
+
+msgid "Configuration preview. Automatic recovery is not available in this development build."
+msgstr ""
+
+msgid "Connect when needed"
+msgstr ""
+
+msgid "Connection attempts on the alternate uplink"
+msgstr ""
+
+msgid "Connection timeout (seconds)"
+msgstr ""
+
+msgid "Connectivity checks"
+msgstr ""
+
+msgid "Cooldown after repeated failure (seconds)"
+msgstr ""
+
+msgid "Daily"
+msgstr ""
+
+msgid "Day of the week"
+msgstr ""
+
+msgid "Debug"
+msgstr ""
+
+msgid "Enable scheduled rotation"
+msgstr ""
+
+msgid "Enter a time in HH:MM format."
+msgstr ""
+
+msgid "Enter a whole number from %s to %s."
+msgstr ""
+
+msgid "Enter an HTTP or HTTPS URL without credentials or a fragment."
+msgstr ""
+
+msgid "Errors"
+msgstr ""
+
+msgid "Ethernet"
+msgstr ""
+
+msgid "Every N hours"
+msgstr ""
+
+msgid "Expected HTTP status"
+msgstr ""
+
+msgid "Extra rotations after authentication succeeds but internet fails"
+msgstr ""
+
+msgid "Failed checks before recovery"
+msgstr ""
+
+msgid "Failed portal checks before failover"
+msgstr ""
+
+msgid "Failure confirmation interval (seconds)"
+msgstr ""
+
+msgid "Fixed private MAC"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Information"
+msgstr ""
+
+msgid "Initial retry delay (seconds)"
+msgstr ""
+
+msgid "Internet check URL"
+msgstr ""
+
+msgid "Internet checks after authentication"
+msgstr ""
+
+msgid "Interval (hours)"
+msgstr ""
+
+msgid "Keep connected"
+msgstr ""
+
+msgid "Log level"
+msgstr ""
+
+msgid "Log out before scheduled rotation"
+msgstr ""
+
+msgid "MAC policy"
+msgstr ""
+
+msgid "MAC privacy"
+msgstr ""
+
+msgid "Manually"
+msgstr ""
+
+msgid "Maximum delay must be at least the initial delay."
+msgstr ""
+
+msgid "Maximum retry delay (seconds)"
+msgstr ""
+
+msgid "Maximum rotations per outage"
+msgstr ""
+
+msgid "Maximum switches per outage"
+msgstr ""
+
+msgid "Minimum rotation interval (seconds)"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "Network interface"
+msgstr ""
+
+msgid "Not configured"
+msgstr ""
+
+msgid "NuitGuard"
+msgstr ""
+
+msgid "Portal discovery attempts"
+msgstr ""
+
+msgid "Portal discovery URL"
+msgstr ""
+
+msgid "Portal failure check interval (seconds)"
+msgstr ""
+
+msgid "Preferred uplink"
+msgstr ""
+
+msgid "Recent MAC addresses to avoid"
+msgstr ""
+
+msgid "Recovery"
+msgstr ""
+
+msgid "Recovery attempts per outage"
+msgstr ""
+
+msgid "Recovery check interval (seconds)"
+msgstr ""
+
+msgid "Return to the preferred uplink"
+msgstr ""
+
+msgid "Rotate during recovery"
+msgstr ""
+
+msgid "Rotate on schedule"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Schedule"
+msgstr ""
+
+msgid "Schedule type"
+msgstr ""
+
+msgid "Select an existing network interface."
+msgstr ""
+
+msgid "Select an existing wireless client. Create one in Network → Wireless if needed."
+msgstr ""
+
+msgid "Service name"
+msgstr ""
+
+msgid "Service value"
+msgstr ""
+
+msgid "Stable time before returning (seconds)"
+msgstr ""
+
+msgid "Stable time to reset retry budgets (seconds)"
+msgstr ""
+
+msgid "Standby mode"
+msgstr ""
+
+msgid "Successful checks before returning"
+msgstr ""
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Time (router time zone)"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Uplinks"
+msgstr ""
+
+msgid "Use a private MAC address"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Warnings"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Weekly"
+msgstr ""
+
+msgid "When the alternate uplink fails"
+msgstr ""
+
+msgid "Wi-Fi"
+msgstr ""
+
+msgid "Wireless client configuration"
+msgstr ""
+
+msgid "Zero disables automatic switching. The budget resets after a stable connection."
+msgstr ""

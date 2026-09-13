@@ -1,0 +1,266 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-app-nuitguard\n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "After stable recovery"
+msgstr "稳定恢复后返回"
+
+msgid "Allow failover"
+msgstr "允许故障切换"
+
+msgid "Authentication"
+msgstr "认证"
+
+msgid "Authentication attempts per MAC"
+msgstr "每个 MAC 的认证尝试次数"
+
+msgid "Check interval (seconds)"
+msgstr "检测间隔（秒）"
+
+msgid "Check timeout (seconds)"
+msgstr "检测超时（秒）"
+
+msgid "Choose different interfaces for Ethernet and Wi-Fi."
+msgstr "有线与无线网络请选择不同接口。"
+
+msgid "Configuration preview. Automatic recovery is not available in this development build."
+msgstr "配置预览。此开发版本暂未提供自动恢复功能。"
+
+msgid "Connect when needed"
+msgstr "需要时连接"
+
+msgid "Connection attempts on the alternate uplink"
+msgstr "备用上联连接尝试次数"
+
+msgid "Connection timeout (seconds)"
+msgstr "连接超时（秒）"
+
+msgid "Connectivity checks"
+msgstr "连通性检测"
+
+msgid "Cooldown after repeated failure (seconds)"
+msgstr "连续失败后的冷却时间（秒）"
+
+msgid "Daily"
+msgstr "每天"
+
+msgid "Day of the week"
+msgstr "星期"
+
+msgid "Debug"
+msgstr "调试"
+
+msgid "Enable scheduled rotation"
+msgstr "启用计划轮换"
+
+msgid "Enter a time in HH:MM format."
+msgstr "请输入 HH:MM 格式的时间。"
+
+msgid "Enter a whole number from %s to %s."
+msgstr "请输入 %s 到 %s 之间的整数。"
+
+msgid "Enter an HTTP or HTTPS URL without credentials or a fragment."
+msgstr "请输入不含用户名、密码或片段标识的 HTTP 或 HTTPS 地址。"
+
+msgid "Errors"
+msgstr "错误"
+
+msgid "Ethernet"
+msgstr "有线网络"
+
+msgid "Every N hours"
+msgstr "每隔若干小时"
+
+msgid "Expected HTTP status"
+msgstr "预期 HTTP 状态码"
+
+msgid "Extra rotations after authentication succeeds but internet fails"
+msgstr "认证成功但公网不通时额外轮换次数"
+
+msgid "Failed checks before recovery"
+msgstr "开始恢复前连续检测失败次数"
+
+msgid "Failed portal checks before failover"
+msgstr "切换前连续 Portal 检测失败次数"
+
+msgid "Failure confirmation interval (seconds)"
+msgstr "故障确认间隔（秒）"
+
+msgid "Fixed private MAC"
+msgstr "固定隐私 MAC"
+
+msgid "Friday"
+msgstr "星期五"
+
+msgid "Information"
+msgstr "信息"
+
+msgid "Initial retry delay (seconds)"
+msgstr "初始重试间隔（秒）"
+
+msgid "Internet check URL"
+msgstr "公网检测地址"
+
+msgid "Internet checks after authentication"
+msgstr "认证后的公网检测次数"
+
+msgid "Interval (hours)"
+msgstr "间隔（小时）"
+
+msgid "Keep connected"
+msgstr "保持连接"
+
+msgid "Log level"
+msgstr "日志级别"
+
+msgid "Log out before scheduled rotation"
+msgstr "计划轮换前注销"
+
+msgid "MAC policy"
+msgstr "MAC 策略"
+
+msgid "MAC privacy"
+msgstr "MAC 隐私"
+
+msgid "Manually"
+msgstr "手动返回"
+
+msgid "Maximum delay must be at least the initial delay."
+msgstr "最大重试间隔不能小于初始间隔。"
+
+msgid "Maximum retry delay (seconds)"
+msgstr "最大重试间隔（秒）"
+
+msgid "Maximum rotations per outage"
+msgstr "每次故障最多轮换次数"
+
+msgid "Maximum switches per outage"
+msgstr "每次故障最多切换次数"
+
+msgid "Minimum rotation interval (seconds)"
+msgstr "最短轮换间隔（秒）"
+
+msgid "Monday"
+msgstr "星期一"
+
+msgid "Network interface"
+msgstr "网络接口"
+
+msgid "Not configured"
+msgstr "未配置"
+
+msgid "NuitGuard"
+msgstr "NuitGuard"
+
+msgid "Portal discovery attempts"
+msgstr "Portal 发现尝试次数"
+
+msgid "Portal discovery URL"
+msgstr "Portal 发现地址"
+
+msgid "Portal failure check interval (seconds)"
+msgstr "Portal 故障检测间隔（秒）"
+
+msgid "Preferred uplink"
+msgstr "优先使用的上联"
+
+msgid "Recent MAC addresses to avoid"
+msgstr "避开最近使用的 MAC 数量"
+
+msgid "Recovery"
+msgstr "故障恢复"
+
+msgid "Recovery attempts per outage"
+msgstr "每次故障最多恢复尝试次数"
+
+msgid "Recovery check interval (seconds)"
+msgstr "恢复检测间隔（秒）"
+
+msgid "Return to the preferred uplink"
+msgstr "返回首选上联"
+
+msgid "Rotate during recovery"
+msgstr "故障恢复时轮换"
+
+msgid "Rotate on schedule"
+msgstr "按计划轮换"
+
+msgid "Saturday"
+msgstr "星期六"
+
+msgid "Schedule"
+msgstr "计划任务"
+
+msgid "Schedule type"
+msgstr "计划类型"
+
+msgid "Select an existing network interface."
+msgstr "请选择已有的网络接口。"
+
+msgid "Select an existing wireless client. Create one in Network → Wireless if needed."
+msgstr "选择已有无线客户端。如有需要，请在“网络 → 无线”中创建。"
+
+msgid "Service name"
+msgstr "服务名称"
+
+msgid "Service value"
+msgstr "服务值"
+
+msgid "Stable time before returning (seconds)"
+msgstr "返回前持续稳定时间（秒）"
+
+msgid "Stable time to reset retry budgets (seconds)"
+msgstr "重置重试次数所需的稳定时间（秒）"
+
+msgid "Standby mode"
+msgstr "待机模式"
+
+msgid "Successful checks before returning"
+msgstr "返回前连续检测成功次数"
+
+msgid "Sunday"
+msgstr "星期日"
+
+msgid "Thursday"
+msgstr "星期四"
+
+msgid "Time (router time zone)"
+msgstr "时间（路由器时区）"
+
+msgid "Tuesday"
+msgstr "星期二"
+
+msgid "Uplinks"
+msgstr "上联"
+
+msgid "Use a private MAC address"
+msgstr "使用隐私 MAC"
+
+msgid "Username"
+msgstr "用户名"
+
+msgid "Warnings"
+msgstr "警告"
+
+msgid "Wednesday"
+msgstr "星期三"
+
+msgid "Weekly"
+msgstr "每周"
+
+msgid "When the alternate uplink fails"
+msgstr "备用上联故障时返回"
+
+msgid "Wi-Fi"
+msgstr "无线网络"
+
+msgid "Wireless client configuration"
+msgstr "无线客户端配置"
+
+msgid "Zero disables automatic switching. The budget resets after a stable connection."
+msgstr "设为 0 禁用自动切换。连接持续稳定后重置次数。"

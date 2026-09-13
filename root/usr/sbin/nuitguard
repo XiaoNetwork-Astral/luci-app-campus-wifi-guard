@@ -1,0 +1,23 @@
+#!/bin/sh
+
+case "$1:$#:$2" in
+	check-config:1:|inspect:1:|probe:2:wired|probe:2:wifi) ;;
+	*) printf '%s\n' 'Usage: nuitguard {check-config|inspect|probe wired|probe wifi}' >&2; exit 2 ;;
+esac
+
+. /lib/functions.sh
+. /usr/libexec/nuitguard/config.sh
+config_load nuitguard || exit 1
+ng_config_validate || exit 1
+
+case "$1" in
+	check-config) printf '%s\n' 'Configuration is valid.' ;;
+	inspect)
+		. /usr/libexec/nuitguard/inspect.sh
+		ng_inspect
+		;;
+	probe)
+		. /usr/libexec/nuitguard/probe.sh
+		ng_probe "$2"
+		;;
+esac
