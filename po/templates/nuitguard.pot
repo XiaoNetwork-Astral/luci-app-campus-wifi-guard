@@ -5,15 +5,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "1. Confirm the outage"
-msgstr ""
-
-msgid "2. Retry authentication"
-msgstr ""
-
-msgid "3. Switch and return"
-msgstr ""
-
 msgid "A network operation failed. The service stopped and attempted to restore its changes."
 msgstr ""
 
@@ -26,7 +17,7 @@ msgstr ""
 msgid "Account type"
 msgstr ""
 
-msgid "Add this uplink to make it available for recovery."
+msgid "Actions"
 msgstr ""
 
 msgid "Advanced settings"
@@ -59,7 +50,7 @@ msgstr ""
 msgid "Authentication is sent only to this origin. Include the scheme and optional port, with no path."
 msgstr ""
 
-msgid "Automatic recovery"
+msgid "Automatic campus authentication and IPv4 uplink recovery."
 msgstr ""
 
 msgid "Basic settings"
@@ -68,16 +59,7 @@ msgstr ""
 msgid "Campus Wi-Fi SSID"
 msgstr ""
 
-msgid "Campus account"
-msgstr ""
-
 msgid "Campus credentials are missing"
-msgstr ""
-
-msgid "Campus portal"
-msgstr ""
-
-msgid "Campus sign-in and automatic connection recovery. Start with your account and uplinks; tune recovery only when needed."
 msgstr ""
 
 msgid "Cancel"
@@ -104,16 +86,13 @@ msgstr ""
 msgid "Choose different interfaces for Ethernet and Wi-Fi."
 msgstr ""
 
-msgid "Choose the connection to use first, then configure Ethernet and Wi-Fi below."
+msgid "Close"
 msgstr ""
 
 msgid "Configure an internet check URL before enabling recovery."
 msgstr ""
 
 msgid "Configure uplink"
-msgstr ""
-
-msgid "Configure your campus account and uplinks, then enable NuitGuard in Settings."
 msgstr ""
 
 msgid "Confirming an outage"
@@ -158,16 +137,10 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-msgid "Detailed timing and limits"
-msgstr ""
-
-msgid "Edit settings"
+msgid "Details"
 msgstr ""
 
 msgid "Enable NuitGuard"
-msgstr ""
-
-msgid "Enable a private MAC for each connection in Uplink networks. Choose here whether and when that address changes."
 msgstr ""
 
 msgid "Enable scheduled rotation"
@@ -221,9 +194,6 @@ msgstr ""
 msgid "Failed portal checks before failover"
 msgstr ""
 
-msgid "Failover uses the other configured uplink. Return rules control when the preferred connection takes over again."
-msgstr ""
-
 msgid "Failure confirmation interval (seconds)"
 msgstr ""
 
@@ -254,9 +224,6 @@ msgstr ""
 msgid "Interface"
 msgstr ""
 
-msgid "Internet access check"
-msgstr ""
-
 msgid "Internet access verified"
 msgstr ""
 
@@ -266,22 +233,16 @@ msgstr ""
 msgid "Internet checks after authentication"
 msgstr ""
 
-msgid "Internet checks determine whether recovery is needed. A portal timeout alone does not mean the connection is offline."
-msgstr ""
-
 msgid "Interval (hours)"
 msgstr ""
 
 msgid "Keep connected"
 msgstr ""
 
-msgid "Keep these values unless your campus uses a different portal."
-msgstr ""
-
 msgid "Keepalive was not confirmed; checking internet access"
 msgstr ""
 
-msgid "Last action: %s"
+msgid "Last action"
 msgstr ""
 
 msgid "Leave blank to keep the saved password."
@@ -291,12 +252,6 @@ msgid "Leave blank to use the account type selected in Basic settings."
 msgstr ""
 
 msgid "Level"
-msgstr ""
-
-msgid "Limit attempts and wait between retries to avoid reconnecting continuously."
-msgstr ""
-
-msgid "Live checks begin when NuitGuard is enabled."
 msgstr ""
 
 msgid "Log level"
@@ -344,13 +299,10 @@ msgstr ""
 msgid "Network interface"
 msgstr ""
 
-msgid "Network name"
-msgstr ""
-
 msgid "Next rotation"
 msgstr ""
 
-msgid "No events yet. Connection checks and recovery activity will appear here."
+msgid "No events yet."
 msgstr ""
 
 msgid "No open networks found. You can enter the SSID manually."
@@ -431,9 +383,6 @@ msgstr ""
 msgid "Private MAC"
 msgstr ""
 
-msgid "Private MAC policy"
-msgstr ""
-
 msgid "Queued"
 msgstr ""
 
@@ -459,9 +408,6 @@ msgid "Recovery check interval (seconds)"
 msgstr ""
 
 msgid "Recovery is paused"
-msgstr ""
-
-msgid "Refreshes every 5 seconds"
 msgstr ""
 
 msgid "Remove saved password"
@@ -492,9 +438,6 @@ msgid "Rotate on schedule"
 msgstr ""
 
 msgid "Saturday"
-msgstr ""
-
-msgid "Save and apply restarts NuitGuard with your configuration."
 msgstr ""
 
 msgid "Saved password"
@@ -536,7 +479,7 @@ msgstr ""
 msgid "Service started"
 msgstr ""
 
-msgid "Set up NuitGuard"
+msgid "Service status"
 msgstr ""
 
 msgid "Settings"
@@ -558,6 +501,9 @@ msgid "Standby mode"
 msgstr ""
 
 msgid "Starting"
+msgstr ""
+
+msgid "State"
 msgstr ""
 
 msgid "Status"
@@ -635,10 +581,7 @@ msgstr ""
 msgid "Uplink networks"
 msgstr ""
 
-msgid "Uplink preference"
-msgstr ""
-
-msgid "Use a URL with a known response code. Successful internet access takes priority over portal availability."
+msgid "Uplinks"
 msgstr ""
 
 msgid "Use a private MAC address"

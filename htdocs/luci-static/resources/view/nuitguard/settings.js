@@ -34,14 +34,6 @@ function flagOption(section, tab, key, title) {
 	return option;
 }
 
-function group(section, tab, key, title, description) {
-	var option = section.taboption(tab, form.DummyValue, '_' + key);
-	option.render = function() {
-		return E('div', { class: 'ng-group-heading' }, [E('strong', {}, title), description ? E('p', {}, description) : '']);
-	};
-	return option;
-}
-
 function nested(section, tab, name, type, title, description) {
 	var option = section.taboption(tab, form.SectionValue, '_' + name, form.NamedSection, name, type, title, description);
 	return option.subsection;
@@ -71,8 +63,7 @@ return view.extend({
 
 	render: function(data) {
 		var status = data && data[3] || {};
-		var m = new form.Map('nuitguard', _('NuitGuard'),
-			_('Campus sign-in and automatic connection recovery. Start with your account and uplinks; tune recovery only when needed.'));
+		var m = new form.Map('nuitguard', _('NuitGuard'), _('Automatic campus authentication and IPv4 uplink recovery.'));
 		var s = m.section(form.NamedSection, 'main', 'main');
 		var main = s;
 		var o;
@@ -81,7 +72,6 @@ return view.extend({
 		s.tab('recovery', _('Recovery'));
 		s.tab('mac', _('Privacy and schedule'));
 		s.tab('advanced', _('Advanced settings'));
-		group(s, 'basic', 'service', _('Automatic recovery'), _('Save and apply restarts NuitGuard with your configuration.'));
 		o = flagOption(s, 'basic', 'enabled', _('Enable NuitGuard'));
 		o.validate = function(section_id, value) {
 			if (value !== '1') return true;
@@ -90,17 +80,14 @@ return view.extend({
 				? true : _('Enter the username, service and password before enabling recovery.');
 		};
 
-		group(s, 'uplinks', 'selection', _('Uplink preference'), _('Choose the connection to use first, then configure Ethernet and Wi-Fi below.'));
 		choiceOption(s, 'uplinks', 'preferred_uplink', _('Preferred uplink'), [
 			['wired', _('Ethernet')], ['wifi', _('Wi-Fi')]
 		]);
 		choiceOption(s, 'uplinks', 'standby_mode', _('Standby mode'), [
 			['cold', _('Connect when needed')], ['warm', _('Keep connected')]
 		]);
-		group(s, 'recovery', 'detect', _('1. Confirm the outage'), _('Internet checks determine whether recovery is needed. A portal timeout alone does not mean the connection is offline.'));
 		numberOption(s, 'recovery', 'offline_confirm_count', _('Failed checks before recovery'), 1, 100);
 		numberOption(s, 'recovery', 'offline_confirm_interval', _('Failure confirmation interval (seconds)'), 1, 3600);
-		group(s, 'recovery', 'retry', _('2. Retry authentication'), _('Limit attempts and wait between retries to avoid reconnecting continuously.'));
 		numberOption(s, 'recovery', 'max_auth_retries_per_mac', _('Authentication attempts per MAC'), 1, 100);
 		numberOption(s, 'recovery', 'max_cycle_attempts', _('Recovery attempts per outage'), 1, 100);
 		numberOption(s, 'recovery', 'retry_initial_delay', _('Initial retry delay (seconds)'), 1, 3600);
@@ -113,7 +100,6 @@ return view.extend({
 			return Number(value) >= Number(initial) ? true : _('Maximum delay must be at least the initial delay.');
 		};
 		numberOption(s, 'recovery', 'circuit_breaker_cooldown', _('Cooldown after repeated failure (seconds)'), 1, 604800);
-		group(s, 'recovery', 'switching', _('3. Switch and return'), _('Failover uses the other configured uplink. Return rules control when the preferred connection takes over again.'));
 		flagOption(s, 'recovery', 'failover_enabled', _('Allow failover'));
 		var failover = [{ failover_enabled: '1' }];
 		when(numberOption(s, 'recovery', 'max_route_switches_per_incident', _('Maximum switches per outage'), 0, 100,
@@ -128,7 +114,6 @@ return view.extend({
 		when(numberOption(s, 'recovery', 'primary_recovery_interval', _('Recovery check interval (seconds)'), 1, 86400), stableReturn);
 		when(numberOption(s, 'recovery', 'primary_stable_time', _('Stable time before returning (seconds)'), 1, 604800), stableReturn);
 
-		group(s, 'mac', 'privacy', _('Private MAC policy'), _('Enable a private MAC for each connection in Uplink networks. Choose here whether and when that address changes.'));
 		choiceOption(s, 'mac', 'rotation_mode', _('MAC policy'), [
 			['fixed', _('Fixed private MAC')], ['offline', _('Rotate during recovery')],
 			['scheduled', _('Rotate on schedule')]
@@ -139,7 +124,6 @@ return view.extend({
 		when(numberOption(s, 'mac', 'recent_mac_history', _('Recent MAC addresses to avoid'), 1, 256), rotating);
 		when(numberOption(s, 'mac', 'auth_success_but_offline_rotation_limit', _('Extra rotations after authentication succeeds but internet fails'), 0, 1), [{ rotation_mode: 'offline' }]);
 
-		group(s, 'advanced', 'portal', _('Campus portal'), _('Keep these values unless your campus uses a different portal.'));
 		urlOption(s, 'advanced', 'portal_probe_url', _('Portal discovery URL'), false);
 		o = urlOption(s, 'advanced', 'portal_origin', _('Expected portal origin'), false);
 		o.description = _('Authentication is sent only to this origin. Include the scheme and optional port, with no path.');
@@ -148,7 +132,6 @@ return view.extend({
 		};
 		o = s.taboption('advanced', form.Value, '_service_label', _('Optional service display name'), _('Leave blank to use the account type selected in Basic settings.'));
 		o.ucisection = 'account'; o.ucioption = 'service_label';
-		group(s, 'advanced', 'thresholds', _('Detailed timing and limits'));
 		when(numberOption(s, 'advanced', 'portal_fail_count', _('Failed portal checks before failover'), 1, 100), failover);
 		when(numberOption(s, 'advanced', 'portal_fail_interval', _('Portal failure check interval (seconds)'), 1, 3600), failover);
 		numberOption(s, 'advanced', 'max_portal_discovery_retries', _('Portal discovery attempts'), 1, 100);
@@ -224,9 +207,13 @@ return view.extend({
 			}
 		});
 
-		s = nested(main, 'basic', 'account', 'account', _('Campus account'));
-		s.option(form.Value, 'username', _('Username'));
-		o = s.option(form.Value, '_password', _('Password'), _('Leave blank to keep the saved password.'));
+		function accountOption(type, key, title, description) {
+			var option = main.taboption('basic', type, key, title, description);
+			option.ucisection = 'account';
+			return option;
+		}
+		accountOption(form.Value, 'username', _('Username'));
+		o = accountOption(form.Value, '_password', _('Password'), _('Leave blank to keep the saved password.'));
 		o.password = true;
 		o.placeholder = status.credentials && status.credentials.configured ? _('Password is saved') : _('No password saved');
 		o.cfgvalue = function() { return ''; };
@@ -241,7 +228,7 @@ return view.extend({
 		};
 		o.remove = function() {};
 		if (status.credentials && status.credentials.configured) {
-			o = s.option(form.Button, '_clear_password', _('Saved password'));
+			o = accountOption(form.Button, '_clear_password', _('Saved password'));
 			o.inputtitle = _('Remove saved password'); o.inputstyle = 'neutral';
 			o.onclick = function(event) {
 				var target = event.currentTarget;
@@ -254,10 +241,9 @@ return view.extend({
 				});
 			};
 		}
-		o = s.option(form.Value, 'service_value', _('Account type'), _('Choose a campus account type, or enter a custom service value.'));
+		o = accountOption(form.Value, 'service_value', _('Account type'), _('Choose a campus account type, or enter a custom service value.'));
 		o.value('default', _('Student')); o.value('Teacher', _('Staff'));
 
-		group(main, 'basic', 'internet', _('Internet access check'), _('Use a URL with a known response code. Successful internet access takes priority over portal availability.'));
 		o = urlOption(main, 'basic', 'internet_probe_url', _('Internet check URL'), true);
 		var validateInternetURL = o.validate;
 		o.validate = function(section_id, value) {
@@ -309,16 +295,13 @@ return view.extend({
 		// Keep schedule values when the entire subsection is hidden by the MAC policy.
 		s.children.forEach(function(option) { option.retain = true; });
 		return m.render().then(function(node) {
-			var page = E('div', { class: 'ng-page ng-settings' }, [
-				E('link', { rel: 'stylesheet', href: L.resource('nuitguard/nuitguard.css') }), node
-			]);
 			var tab = new URLSearchParams(window.location.search).get('section');
 			if (['basic', 'uplinks', 'recovery', 'mac', 'advanced'].indexOf(tab) >= 0)
 				requestAnimationFrame(function() {
-					var link = page.querySelector('.cbi-tabmenu [data-tab="' + tab + '"] a');
+					var link = node.querySelector('.cbi-tabmenu [data-tab="' + tab + '"] a');
 					if (link) link.click();
 				});
-			return page;
+			return node;
 		});
 	}
 });

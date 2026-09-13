@@ -50,7 +50,7 @@ function roleName(role) { return role === 'wifi' ? _('Wi-Fi') : _('Ethernet'); }
 
 function button(action, role, title, data, secondary) {
 	return E('button', {
-		class: secondary ? 'btn' : 'btn cbi-button-action', disabled: !data.running,
+		class: secondary ? 'cbi-button cbi-button-neutral' : 'cbi-button cbi-button-action', disabled: !data.running,
 		'aria-label': title + ' · ' + roleName(role),
 		click: function(event) {
 			var target = event.currentTarget;
@@ -65,83 +65,91 @@ function button(action, role, title, data, secondary) {
 }
 
 function settingsLink(title, tab) {
-	return E('a', { class: 'btn', href: L.url('admin/services/nuitguard/settings') + (tab ? '?section=' + tab : '') }, title);
+	return E('a', { class: 'cbi-button cbi-button-action', href: L.url('admin/services/nuitguard/settings') + (tab ? '?section=' + tab : '') }, title);
 }
 
-function pair(title, value) {
-	return E('div', { class: 'ng-fact' }, [E('dt', {}, title), E('dd', {}, value)]);
+function statusRow(title, value) {
+	return E('tr', { class: 'tr' }, [E('td', { class: 'td left', width: '33%' }, title), E('td', { class: 'td left' }, value)]);
+}
+
+function uplinkActions(role, path, cfg, active, data) {
+	return E('button', {
+		class: 'cbi-button cbi-button-neutral',
+		'aria-label': _('More actions') + ' · ' + roleName(role),
+		click: function() {
+			var actions = [button('authenticate', role, _('Retry authentication'), data, true)];
+			if (!active && path.phase === 'online') actions.push(button('switch', role, _('Use this uplink'), data, true));
+			if (cfg.privacy_mac === '1') actions.push(button('rotate', role, _('Rotate MAC and reconnect'), data, true));
+			actions.push(button('logout', role, _('Log out and pause'), data, true));
+			ui.showModal(roleName(role), [
+				E('p', {}, _('Reauthentication, MAC changes, switching and logout may interrupt this connection. Logout pauses automatic recovery.')),
+				E('div', { class: 'cbi-section' }, actions.flatMap(function(action) { return [action, ' ']; })),
+				E('div', { class: 'right' }, E('button', { class: 'btn', click: ui.hideModal }, _('Close')))
+			]);
+		}
+	}, _('More actions'));
 }
 
 function content(data) {
 	var paths = data.paths || {}, enabled = uci.get('nuitguard', 'main', 'enabled') === '1';
 	var preferred = uci.get('nuitguard', 'main', 'preferred_uplink') || 'wired';
 	var state = !data.running ? (enabled ? _('Service is stopped') : _('Not enabled')) : data.blocked ? _('Recovery is paused') : _('Service is running');
-	var detail = !data.running ? _('Configure your campus account and uplinks, then enable NuitGuard in Settings.') : label(data.reason);
-	if (!data.running && data.reason && ['stopped', 'not_started'].indexOf(data.reason) < 0) detail = label(data.reason);
-	var cards = ['wired', 'wifi'].map(function(role) {
+	var summary = [statusRow(_('State'), state), statusRow(_('Preferred uplink'), roleName(preferred))];
+	if (data.reason && ['stopped', 'not_started'].indexOf(data.reason) < 0) summary.push(statusRow(_('Details'), label(data.reason)));
+	if (data.running) summary.push(statusRow(_('Switches this outage'), String(data.switches || 0)));
+	if (data.next_schedule && data.running) summary.push(statusRow(_('Next rotation'), new Date(data.next_schedule * 1000).toLocaleString()));
+	if (data.last_action && data.running) summary.push(statusRow(_('Last action'), label(data.last_action.result)));
+
+	var rows = ['wired', 'wifi'].map(function(role) {
 		var path = paths[role] || {}, cfg = uci.get('nuitguard', role) || {};
 		var configured = role === 'wifi' && cfg.mode === 'managed' ? !!(cfg.radio && cfg.ssid) : !!cfg.interface;
 		var active = data.running && data.selected && data.active === role;
 		var phase = !configured ? _('Not configured') : !data.running ? _('Not monitored') : label(path.phase);
-		var facts = [pair(_('Interface'), path.interface || cfg.interface || _('Created when connected'))];
-		if (role === 'wifi' && cfg.ssid && cfg.mode === 'managed') facts.push(pair(_('Network name'), cfg.ssid));
-		if (path.private_mac && data.running) facts.push(pair(_('Private MAC'), path.private_mac));
-		if (data.running && configured) facts.push(pair(_('Recovery attempts / rotations'), String(path.cycles || 0) + ' / ' + String(path.rotations || 0)));
 		var actions = [];
 		if (!configured) actions.push(settingsLink(_('Configure uplink'), 'uplinks'));
-		else if (data.running && !data.blocked) {
-			actions.push(button('check', role, _('Check now'), data));
-			var more = [button('authenticate', role, _('Retry authentication'), data, true)];
-			if (!active && path.phase === 'online') more.push(button('switch', role, _('Use this uplink'), data, true));
-			if (cfg.privacy_mac === '1') more.push(button('rotate', role, _('Rotate MAC and reconnect'), data, true));
-			more.push(button('logout', role, _('Log out and pause'), data, true));
-			actions.push(E('details', { class: 'ng-more', 'data-role': role }, [
-				E('summary', {}, _('More actions')),
-				E('div', { class: 'ng-more-content' }, [
-					E('p', { class: 'ng-muted' }, _('Reauthentication, MAC changes, switching and logout may interrupt this connection. Logout pauses automatic recovery.')),
-					E('div', { class: 'ng-action-list' }, more)
-				])
-			]));
-		}
-		return E('section', { class: 'ng-card' + (active ? ' ng-card-active' : '') }, [
-			E('div', { class: 'ng-card-heading' }, [
-				E('strong', {}, roleName(role)), E('span', { class: 'ng-badge' }, active ? _('In use') : preferred === role ? _('Preferred') : _('Alternate'))
-			]),
-			E('div', { class: 'ng-path-state' }, phase),
-			E('p', { class: 'ng-muted' }, !configured ? _('Add this uplink to make it available for recovery.') : !data.running ? _('Live checks begin when NuitGuard is enabled.') : label(path.reason)),
-			configured ? E('dl', { class: 'ng-facts' }, facts) : '',
-			actions.length ? E('div', { class: 'ng-actions' }, actions) : ''
+		else if (data.running && !data.blocked) actions = [
+			button('check', role, _('Check now'), data), ' ', uplinkActions(role, path, cfg, active, data)
+		];
+		var details = [phase];
+		if (data.running && configured && path.reason && path.reason !== path.phase)
+			details.push(E('div', { class: 'cbi-value-description' }, label(path.reason)));
+		return E('tr', { class: 'tr' }, [
+			E('td', { class: 'td left' }, roleName(role) + ' (' + (active ? _('In use') : preferred === role ? _('Preferred') : _('Alternate')) + ')'),
+			E('td', { class: 'td left' }, configured ? (path.interface || cfg.interface || _('Created when connected')) : '—'),
+			E('td', { class: 'td left' }, details),
+			E('td', { class: 'td left' }, data.running && path.private_mac || '—'),
+			E('td', { class: 'td' }, data.running && configured ? String(path.cycles || 0) + ' / ' + String(path.rotations || 0) : '—'),
+			E('td', { class: 'td cbi-section-actions' }, actions.length ? actions : '—')
 		]);
 	});
 	var level = { error: _('Errors'), warn: _('Warnings'), info: _('Information'), debug: _('Debug') };
 	var events = (data.events || []).slice(-20).reverse().map(function(entry) {
-		return E('tr', { class: 'tr' }, [E('td', { class: 'td' }, new Date(entry.time * 1000).toLocaleString()),
+		return E('tr', { class: 'tr' }, [E('td', { class: 'td left' }, new Date(entry.time * 1000).toLocaleString()),
 			E('td', { class: 'td' }, level[entry.level] || entry.level), E('td', { class: 'td' }, entry.role ? roleName(entry.role) : '—'),
-			E('td', { class: 'td' }, label(entry.code))]);
+			E('td', { class: 'td left' }, label(entry.code))]);
 	});
-	var summaryFacts = [pair(_('Preferred uplink'), roleName(preferred))];
-	if (data.running) summaryFacts.push(pair(_('Switches this outage'), String(data.switches || 0)));
-	if (data.next_schedule && data.running) summaryFacts.push(pair(_('Next rotation'), new Date(data.next_schedule * 1000).toLocaleString()));
+	if (!events.length) events.push(E('tr', { class: 'tr placeholder' }, E('td', { class: 'td', colspan: 4 }, E('em', {}, _('No events yet.')))));
 	return E('div', {}, [
 		E('h2', {}, _('NuitGuard status')),
-		E('section', { class: 'ng-summary' }, [
-			E('div', { class: 'ng-summary-top' }, [
-				E('div', {}, [E('strong', { class: 'ng-service-state' }, state), E('p', { class: 'ng-muted' }, detail)]),
-				E('div', { class: 'ng-actions' }, [
-					data.running && data.blocked ? button('resume', data.active || preferred, _('Resume recovery'), data) : '',
-					settingsLink(data.running ? _('Edit settings') : _('Set up NuitGuard'), 'basic')
-				])
-			]),
-			E('dl', { class: 'ng-summary-facts' }, summaryFacts),
-			data.last_action && data.running ? E('p', { class: 'ng-muted' }, _('Last action: %s').format(label(data.last_action.result))) : ''
+		E('div', { class: 'cbi-section' }, [
+			E('h3', {}, _('Service status')),
+			E('table', { class: 'table' }, summary),
+			E('div', { class: 'cbi-page-actions' }, [
+				data.running && data.blocked ? button('resume', data.active || preferred, _('Resume recovery'), data) : '', ' ',
+				settingsLink(_('Settings'), 'basic')
+			])
 		]),
-		E('div', { class: 'ng-uplinks' }, cards),
-		E('section', { class: 'ng-events' }, [
-			E('div', { class: 'ng-card-heading' }, [E('strong', {}, _('Recent events')), E('span', { class: 'ng-muted' }, _('Refreshes every 5 seconds'))]),
-			events.length ? E('div', { class: 'ng-table-scroll' }, E('table', { class: 'table' }, [E('tr', { class: 'tr table-titles' }, [
+		E('div', { class: 'cbi-section' }, [
+			E('h3', {}, _('Uplinks')),
+			E('table', { class: 'table' }, [E('tr', { class: 'tr table-titles' }, [
+				_('Uplink'), _('Interface'), _('State'), _('Private MAC'), _('Recovery attempts / rotations'), _('Actions')
+			].map(function(title) { return E('th', { class: 'th' }, title); }))].concat(rows))
+		]),
+		E('div', { class: 'cbi-section' }, [
+			E('h3', {}, _('Recent events')),
+			E('table', { class: 'table' }, [E('tr', { class: 'tr table-titles' }, [
 				_('Time'), _('Level'), _('Uplink'), _('Event')
-			].map(function(title) { return E('th', { class: 'th' }, title); }))].concat(events))) :
-				E('p', { class: 'ng-empty' }, _('No events yet. Connection checks and recovery activity will appear here.'))
+			].map(function(title) { return E('th', { class: 'th' }, title); }))].concat(events))
 		])
 	]);
 }
@@ -151,11 +159,11 @@ return view.extend({
 	render: function(data) {
 		var container = E('div', {}, content(data[0]));
 		poll.add(function() {
-			// Leave focused controls and open action menus in place while they are in use.
-			if (container.querySelector('details[open]') || container.contains(document.activeElement)) return Promise.resolve();
+			// Preserve focus while a status control is being used.
+			if (container.contains(document.activeElement)) return Promise.resolve();
 			return callStatus().then(function(next) { dom.content(container, content(next)); });
 		}, 5);
-		return E('div', { class: 'ng-page ng-status' }, [E('link', { rel: 'stylesheet', href: L.resource('nuitguard/nuitguard.css') }), container]);
+		return container;
 	},
 	handleSaveApply: null,
 	handleSave: null,

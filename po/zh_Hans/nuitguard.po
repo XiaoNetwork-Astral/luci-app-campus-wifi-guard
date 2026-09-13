@@ -7,15 +7,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "1. Confirm the outage"
-msgstr "1. 确认断网"
-
-msgid "2. Retry authentication"
-msgstr "2. 重试认证"
-
-msgid "3. Switch and return"
-msgstr "3. 切换与返回"
-
 msgid "A network operation failed. The service stopped and attempted to restore its changes."
 msgstr "网络操作失败。服务已停止，并已尝试恢复其修改。"
 
@@ -28,8 +19,8 @@ msgstr "已接受"
 msgid "Account type"
 msgstr "账号类型"
 
-msgid "Add this uplink to make it available for recovery."
-msgstr "配置此上联后，可将其用于连接恢复。"
+msgid "Actions"
+msgstr "操作"
 
 msgid "Advanced settings"
 msgstr "高级设置"
@@ -61,8 +52,8 @@ msgstr "每个 MAC 的认证尝试次数"
 msgid "Authentication is sent only to this origin. Include the scheme and optional port, with no path."
 msgstr "仅向此来源地址提交认证。请包含协议和可选端口，不要包含路径。"
 
-msgid "Automatic recovery"
-msgstr "自动恢复"
+msgid "Automatic campus authentication and IPv4 uplink recovery."
+msgstr "校园网自动认证与 IPv4 上联恢复。"
 
 msgid "Basic settings"
 msgstr "基础设置"
@@ -70,17 +61,8 @@ msgstr "基础设置"
 msgid "Campus Wi-Fi SSID"
 msgstr "校园 Wi-Fi 的 SSID"
 
-msgid "Campus account"
-msgstr "校园网账号"
-
 msgid "Campus credentials are missing"
 msgstr "尚未配置校园网凭据"
-
-msgid "Campus portal"
-msgstr "校园认证门户"
-
-msgid "Campus sign-in and automatic connection recovery. Start with your account and uplinks; tune recovery only when needed."
-msgstr "校园网认证与断线自动恢复。先配置账号和上联网络，再按需调整恢复策略。"
 
 msgid "Cancel"
 msgstr "取消"
@@ -106,17 +88,14 @@ msgstr "选择校园网账号类型，也可以填写自定义服务值。"
 msgid "Choose different interfaces for Ethernet and Wi-Fi."
 msgstr "有线与无线网络请选择不同接口。"
 
-msgid "Choose the connection to use first, then configure Ethernet and Wi-Fi below."
-msgstr "选择优先使用的连接，并在下方配置有线和无线网络。"
+msgid "Close"
+msgstr "关闭"
 
 msgid "Configure an internet check URL before enabling recovery."
 msgstr "启用自动恢复前，请配置公网检测地址。"
 
 msgid "Configure uplink"
 msgstr "配置此上联"
-
-msgid "Configure your campus account and uplinks, then enable NuitGuard in Settings."
-msgstr "请在设置中配置校园网账号与上联网络，然后启用 NuitGuard。"
 
 msgid "Confirming an outage"
 msgstr "正在确认断网"
@@ -160,17 +139,11 @@ msgstr "星期"
 msgid "Debug"
 msgstr "调试"
 
-msgid "Detailed timing and limits"
-msgstr "详细时序与限制"
-
-msgid "Edit settings"
-msgstr "修改设置"
+msgid "Details"
+msgstr "详情"
 
 msgid "Enable NuitGuard"
 msgstr "启用 NuitGuard"
-
-msgid "Enable a private MAC for each connection in Uplink networks. Choose here whether and when that address changes."
-msgstr "在「上联网络」中为各连接启用隐私 MAC，在这里选择是否轮换及轮换时机。"
 
 msgid "Enable scheduled rotation"
 msgstr "启用计划轮换"
@@ -223,9 +196,6 @@ msgstr "开始恢复前连续检测失败次数"
 msgid "Failed portal checks before failover"
 msgstr "切换前连续 Portal 检测失败次数"
 
-msgid "Failover uses the other configured uplink. Return rules control when the preferred connection takes over again."
-msgstr "当前线路无法恢复时，尝试另一条已配置的上联；返回策略决定何时重新使用首选线路。"
-
 msgid "Failure confirmation interval (seconds)"
 msgstr "故障确认间隔（秒）"
 
@@ -256,9 +226,6 @@ msgstr "初始重试间隔（秒）"
 msgid "Interface"
 msgstr "接口"
 
-msgid "Internet access check"
-msgstr "公网连通性检测"
-
 msgid "Internet access verified"
 msgstr "公网连通性已确认"
 
@@ -268,23 +235,17 @@ msgstr "公网检测地址"
 msgid "Internet checks after authentication"
 msgstr "认证后的公网检测次数"
 
-msgid "Internet checks determine whether recovery is needed. A portal timeout alone does not mean the connection is offline."
-msgstr "根据公网检测判断是否需要恢复。仅登录页超时不会被判定为断网。"
-
 msgid "Interval (hours)"
 msgstr "间隔（小时）"
 
 msgid "Keep connected"
 msgstr "保持连接"
 
-msgid "Keep these values unless your campus uses a different portal."
-msgstr "校园认证门户未变化时，通常无需修改这些参数。"
-
 msgid "Keepalive was not confirmed; checking internet access"
 msgstr "保活未得到确认，正在检测公网"
 
-msgid "Last action: %s"
-msgstr "上次操作：%s"
+msgid "Last action"
+msgstr "上次操作"
 
 msgid "Leave blank to keep the saved password."
 msgstr "留空以保留已保存的密码。"
@@ -294,12 +255,6 @@ msgstr "留空即可使用「基础设置」中选择的账号类型。"
 
 msgid "Level"
 msgstr "级别"
-
-msgid "Limit attempts and wait between retries to avoid reconnecting continuously."
-msgstr "限制尝试次数并设置重试间隔，避免连续重复连接。"
-
-msgid "Live checks begin when NuitGuard is enabled."
-msgstr "启用 NuitGuard 后开始检测此连接。"
 
 msgid "Log level"
 msgstr "日志级别"
@@ -346,14 +301,11 @@ msgstr "发现了多个不同的门户上下文"
 msgid "Network interface"
 msgstr "网络接口"
 
-msgid "Network name"
-msgstr "网络名称"
-
 msgid "Next rotation"
 msgstr "下次轮换"
 
-msgid "No events yet. Connection checks and recovery activity will appear here."
-msgstr "暂无事件。启用后的连接检测与恢复记录将显示在这里。"
+msgid "No events yet."
+msgstr "暂无事件。"
 
 msgid "No open networks found. You can enter the SSID manually."
 msgstr "没有发现开放网络，可以手动填写 SSID。"
@@ -433,9 +385,6 @@ msgstr "隐私与计划"
 msgid "Private MAC"
 msgstr "隐私 MAC"
 
-msgid "Private MAC policy"
-msgstr "隐私 MAC 策略"
-
 msgid "Queued"
 msgstr "已排队"
 
@@ -462,9 +411,6 @@ msgstr "恢复检测间隔（秒）"
 
 msgid "Recovery is paused"
 msgstr "自动恢复已暂停"
-
-msgid "Refreshes every 5 seconds"
-msgstr "每 5 秒刷新"
 
 msgid "Remove saved password"
 msgstr "移除已保存的密码"
@@ -495,9 +441,6 @@ msgstr "按计划轮换"
 
 msgid "Saturday"
 msgstr "星期六"
-
-msgid "Save and apply restarts NuitGuard with your configuration."
-msgstr "保存并应用后，NuitGuard 将按新配置重新启动。"
 
 msgid "Saved password"
 msgstr "已保存的密码"
@@ -538,8 +481,8 @@ msgstr "服务已停止"
 msgid "Service started"
 msgstr "服务已启动"
 
-msgid "Set up NuitGuard"
-msgstr "前往设置"
+msgid "Service status"
+msgstr "服务状态"
 
 msgid "Settings"
 msgstr "设置"
@@ -561,6 +504,9 @@ msgstr "待机模式"
 
 msgid "Starting"
 msgstr "正在启动"
+
+msgid "State"
+msgstr "状态"
 
 msgid "Status"
 msgstr "状态"
@@ -637,11 +583,8 @@ msgstr "上联防火墙区域"
 msgid "Uplink networks"
 msgstr "上联网络"
 
-msgid "Uplink preference"
-msgstr "连接偏好"
-
-msgid "Use a URL with a known response code. Successful internet access takes priority over portal availability."
-msgstr "填写响应状态码已知的检测地址。公网连通时，即使登录页无法访问也视为在线。"
+msgid "Uplinks"
+msgstr "上联"
 
 msgid "Use a private MAC address"
 msgstr "使用隐私 MAC"
