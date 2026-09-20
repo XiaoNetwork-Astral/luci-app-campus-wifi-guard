@@ -138,12 +138,12 @@ let io = {
 		if (changed) clear_session(role);
 		return changed;
 	},
-	internet: function(role, check_online_portal) {
+	internet: function(role) {
 		let response = client(role).http(settings.main.internet_probe_url);
 		let internet = check_internet(response, settings.main.internet_expected_status, settings.main.internet_expected_body,
 			settings.main.internet_probe_url, settings.main.portal_origin);
-		// Offline recovery still needs the portal immediately; an online path waits for stability.
-		if (internet.online && !check_online_portal) return internet;
+		// Successful internet access is sufficient; the login page may remain accessible.
+		if (internet.online) return internet;
 		let portal = client(role).http(settings.main.portal_origin + '/eportal/index.jsp');
 		return { ...internet, portal_reachable: portal.curl_exit == 0 && portal.status >= 200 && portal.status < 400 };
 

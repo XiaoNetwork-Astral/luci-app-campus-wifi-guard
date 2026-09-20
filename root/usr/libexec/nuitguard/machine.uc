@@ -8,7 +8,7 @@ export function new_path(role) {
 		portal_failures: 0, discoveries: 0, authentications: 0, cycles: 0,
 		rotations: 0, auth_rotations: 0, recovery_rotations: 0,
 		post_auth_rotations: 0, pool_regenerations: 0, mac_changed: false,
-		internet_online: null, portal_reachable: null, both_reachable_reported: false,
+		internet_online: null, portal_reachable: null,
 		internet_failure: null, response_mismatch_reported: false, verifications: 0, verify_deadline: 0,
 		last_rotation: null, online_since: null, successes: 0, session: null };
 };
@@ -43,7 +43,7 @@ export function create_machine(settings, io) {
 	function begin(p, now) {
 		p.phase = 'connecting'; p.reason = 'connecting'; p.due = now;
 		p.online_since = null; p.successes = 0;
-		p.internet_online = p.portal_reachable = null; p.both_reachable_reported = false;
+		p.internet_online = p.portal_reachable = null;
 		p.deadline = now + c.reconnect_timeout;
 		io.connect(p.role);
 	}
@@ -100,16 +100,12 @@ export function create_machine(settings, io) {
 		p.due = now + min(c.retry_max_delay, c.retry_initial_delay * (2 ** min(p.cycles - 1, 20)));
 	}
 
-	function internet(p, now) {
-		let check_online_portal = p.online_since != null && now - p.online_since >= (c.portal_check_delay ?? 30);
-		let result = io.internet(p.role, check_online_portal);
+	function internet(p) {
+		let result = io.internet(p.role);
 		let online = type(result) == 'object' ? result.online === true : result === true;
 		p.internet_online = online;
-		p.portal_reachable = (!online || check_online_portal) && type(result?.portal_reachable) == 'bool' ? result.portal_reachable : null;
+		p.portal_reachable = !online && type(result?.portal_reachable) == 'bool' ? result.portal_reachable : null;
 		if (!online) { p.online_since = null; p.successes = 0; }
-		let both = online && p.portal_reachable === true;
-		if (both && !p.both_reachable_reported && io.event) io.event('warn', 'internet_and_portal_reachable', p.role);
-		p.both_reachable_reported = both;
 		p.internet_failure = online ? null : type(result) == 'object' ? result.reason : null;
 		if (p.internet_failure == 'internet_response_mismatch' && !p.response_mismatch_reported) {
 			p.response_mismatch_reported = true;
@@ -143,14 +139,14 @@ export function create_machine(settings, io) {
 			return;
 		}
 		if (p.phase == 'waiting_rotation') {
-			if (internet(p, now)) { healthy(p, now); return; }
+			if (internet(p)) { healthy(p, now); return; }
 			if (recover_mac(p, now)) return;
 			cooldown(p, 'mac_recovery_exhausted', now); return;
 		}
 		if (p.phase == 'connecting') p.phase = 'checking';
 		if (p.phase == 'checking' || p.phase == 'online' || p.phase == 'verifying' || p.phase == 'waiting_network') {
 			let verifying = p.phase == 'verifying';
-			if (internet(p, now)) { healthy(p, now); return; }
+			if (internet(p)) { healthy(p, now); return; }
 			p.online_since = null; p.successes = 0;
 			if (p.portal_reachable === false && (!verifying || now >= p.verify_deadline)) {
 				p.portal_failures++; p.cycles++;

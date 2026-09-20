@@ -99,7 +99,6 @@ ng_config_validate() {
 	ng_config_uint main primary_stable_time 1 604800
 	ng_config_uint main incident_reset_time 1 604800
 	ng_config_uint main probe_interval 1 86400
-	ng_config_uint main portal_check_delay 1 86400 30
 	ng_config_uint main probe_timeout 1 120
 	ng_config_uint main offline_confirm_count 1 100
 	ng_config_uint main offline_confirm_interval 1 3600

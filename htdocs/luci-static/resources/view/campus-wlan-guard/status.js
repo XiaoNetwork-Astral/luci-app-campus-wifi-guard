@@ -15,7 +15,6 @@ function label(code) {
 		configuration_invalid: _('The saved configuration is invalid; review the settings before starting'),
 		waiting_network: _('Waiting for network availability'),
 		internet_and_portal_unreachable: _('Internet and the login page are both unreachable; waiting to check again'),
-		internet_and_portal_reachable: _('The login page is still reachable after sustained internet access; keeping the connection online'),
 		portal_link_matches: _('The portal IP and MAC match the current uplink'),
 		portal_link_unconfirmed: _('Could not match the portal IP and MAC to the current uplink'),
 		network_address_changed: _('The uplink address changed; checking the new network path'),
@@ -164,7 +163,7 @@ function content(data) {
 		if (data.running && configured) {
 			var reachability = function(value) { return value === true ? _('Reachable') : value === false ? _('Unreachable') : _('Not checked'); };
 			details.push(detail(_('Internet access'), reachability(path.internet_online)));
-			details.push(detail(_('Campus login page'), reachability(path.portal_reachable)));
+			if (path.internet_online !== true) details.push(detail(_('Campus login page'), reachability(path.portal_reachable)));
 		}
 		if (data.running && configured) details.push(detail(_('Recovery rounds / MAC changes'), String(path.cycles || 0) + ' / ' + String(path.rotations || 0)));
 		if (data.running && path.pool_regenerations) details.push(detail(_('Pool regenerations'), String(path.pool_regenerations)));
@@ -181,7 +180,7 @@ function content(data) {
 	});
 	var eventTitles = [_('Time'), _('Level'), _('Uplink'), _('Event')];
 	var level = { error: _('Errors'), warn: _('Warnings'), info: _('Information'), debug: _('Debug') };
-	var events = (data.events || []).filter(function(entry) { return entry.code !== 'not_started'; }).slice(-20).reverse().map(function(entry) {
+	var events = (data.events || []).filter(function(entry) { return ['not_started', 'internet_and_portal_reachable'].indexOf(entry.code) < 0; }).slice(-20).reverse().map(function(entry) {
 		return tableRow(eventTitles, [
 			new Date(entry.time * 1000).toLocaleString(), level[entry.level] || entry.level,
 			entry.role ? roleName(entry.role) : '—', label(entry.code)

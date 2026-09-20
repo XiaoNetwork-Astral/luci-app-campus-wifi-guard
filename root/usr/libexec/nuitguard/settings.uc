@@ -16,7 +16,6 @@ export function read_settings() {
 	result.main.auto_regenerate_pool ??= 0;
 	result.main.max_pool_regenerations ??= 1;
 	result.main.internet_expected_body ??= '';
-	result.main.portal_check_delay ??= 30;
 	result.main.mac_pool = shared_pool(result);
 	return result;
 };

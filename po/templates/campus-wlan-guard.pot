@@ -488,9 +488,6 @@ msgstr ""
 msgid "One successful check confirms internet access; repeated failures continue the recovery process"
 msgstr ""
 
-msgid "Online time before checking the login page (seconds)"
-msgstr ""
-
 msgid "Optional access point BSSID"
 msgstr ""
 
@@ -707,9 +704,6 @@ msgstr ""
 msgid "The internet check was redirected to the configured login portal"
 msgstr ""
 
-msgid "The login page is still reachable after sustained internet access; keeping the connection online"
-msgstr ""
-
 msgid "The portal IP and MAC match the current uplink"
 msgstr ""
 
@@ -831,9 +825,6 @@ msgid "Wait after repeated recovery failures (seconds)"
 msgstr ""
 
 msgid "Wait for a network address (seconds)"
-msgstr ""
-
-msgid "Wait for continuous internet access before checking the campus login page; a failed internet check restarts the timer"
 msgstr ""
 
 msgid "Waiting for network availability"

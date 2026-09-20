@@ -490,9 +490,6 @@ msgstr "生成的 MAC 地址数量"
 msgid "One successful check confirms internet access; repeated failures continue the recovery process"
 msgstr "检测成功一次即可确认联网；如果连续失败，会继续尝试恢复连接"
 
-msgid "Online time before checking the login page (seconds)"
-msgstr "联网后检查登录页的等待时间（秒）"
-
 msgid "Optional access point BSSID"
 msgstr "接入点 BSSID（选填）"
 
@@ -709,9 +706,6 @@ msgstr "找到的登录服务器与设置不一致，已停止认证"
 msgid "The internet check was redirected to the configured login portal"
 msgstr "公网检测跳转到了校园网登录页，需要认证"
 
-msgid "The login page is still reachable after sustained internet access; keeping the connection online"
-msgstr "公网已稳定连接，但校园网登录页仍可访问；继续保持连接"
-
 msgid "The portal IP and MAC match the current uplink"
 msgstr "登录页中的 IP 和 MAC 与当前线路一致"
 
@@ -834,9 +828,6 @@ msgstr "连续恢复失败后的等待时间（秒）"
 
 msgid "Wait for a network address (seconds)"
 msgstr "等待获取网络地址的时间（秒）"
-
-msgid "Wait for continuous internet access before checking the campus login page; a failed internet check restarts the timer"
-msgstr "公网持续可达一段时间后，再检查校园网登录页；期间检测失败会重新计时"
 
 msgid "Waiting for network availability"
 msgstr "等待网络恢复"
