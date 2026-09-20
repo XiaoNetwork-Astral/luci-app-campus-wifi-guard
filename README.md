@@ -38,7 +38,7 @@ apk add --allow-untrusted /tmp/luci-i18n-campus-wlan-guard-zh-cn.apk
 
 Internet checks reject redirects and require the expected status plus an empty 204 response or matching response text. Public internet access takes priority over login-page reachability; repeated failures of both checks enter cooldown without changing MAC addresses. After authentication, the service allows time for campus DHCP changes and updates its routes.
 
-The internet check selector includes Xiaomi, Huawei and vivo presets and accepts a custom URL. General settings also offers full initialization, which restores plugin-owned network changes before clearing the plugin settings and saved data.
+The internet check selector includes Xiaomi, Huawei and vivo presets and accepts a custom URL. At the bottom of General settings, Reset restores defaults while preserving the saved account; Reset completely also removes the account. Both actions stop the service and restore plugin-owned network changes first.
 
 ## Compatibility
 

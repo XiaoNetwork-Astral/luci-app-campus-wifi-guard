@@ -6,14 +6,14 @@ import { save_password } from '/usr/libexec/nuitguard/credentials.uc';
 import { create_identities, generate_pool } from '/usr/libexec/nuitguard/identity.uc';
 import { read_settings } from '/usr/libexec/nuitguard/settings.uc';
 
-let methods = { reset: { confirm: false }, status: {}, set_password: { password: '', clear: false }, action: { action: '', role: '' }, generate_pool: { size: 0 } };
+let methods = { reset: { confirm: false, mode: '' }, status: {}, set_password: { password: '', clear: false }, action: { action: '', role: '' }, generate_pool: { size: 0 } };
 if (ARGV[0] == 'list') { printf('%J\n', methods); exit(0); }
 if (ARGV[0] != 'call' || !methods[ARGV[1]]) exit(1);
 try {
 	let input = json(fs.stdin.read('all') || '{}');
 	let result;
 	if (ARGV[1] == 'status') result = status();
-	else if (ARGV[1] == 'reset') result = request_reset(input.confirm);
+	else if (ARGV[1] == 'reset') result = request_reset(input.confirm, input.mode);
 	else if (resetting()) result = { result: 'busy' };
 	else if (ARGV[1] == 'set_password') result = save_password(input.password, input.clear === true);
 	else if (ARGV[1] == 'generate_pool') {

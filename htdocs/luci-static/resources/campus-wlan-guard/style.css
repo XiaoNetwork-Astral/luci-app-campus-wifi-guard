@@ -106,3 +106,28 @@
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 }
+
+.cwg-modal-actions { display: flex; flex-wrap: wrap; gap: .5em; margin: 0 0 1em; }
+.cwg-modal-actions > button { margin: 0; }
+
+.cwg-settings [data-name="internet_probe_url"] .cbi-dropdown {
+ width: 18rem;
+ min-width: 0;
+ max-width: 100%;
+ box-sizing: border-box;
+}
+.cwg-settings [data-name="internet_probe_url"] .cbi-dropdown > ul.dropdown {
+ width: 100%;
+ min-width: 0;
+ box-sizing: border-box;
+}
+.cwg-settings [data-name="internet_probe_url"] .cbi-dropdown > ul.dropdown > li {
+ white-space: normal;
+ overflow-wrap: anywhere;
+}
+.cwg-settings [data-name="internet_probe_url"] .cbi-dropdown:not([open]) > ul > li,
+.cwg-settings [data-name="internet_probe_url"] .cbi-dropdown > ul.preview > li {
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+}

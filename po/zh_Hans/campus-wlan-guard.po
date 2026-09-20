@@ -70,6 +70,9 @@ msgstr "备用线路连接尝试上限"
 msgid "Backup connection mode"
 msgstr "备用线路连接方式"
 
+msgid "Both actions stop the service and restore its network changes; only a complete reset removes the saved account"
+msgstr "两种操作都会停止服务并恢复插件修改的网络设置；仅彻底重置会清除已保存的账号"
+
 msgid "Campus WLAN Guard"
 msgstr "校园网守卫"
 
@@ -133,8 +136,8 @@ msgstr "启用自动恢复前，请配置公网检测地址"
 msgid "Configure uplink"
 msgstr "配置此上联"
 
-msgid "Confirm initialization"
-msgstr "确认初始化"
+msgid "Confirm reset"
+msgstr "确认重置"
 
 msgid "Confirming an outage"
 msgstr "正在确认断网"
@@ -313,9 +316,6 @@ msgstr "无线固定隐私 MAC 地址"
 msgid "Friday"
 msgstr "星期五"
 
-msgid "Fully initialize"
-msgstr "完全初始化"
-
 msgid "General settings"
 msgstr "常规设置"
 
@@ -430,9 +430,6 @@ msgstr "恢复重试的最长等待时间（秒）"
 msgid "MAC addresses"
 msgstr "MAC 地址"
 
-msgid "MAC pool"
-msgstr "MAC 地址池"
-
 msgid "MAC pool regenerated after repeated connection failures"
 msgstr "连续连接失败后已重建 MAC 地址池"
 
@@ -489,9 +486,6 @@ msgstr "未配置"
 
 msgid "Not enabled"
 msgstr "未启用"
-
-msgid "Not generated"
-msgstr "尚未生成"
 
 msgid "Not monitored"
 msgstr "尚未检测"
@@ -577,14 +571,26 @@ msgstr "自动恢复已暂停"
 msgid "Recovery rounds / MAC changes"
 msgstr "恢复轮数 / MAC 更换次数"
 
-msgid "Remove all plugin settings and saved data, then leave the service disabled"
-msgstr "清除插件的全部设置和已保存数据，并停用服务"
-
 msgid "Replaces the list above; save and apply to use it; existing campus device records are not removed"
 msgstr "替换上方列表，保存并应用后生效；校园网已有的设备记录不会被删除"
 
+msgid "Reset"
+msgstr "重置"
+
+msgid "Reset completely"
+msgstr "彻底重置"
+
+msgid "Reset settings"
+msgstr "重置设置"
+
 msgid "Response text returned when online"
 msgstr "联网时应返回的正文"
+
+msgid "Restore all plugin defaults and clear saved data, including the campus account and password"
+msgstr "将插件全部设置恢复默认，并清除包括校园网账号密码在内的已保存数据"
+
+msgid "Restore default settings and clear private MAC addresses, schedules, runtime records and pending changes; keep the campus account, password and account type"
+msgstr "恢复默认设置并清除隐私 MAC、计划、运行记录及待应用修改；保留校园网账号、密码及账号类型"
 
 msgid "Resume recovery"
 msgstr "恢复自动处理"
@@ -747,9 +753,6 @@ msgstr "上联地址已更新，正在检查新的网络路径"
 
 msgid "The uplink has no usable IPv4 connection"
 msgstr "该上联没有可用的 IPv4 连接"
-
-msgid "This removes the campus account and password, private MAC addresses, schedules, runtime records and pending plugin changes; router network settings are preserved"
-msgstr "这会清除校园网账号密码、隐私 MAC、计划、运行记录及插件待应用修改；保留路由器网络设置"
 
 msgid "This uplink is not configured"
 msgstr "尚未配置该上联"

@@ -107,7 +107,7 @@ function uplinkActions(role, path, cfg, active, data) {
 			actions.push(button('logout', role, _('Log out and pause'), data, true));
 			ui.showModal(roleName(role), [
 				E('p', {}, _('Reauthentication, MAC changes, switching and logout may interrupt this connection; logout pauses automatic recovery')),
-				E('div', { class: 'cbi-section' }, actions.flatMap(function(action) { return [action, ' ']; })),
+				E('div', { class: 'cwg-modal-actions' }, actions),
 				E('div', { class: 'right' }, E('button', { class: 'btn', click: ui.hideModal }, _('Close')))
 			]);
 		}
@@ -156,17 +156,11 @@ function content(data) {
 		var configured = role === 'wifi' && cfg.mode === 'managed' ? !!(cfg.radio && cfg.ssid) : !!cfg.interface;
 		var active = data.running && data.selected && data.active === role;
 		var phase = !configured ? _('Not configured') : !data.running ? _('Not monitored') : label(path.phase);
-		var pool = cfg.mac_pool || [];
-		if (!Array.isArray(pool)) pool = [pool];
-		var position = pool.map(function(mac) { return mac.toLowerCase(); }).indexOf((path.private_mac || '').toLowerCase());
-		var poolSize = data.running && path.pool_size != null ? path.pool_size : pool.length;
-		var poolPosition = data.running && path.pool_position != null ? path.pool_position : position + 1;
 		var details = [
 			detail(_('Interface'), configured ? path.interface || cfg.interface || _('Created when connected') : '—'),
 			detail(cfg.rotation_mode === 'fixed' ? _('Fixed private MAC address') : _('Private MAC'),
 				data.running && path.private_mac || (cfg.rotation_mode === 'fixed' ? uci.get('nuitguard', 'main', 'fixed_mac_' + role) : '') || '—')
 		];
-		if (cfg.rotation_mode !== 'fixed') details.push(detail(_('MAC pool'), poolSize ? (poolPosition > 0 ? String(poolPosition) + ' / ' : '') + String(poolSize) : _('Not generated')));
 		if (data.running && configured) {
 			var reachability = function(value) { return value === true ? _('Reachable') : value === false ? _('Unreachable') : _('Not checked'); };
 			details.push(detail(_('Internet access'), reachability(path.internet_online)));

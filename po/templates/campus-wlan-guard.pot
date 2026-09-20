@@ -68,6 +68,9 @@ msgstr ""
 msgid "Backup connection mode"
 msgstr ""
 
+msgid "Both actions stop the service and restore its network changes; only a complete reset removes the saved account"
+msgstr ""
+
 msgid "Campus WLAN Guard"
 msgstr ""
 
@@ -131,7 +134,7 @@ msgstr ""
 msgid "Configure uplink"
 msgstr ""
 
-msgid "Confirm initialization"
+msgid "Confirm reset"
 msgstr ""
 
 msgid "Confirming an outage"
@@ -311,9 +314,6 @@ msgstr ""
 msgid "Friday"
 msgstr ""
 
-msgid "Fully initialize"
-msgstr ""
-
 msgid "General settings"
 msgstr ""
 
@@ -428,9 +428,6 @@ msgstr ""
 msgid "MAC addresses"
 msgstr ""
 
-msgid "MAC pool"
-msgstr ""
-
 msgid "MAC pool regenerated after repeated connection failures"
 msgstr ""
 
@@ -486,9 +483,6 @@ msgid "Not configured"
 msgstr ""
 
 msgid "Not enabled"
-msgstr ""
-
-msgid "Not generated"
 msgstr ""
 
 msgid "Not monitored"
@@ -575,13 +569,25 @@ msgstr ""
 msgid "Recovery rounds / MAC changes"
 msgstr ""
 
-msgid "Remove all plugin settings and saved data, then leave the service disabled"
-msgstr ""
-
 msgid "Replaces the list above; save and apply to use it; existing campus device records are not removed"
 msgstr ""
 
+msgid "Reset"
+msgstr ""
+
+msgid "Reset completely"
+msgstr ""
+
+msgid "Reset settings"
+msgstr ""
+
 msgid "Response text returned when online"
+msgstr ""
+
+msgid "Restore all plugin defaults and clear saved data, including the campus account and password"
+msgstr ""
+
+msgid "Restore default settings and clear private MAC addresses, schedules, runtime records and pending changes; keep the campus account, password and account type"
 msgstr ""
 
 msgid "Resume recovery"
@@ -744,9 +750,6 @@ msgid "The uplink address changed; checking the new network path"
 msgstr ""
 
 msgid "The uplink has no usable IPv4 connection"
-msgstr ""
-
-msgid "This removes the campus account and password, private MAC addresses, schedules, runtime records and pending plugin changes; router network settings are preserved"
 msgstr ""
 
 msgid "This uplink is not configured"

@@ -1,12 +1,12 @@
 #!/bin/sh
 
 case "$1:$#:$2" in
-	reset:1:|reload:1:|check-config:1:|inspect:1:|probe:2:wired|probe:2:wifi|preflight:1:|run:1:|restore:1:|status:1:) ;;
-	*) printf '%s\n' 'Usage: nuitguard {reset|reload|check-config|inspect|probe wired|probe wifi|preflight|run|restore|status}' >&2; exit 2 ;;
+	reset:2:settings|reset:2:all|reload:1:|check-config:1:|inspect:1:|probe:2:wired|probe:2:wifi|preflight:1:|run:1:|restore:1:|status:1:) ;;
+	*) printf '%s\n' 'Usage: nuitguard {reset settings|reset all|reload|check-config|inspect|probe wired|probe wifi|preflight|run|restore|status}' >&2; exit 2 ;;
 esac
 
 if [ "$1" = reset ]; then
-	exec ucode -e 'import {execute_reset} from "/usr/libexec/nuitguard/reset.uc"; exit(execute_reset());'
+	exec ucode -e 'import {execute_reset} from "/usr/libexec/nuitguard/reset.uc"; exit(execute_reset(ARGV[0]));' "$2"
 fi
 if [ "$1" = run ]; then
 	ucode -e 'import {resetting} from "/usr/libexec/nuitguard/reset.uc"; exit(resetting() ? 1 : 0);' || exit 1

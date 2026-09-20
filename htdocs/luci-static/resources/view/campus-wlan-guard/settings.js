@@ -5,7 +5,7 @@
 'require rpc';
 'require ui';
 
-var callReset = rpc.declare({ object: 'nuitguard', method: 'reset', params: ['confirm'], expect: {} });
+var callReset = rpc.declare({ object: 'nuitguard', method: 'reset', params: ['confirm', 'mode'], expect: {} });
 var callStatus = rpc.declare({ object: 'nuitguard', method: 'status', expect: {} });
 var callAction = rpc.declare({ object: 'nuitguard', method: 'action', params: ['action', 'role'], expect: {} });
 var callPassword = rpc.declare({ object: 'nuitguard', method: 'set_password', params: ['password', 'clear'], expect: {} });
@@ -113,38 +113,6 @@ return view.extend({
 				? true : _('Enter the username, service and password before enabling recovery');
 		};
 
-		var initialize = s.taboption('basic', form.Button, '_initialize', _('Fully initialize'),
-			_('Remove all plugin settings and saved data, then leave the service disabled'));
-		initialize.inputtitle = _('Fully initialize'); initialize.inputstyle = 'reset';
-		initialize.onclick = function() {
-			ui.showModal(_('Fully initialize'), [
-				E('p', {}, _('This removes the campus account and password, private MAC addresses, schedules, runtime records and pending plugin changes; router network settings are preserved')),
-				E('div', { class: 'right' }, [
-					E('button', { class: 'btn', click: ui.hideModal }, _('Cancel')), ' ',
-					E('button', { class: 'btn cbi-button-negative', click: async function(event) {
-						event.currentTarget.disabled = true;
-						try {
-							var result = await callReset(true);
-							if (result.result !== 'queued') throw new Error(_('Could not start initialization; another operation may be running'));
-							ui.showModal(_('Fully initialize'), [E('p', { class: 'spinning' }, _('Stopping the service and restoring network settings before clearing data'))]);
-							for (var attempt = 0; attempt < 210; attempt++) {
-								await new Promise(function(resolve) { window.setTimeout(resolve, 1000); });
-								var current = await callStatus();
-								if (current.reset && current.reset.state === 'complete') {
-									window.location.href = L.url('admin/services/campus-wlan-guard/settings'); return;
-								}
-								if (current.reset && current.reset.state === 'failed') throw new Error(
-									current.reset.error === 'restore_failed' || current.reset.error === 'stop_failed'
-										? _('Could not stop the service or restore its network changes; plugin data was not cleared')
-										: _('Initialization could not finish; check the router before trying again'));
-							}
-							throw new Error(_('Initialization is taking longer than expected; check the status before trying again'));
-						}
-						catch (error) { ui.hideModal(); ui.addNotification(null, E('p', {}, error.message)); }
-					} }, _('Confirm initialization'))
-				])
-			]);
-		};
 
 		choiceOption(s, 'uplinks', 'preferred_uplink', _('Preferred uplink'), [
 			['wired', _('Ethernet')], ['wifi', _('Wi-Fi')]
@@ -488,6 +456,47 @@ return view.extend({
 			['error', _('Errors')], ['warn', _('Warnings')], ['info', _('Information')], ['debug', _('Debug')]
 		]);
 
+		function resetSettings(mode) {
+			var title = mode === 'settings' ? _('Reset') : _('Reset completely');
+			ui.showModal(title, [
+				E('p', {}, mode === 'settings'
+					? _('Restore default settings and clear private MAC addresses, schedules, runtime records and pending changes; keep the campus account, password and account type')
+					: _('Restore all plugin defaults and clear saved data, including the campus account and password')),
+				E('div', { class: 'right' }, [
+					E('button', { class: 'btn', click: ui.hideModal }, _('Cancel')), ' ',
+					E('button', { class: 'btn cbi-button-negative', click: async function(event) {
+						event.currentTarget.disabled = true;
+						try {
+							var result = await callReset(true, mode);
+							if (result.result !== 'queued') throw new Error(_('Could not start initialization; another operation may be running'));
+							ui.showModal(title, [E('p', { class: 'spinning' }, _('Stopping the service and restoring network settings before clearing data'))]);
+							for (var attempt = 0; attempt < 210; attempt++) {
+								await new Promise(function(resolve) { window.setTimeout(resolve, 1000); });
+								var current = await callStatus();
+								if (current.reset && current.reset.state === 'complete') {
+									window.location.href = L.url('admin/services/campus-wlan-guard/settings'); return;
+								}
+								if (current.reset && current.reset.state === 'failed') throw new Error(
+									current.reset.error === 'restore_failed' || current.reset.error === 'stop_failed'
+										? _('Could not stop the service or restore its network changes; plugin data was not cleared')
+										: _('Initialization could not finish; check the router before trying again'));
+							}
+							throw new Error(_('Initialization is taking longer than expected; check the status before trying again'));
+						}
+						catch (error) { ui.hideModal(); ui.addNotification(null, E('p', {}, error.message)); }
+					} }, _('Confirm reset'))
+				])
+			]);
+		}
+		var reset = s.taboption('basic', form.DummyValue, '_reset', _('Reset settings'));
+		reset.renderWidget = function() {
+			return E('div', {}, [
+				E('button', { type: 'button', class: 'cbi-button cbi-button-neutral', disabled: m.readonly, click: function() { resetSettings('settings'); } }, _('Reset')), ' ',
+				E('button', { type: 'button', class: 'cbi-button cbi-button-reset', disabled: m.readonly, click: function() { resetSettings('all'); } }, _('Reset completely'))
+			]);
+		};
+		reset.description = _('Both actions stop the service and restore its network changes; only a complete reset removes the saved account');
+
 		var checks = group(main, 'checks', 'internet_check', _('Internet access check'));
 		o = urlOption(checks, null, 'internet_probe_url', _('Internet check URL'), true);
 		var internetPresets = [
@@ -495,7 +504,7 @@ return view.extend({
 			['http://connectivitycheck.platform.hicloud.com/generate_204', _('Huawei')],
 			['http://wifi.vivo.com.cn/generate_204', _('vivo')]
 		];
-		internetPresets.forEach(function(preset) { o.value(preset[0], preset[1] + ' (HTTP 204)'); });
+		internetPresets.forEach(function(preset) { o.value(preset[0], preset[1] + ' (' + preset[0] + ')'); });
 		o.onchange = function(event, section_id, value) {
 			if (internetPresets.some(function(preset) { return preset[0] === value; })) {
 				m.lookupOption('internet_expected_status', 'main')[0].getUIElement('main').setValue('204');
@@ -505,7 +514,8 @@ return view.extend({
 		o.description = _('Choose a preset or enter a custom URL; presets use HTTP 204 with an empty response');
 		var validateInternetURL = o.validate;
 		o.validate = function(section_id, value) {
-			if (!value && m.lookupOption('enabled', 'main')[0].formvalue('main') === '1')
+			// LuCI also validates the empty custom-entry draft while a preset remains selected.
+			if (!value && !this.formvalue(section_id) && m.lookupOption('enabled', 'main')[0].formvalue('main') === '1')
 				return _('Configure an internet check URL before enabling recovery');
 			return validateInternetURL.call(this, section_id, value);
 		};
