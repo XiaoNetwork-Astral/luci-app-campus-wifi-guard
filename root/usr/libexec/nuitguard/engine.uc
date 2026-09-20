@@ -3,9 +3,11 @@ import { read_settings } from './settings.uc';
 import { create_network } from './network.uc';
 import { create_http } from './http.uc';
 import { create_auth } from './auth.uc';
+import { check_internet } from './internet-check.uc';
 import { create_machine } from './machine.uc';
 import { load_password } from './credentials.uc';
 import { next_schedule } from './schedule.uc';
+import { logout_private_sessions, link_identity } from './session-cleanup.uc';
 import { runtime_dir, private_dir, ensure_directory, atomic_json, read_json, monotonic_seconds } from './common.uc';
 
 let command = ARGV[0];
@@ -21,8 +23,14 @@ if (command == 'preflight') {
 
 ensure_directory(runtime_dir);
 let lock = fs.open(runtime_dir + '/daemon.lock', 'a', 384);
-assert(lock && lock.lock('xn'), 'NuitGuard is already running');
-if (command == 'restore') { network.restore(); fs.unlink(runtime_dir + '/checkpoint.json'); lock.close(); exit(0); }
+assert(lock && lock.lock('xn'), 'Campus WLAN Guard is already running');
+if (command == 'restore') {
+	network.restore();
+	fs.unlink(runtime_dir + '/checkpoint.json');
+	let previous = read_json(runtime_dir + '/status.json', {});
+	atomic_json(runtime_dir + '/status.json', { reason: index(['startup_failed', 'configuration_invalid', 'internet_check_not_configured', 'credentials_missing', 'network_operation_failed', 'restoration_failed'], previous.reason) >= 0 ? previous.reason : 'stopped', failure: previous.failure, paths: {}, events: previous.events || [], updated: time() });
+	lock.close(); exit(0);
+}
 
 let missing = settings.main.enabled != 1 ? 'stopped' : !settings.main.internet_probe_url ? 'internet_check_not_configured' :
 	!(settings.account.username && settings.account.service_value && load_password()) ? 'credentials_missing' : null;
@@ -34,6 +42,7 @@ let stop = false;
 signal('TERM', () => stop = true);
 signal('INT', () => stop = true);
 
+let failure;
 let machine, clients = {}, keepalive_due = {}, events = [], last_summary, last_action;
 let schedule_state = read_json(private_dir + '/schedule.json', {});
 let schedule_key = sprintf('%J', settings.schedule);
@@ -41,6 +50,12 @@ if (schedule_state.key != schedule_key) {
 	schedule_state = { key: schedule_key, next: next_schedule(settings.schedule, time()) };
 	if (settings.schedule.enabled == '1' && settings.main.rotation_mode == 'scheduled')
 		atomic_json(private_dir + '/schedule.json', schedule_state);
+}
+
+function failure_code(error) {
+	let code = error?.message;
+	return index(['network_reload_failed', 'uplink_start_failed', 'interface_restore_failed',
+		'restoration_conflict', 'fixed_mac_missing', 'fixed_mac_conflict'], code) >= 0 ? code : 'operation_error';
 }
 
 function event(level, code, role) {
@@ -55,13 +70,16 @@ function event(level, code, role) {
 function client(role) {
 	let link = network.current_link(role);
 	assert(link, 'Uplink has no current IPv4 path');
-	let key = sprintf('%J', link);
+	let key = sprintf('%J', link), identity = link_identity(link);
 	if (clients[role]?.key != key) {
-		if (clients[role] && machine) { machine.paths[role].session = null; machine.paths[role].context = null; }
-		fs.unlink(runtime_dir + '/' + role + '.cookies');
+		if (clients[role] && machine) {
+			machine.paths[role].context = null;
+			if (clients[role].identity != identity) machine.paths[role].session = null;
+		}
+		if (!clients[role] || clients[role].identity != identity) fs.unlink(runtime_dir + '/' + role + '.cookies');
 		let http = create_http(link.device, settings.main.probe_timeout, runtime_dir + '/' + role + '.cookies',
 			(args, timeout) => stop ? 28 : system(args, timeout));
-		clients[role] = { key, http, auth: create_auth(http, settings.main) };
+		clients[role] = { key, identity, http, auth: create_auth(http, settings.main) };
 	}
 	return clients[role];
 }
@@ -70,6 +88,26 @@ function clear_session(role) {
 	if (machine) { machine.paths[role].session = null; machine.paths[role].context = null; }
 	delete clients[role]; delete keepalive_due[role];
 	fs.unlink(runtime_dir + '/' + role + '.cookies');
+}
+
+function publish() {
+	let view = machine.status();
+	for (let role, path in view.paths) {
+		path.interface = network.profiles[role].interface;
+		path.private_mac = network.identities.get(role)?.mac;
+		let pool = network.pool();
+		path.pool_size = length(pool); path.pool_position = index(pool, path.private_mac) + 1;
+	}
+	let summary = join('|', [view.active, view.reason, view.paths.wired.phase, view.paths.wired.reason,
+		view.paths.wifi.phase, view.paths.wifi.reason]);
+	if (summary != last_summary) {
+		for (let role, path in view.paths) event(path.phase == 'blocked' ? 'error' : path.phase == 'cooldown' ? 'warn' : 'info', path.reason, role);
+		last_summary = summary;
+	}
+	atomic_json(runtime_dir + '/status.json', { ...view, updated: time(), monotonic: monotonic_seconds(),
+		failure,
+		next_schedule: settings.schedule.enabled == '1' ? schedule_state.next : null, last_action, events, dns_scope: 'system' });
+	atomic_json(runtime_dir + '/checkpoint.json', { settings, state: machine.state, paths: machine.paths });
 }
 
 let io = {
@@ -82,43 +120,64 @@ let io = {
 	link: network.link,
 	select: network.select,
 	disconnect: function(role) { clear_session(role); network.disconnect(role); },
-	rotate: function(role) { clear_session(role); return network.rotate(role); },
+	event,
+	can_rotate: function(role) { return network.can_rotate(role); },
+	rotation_candidates: function(role) { return network.rotation_candidates(role); },
+	regenerate_pool: function(role) {
+		let changed = network.regenerate_pool(role);
+		if (changed) {
+			for (let name, path in machine.paths) path.post_auth_rotations = 0;
+			event('warn', 'mac_pool_regenerated', role);
+			// Persist the new settings and reserved budget before reconnecting.
+			publish();
+		}
+		return changed;
+	},
+	rotate: function(role) {
+		let changed = network.rotate(role);
+		if (changed) clear_session(role);
+		return changed;
+	},
 	internet: function(role) {
 		let response = client(role).http(settings.main.internet_probe_url);
-		return response.curl_exit == 0 && response.status == settings.main.internet_expected_status;
+		let internet = check_internet(response, settings.main.internet_expected_status, settings.main.internet_expected_body,
+			settings.main.internet_probe_url, settings.main.portal_origin);
+		let portal = client(role).http(settings.main.portal_origin + '/eportal/index.jsp');
+		return { ...internet, portal_reachable: portal.curl_exit == 0 && portal.status >= 200 && portal.status < 400 };
+
 	},
-	discover: function(role) { return client(role).auth.discover(); },
+	discover: function(role) {
+		let result = client(role).auth.discover();
+		if (result.context) {
+			let link = network.current_link(role), params = result.context.params;
+			let same_ip = params?.wlanuserip == link.address;
+			let same_mac = replace(lc(params?.mac || ''), /%3a|[:.\-]/g, '') == replace(lc(link.mac || ''), /[:.\-]/g, '');
+			event(same_ip && same_mac ? 'debug' : 'warn', same_ip && same_mac ? 'portal_link_matches' : 'portal_link_unconfirmed', role);
+		}
+		return result;
+	},
 	authenticate: function(role, context) {
 		let password = load_password();
 		if (!password) return { state: 'credentials_missing' };
 		let result = client(role).auth.login(context, { ...settings.account, password });
 		password = null;
-		if (result.session) result.session.path_key = clients[role].key;
+		if (result.session) result.session.identity_key = clients[role].identity;
 		if (result.session?.keepalive_seconds) keepalive_due[role] = monotonic_seconds() + result.session.keepalive_seconds;
 		return result;
 	},
 	logout: function(role, session) {
-		if (session && network.link(role) && session.path_key == sprintf('%J', network.current_link(role))) client(role).auth.logout(session);
+		let result = { state: 'no_session' };
+		if (session && network.link(role) && session.identity_key && session.identity_key == link_identity(network.current_link(role))) {
+			// Shutdown requests remain bounded and are allowed after the stop signal
+			let auth = stop ? create_auth(create_http(network.current_link(role).device,
+				min(settings.main.probe_timeout, 5), runtime_dir + '/' + role + '.cookies'), settings.main) : client(role).auth;
+			result = auth.logout(session);
+		}
 		clear_session(role);
+		return result;
 	}
 };
 
-function publish() {
-	let view = machine.status();
-	for (let role, path in view.paths) {
-		path.interface = network.profiles[role].interface;
-		path.private_mac = network.identities.get(role)?.mac;
-	}
-	let summary = join('|', [view.active, view.reason, view.paths.wired.phase, view.paths.wired.reason,
-		view.paths.wifi.phase, view.paths.wifi.reason]);
-	if (summary != last_summary) {
-		for (let role, path in view.paths) event(path.phase == 'blocked' ? 'error' : path.phase == 'cooldown' ? 'warn' : 'info', path.reason, role);
-		last_summary = summary;
-	}
-	atomic_json(runtime_dir + '/status.json', { ...view, updated: time(), monotonic: monotonic_seconds(),
-		next_schedule: settings.schedule.enabled == '1' ? schedule_state.next : null, last_action, events, dns_scope: 'system' });
-	atomic_json(runtime_dir + '/checkpoint.json', { settings, state: machine.state, paths: machine.paths });
-}
 
 try {
 	// A previous crash may have left owned configuration. Restore it before a
@@ -154,8 +213,17 @@ try {
 				fs.unlink(runtime_dir + '/processing.json');
 			}
 			// Hotplug accelerates only an ordinary online check; it never clears budgets.
-			if (fs.unlink(runtime_dir + '/wake'))
-				for (let role, path in machine.paths) if (path.phase == 'online' || path.phase == 'connecting') path.due = min(path.due, now);
+			if (fs.unlink(runtime_dir + '/wake')) {
+				for (let role, path in machine.paths) {
+					let previous = network.current_link(role);
+					let link = previous ? network.link(role) : null;
+					if (previous && link && sprintf('%J', previous) != sprintf('%J', link)) {
+						machine.link_changed(role, now);
+						event('info', 'network_address_changed', role);
+					}
+					else if (path.phase == 'online' || path.phase == 'connecting') path.due = min(path.due, now);
+				}
+			}
 			machine.tick(now);
 			for (let role, path in machine.paths) {
 				if (!machine.state.blocked && path.phase == 'online' && path.session?.keepalive_seconds && now >= keepalive_due[role]) {
@@ -173,7 +241,8 @@ try {
 		}
 		catch (error) {
 			machine.state.blocked = true; machine.state.reason = 'network_operation_failed';
-			event('error', 'network_operation_failed');
+			failure = failure_code(error);
+			event('error', failure);
 			stop = true;
 		}
 		publish();
@@ -181,14 +250,19 @@ try {
 	}
 }
 catch (error) {
-	atomic_json(runtime_dir + '/status.json', { reason: 'startup_failed', blocked: true, paths: {}, updated: time() });
-	event('error', 'startup_failed');
+	failure = failure_code(error);
+	event('error', failure);
+	atomic_json(runtime_dir + '/status.json', { reason: 'startup_failed', failure, events, blocked: true, paths: {}, updated: time() });
 }
 
+stop = true;
+if (machine) logout_private_sessions(settings, machine.paths, io);
 for (let role in ['wired', 'wifi']) clear_session(role);
 try { network.restore(); }
 catch (error) {
-	atomic_json(runtime_dir + '/status.json', { reason: 'restoration_conflict', blocked: true, paths: {}, updated: time() });
+	failure = failure_code(error);
+	event('error', failure);
+	atomic_json(runtime_dir + '/status.json', { reason: 'restoration_failed', failure, events, blocked: true, paths: {}, updated: time() });
 	lock.close(); exit(1);
 }
 if (machine) {

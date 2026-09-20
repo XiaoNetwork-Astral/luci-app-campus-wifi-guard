@@ -1,6 +1,9 @@
 import * as fs from 'fs';
+import { reset_status } from './reset.uc';
+import { cursor } from 'uci';
 import { runtime_dir, atomic_json, read_json } from './common.uc';
 import { credential_status } from './credentials.uc';
+import { create_identities } from './identity.uc';
 
 export function running() {
 	let lock = fs.open(runtime_dir + '/daemon.lock', 'r');
@@ -11,8 +14,16 @@ export function running() {
 };
 
 export function status() {
-	return { ...read_json(runtime_dir + '/status.json', { reason: 'stopped', paths: {} }),
-		running: running(), credentials: credential_status() };
+	let identities = create_identities();
+	let uci = cursor('/etc/config', runtime_dir + '/uci', '');
+	let enabled = uci.get('nuitguard', 'main', 'enabled') == '1';
+	let active = running();
+	let state = read_json(runtime_dir + '/status.json', { reason: 'stopped', paths: {} });
+	if (!active && enabled && index(['stopped', 'not_started'], state.reason) >= 0)
+		state.reason = 'service_not_started';
+	return { ...state, enabled, reset: reset_status(),
+		running: active, credentials: credential_status(),
+		private_macs: { wired: identities.get('wired')?.mac, wifi: identities.get('wifi')?.mac } };
 };
 
 export function queue_action(action, role) {

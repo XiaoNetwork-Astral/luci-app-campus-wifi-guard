@@ -1,0 +1,3 @@
+#!/bin/sh
+[ -n "$IPKG_INSTROOT" ] || /etc/init.d/ucitrack reload
+exit 0

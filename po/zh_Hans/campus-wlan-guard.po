@@ -1,0 +1,893 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-app-campus-wlan-guard\n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "A configuration or network operation could not be completed"
+msgstr "配置或网络操作未能完成"
+
+msgid "A network operation failed; the service stopped and attempted to restore its changes"
+msgstr "网络操作失败；服务已停止，并已尝试恢复其修改"
+
+msgid "A radio shared with a local access point may change channel and briefly disconnect its clients when the uplink connects"
+msgstr "上联关联时，与本地 AP 共用的无线电可能切换信道，导致该 AP 的客户端短暂断开"
+
+msgid "Accepted"
+msgstr "已接受"
+
+msgid "Account type"
+msgstr "账号类型"
+
+msgid "Also wait up to this long after login for the campus network to assign an online address"
+msgstr "认证成功后也等待此时长，以便校园网分配正式联网地址"
+
+msgid "Alternate"
+msgstr "备用"
+
+msgid "Alternate uplink attempt limit reached"
+msgstr "已达到备用线路尝试次数上限"
+
+msgid "Another action is already queued"
+msgstr "已有操作正在排队"
+
+msgid "Attempts to find the campus login page"
+msgstr "查找校园网登录页的尝试次数"
+
+msgid "Authenticate now"
+msgstr "立即认证"
+
+msgid "Authenticating"
+msgstr "正在认证"
+
+msgid "Authentication"
+msgstr "认证"
+
+msgid "Authentication attempt limit reached"
+msgstr "已达到认证尝试次数上限"
+
+msgid "Authentication portal"
+msgstr "认证门户"
+
+msgid "Authentication requested; check the status page for the result"
+msgstr "已请求立即认证；请在状态页查看结果"
+
+msgid "Authentication retries"
+msgstr "认证重试"
+
+msgid "Automatic campus authentication and connection recovery with private MAC addresses"
+msgstr "具备隐私 MAC 地址的校园网自动认证与断线恢复"
+
+msgid "Automatically switch connections"
+msgstr "自动切换线路"
+
+msgid "Backup connection attempts"
+msgstr "备用线路连接尝试上限"
+
+msgid "Backup connection mode"
+msgstr "备用线路连接方式"
+
+msgid "Campus WLAN Guard"
+msgstr "校园网守卫"
+
+msgid "Campus Wi-Fi SSID"
+msgstr "校园 Wi-Fi 的 SSID"
+
+msgid "Campus Wi-Fi network"
+msgstr "校园 Wi-Fi 网络"
+
+msgid "Campus account"
+msgstr "校园网账号"
+
+msgid "Campus credentials are missing"
+msgstr "尚未配置校园网凭据"
+
+msgid "Campus login page"
+msgstr "校园网登录页"
+
+msgid "Campus login server address"
+msgstr "校园网登录服务器地址"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Change MAC during connection recovery"
+msgstr "恢复连接时更换"
+
+msgid "Change MAC on a schedule"
+msgstr "按计划定时更换"
+
+msgid "Check interval while confirming an outage (seconds)"
+msgstr "确认断网期间的检测间隔（秒）"
+
+msgid "Check interval while online (seconds)"
+msgstr "在线时的检测间隔（秒）"
+
+msgid "Check now"
+msgstr "立即检测"
+
+msgid "Checking internet access"
+msgstr "正在检测公网"
+
+msgid "Checking internet access after login"
+msgstr "正在验证登录后的公网连通性"
+
+msgid "Choose Student or Staff, or enter the service identifier used by your campus"
+msgstr "选择学生或教职工；其他类型可填写学校使用的服务标识"
+
+msgid "Choose a preset or enter a custom URL; presets use HTTP 204 with an empty response"
+msgstr "选择预设或输入自定义地址；预设使用 HTTP 204 空响应"
+
+msgid "Choose different interfaces for Ethernet and Wi-Fi"
+msgstr "有线与无线网络请选择不同接口"
+
+msgid "Close"
+msgstr "关闭"
+
+msgid "Configure an internet check URL before enabling recovery"
+msgstr "启用自动恢复前，请配置公网检测地址"
+
+msgid "Configure uplink"
+msgstr "配置此上联"
+
+msgid "Confirm initialization"
+msgstr "确认初始化"
+
+msgid "Confirming an outage"
+msgstr "正在确认断网"
+
+msgid "Connect after a failure"
+msgstr "故障时再连接"
+
+msgid "Connecting"
+msgstr "正在连接"
+
+msgid "Connection switches per outage"
+msgstr "每次故障的线路切换上限"
+
+msgid "Connectivity checks"
+msgstr "连通性检测"
+
+msgid "Consecutive failed checks to confirm an outage"
+msgstr "确认断网所需的连续检测失败次数"
+
+msgid "Consecutive successful checks before returning"
+msgstr "切回前连续检测成功次数"
+
+msgid "Continuous online time before returning (seconds)"
+msgstr "切回前所需的持续在线时间（秒）"
+
+msgid "Continuous online time to reset retry counts (seconds)"
+msgstr "重置重试次数所需的持续在线时间（秒）"
+
+msgid "Cooldown and limits"
+msgstr "冷却与限制"
+
+msgid "Cooling down"
+msgstr "冷却中"
+
+msgid "Could not apply the managed network settings"
+msgstr "无法应用插件管理的网络设置"
+
+msgid "Could not bring up the uplink interface"
+msgstr "无法启动上联网络接口"
+
+msgid "Could not confirm logout of the private MAC session; network restoration continued"
+msgstr "未能确认隐私 MAC 会话已注销；继续恢复网络"
+
+msgid "Could not finish restoring the network settings"
+msgstr "网络设置未能全部恢复"
+
+msgid "Could not generate a private MAC address"
+msgstr "无法生成隐私 MAC 地址"
+
+msgid "Could not generate the MAC pool"
+msgstr "无法生成 MAC 地址池"
+
+msgid "Could not match the portal IP and MAC to the current uplink"
+msgstr "未能确认门户中的 IP 和 MAC 与当前上联相符"
+
+msgid "Could not restore the original interface state"
+msgstr "无法恢复接口原有的启用状态"
+
+msgid "Could not save the password"
+msgstr "无法保存密码"
+
+msgid "Could not start initialization; another operation may be running"
+msgstr "无法开始初始化；可能有其他操作正在执行"
+
+msgid "Could not stop the service or restore its network changes; plugin data was not cleared"
+msgstr "未能停止服务或恢复网络修改；插件数据尚未清除"
+
+msgid "Could not submit the action"
+msgstr "无法提交操作"
+
+msgid "Counted separately for Ethernet and Wi-Fi; reset after sustained internet access or a manual resume, not after cooldown"
+msgstr "有线和无线分别计数；持续联网或手动恢复后重置；冷却结束不重置"
+
+msgid "Create an open network client"
+msgstr "创建开放网络客户端"
+
+msgid "Created when connected"
+msgstr "连接时创建"
+
+msgid "Custom network"
+msgstr "自定义网络"
+
+msgid "Daily"
+msgstr "每天"
+
+msgid "Day of the week"
+msgstr "星期"
+
+msgid "Debug"
+msgstr "调试"
+
+msgid "Enable Campus WLAN Guard"
+msgstr "启用校园网守卫"
+
+msgid "Enable scheduled MAC changes"
+msgstr "启用定时更换 MAC"
+
+msgid "Enable the service and apply the settings before authenticating"
+msgstr "请先启用服务并保存应用，再立即认证"
+
+msgid "Enable the service in Settings and apply the configuration"
+msgstr "请在设置中启用服务并应用配置"
+
+msgid "Enter a locally administered unicast MAC address"
+msgstr "请输入本地管理的单播 MAC 地址"
+
+msgid "Enter a time in HH:MM format"
+msgstr "请输入 HH:MM 格式的时间"
+
+msgid "Enter a whole number from %s to %s"
+msgstr "请输入 %s 到 %s 之间的整数"
+
+msgid "Enter an HTTP or HTTPS URL without credentials or a fragment"
+msgstr "请输入不含用户名、密码或片段标识的 HTTP 或 HTTPS 地址"
+
+msgid "Enter an HTTP or HTTPS origin without a path"
+msgstr "请输入不含路径的 HTTP 或 HTTPS 来源地址"
+
+msgid "Enter an SSID of 1 to 32 bytes"
+msgstr "请输入长度为 1 至 32 字节的 SSID"
+
+msgid "Enter an address or generate one; it stays unchanged until you edit and apply it"
+msgstr "填写地址或点击生成；保存并应用后固定使用，直到再次修改"
+
+msgid "Enter or generate a fixed private MAC for each private uplink"
+msgstr "请为启用隐私 MAC 的每条线路填写或生成固定地址"
+
+msgid "Enter the complete text normally returned by the check URL; only leading and trailing whitespace is ignored"
+msgstr "填写检测地址正常返回的完整正文；仅忽略首尾空白"
+
+msgid "Enter the expected response body before enabling a non-204 internet check"
+msgstr "使用非 204 检测时，请先填写预期响应正文"
+
+msgid "Enter the username, service and password before enabling recovery"
+msgstr "启用自动恢复前，请填写用户名、服务及密码"
+
+msgid "Errors"
+msgstr "错误"
+
+msgid "Ethernet"
+msgstr "有线网络"
+
+msgid "Ethernet and Wi-Fi cycle through this list in order; skip the address used by the other connection"
+msgstr "有线和无线按列表顺序循环使用；跳过另一条线路正在使用的地址"
+
+msgid "Ethernet and Wi-Fi must use different private MAC addresses"
+msgstr "有线与无线的隐私 MAC 地址不能相同"
+
+msgid "Event"
+msgstr "事件"
+
+msgid "Every N hours"
+msgstr "每隔若干小时"
+
+msgid "Failed login-page checks before switching"
+msgstr "切换线路前的登录页检测失败次数"
+
+msgid "Failover and return"
+msgstr "切换与回切"
+
+msgid "Finding the portal"
+msgstr "正在发现认证门户"
+
+msgid "First recovery retry delay (seconds)"
+msgstr "首次恢复重试的等待时间（秒）"
+
+msgid "Fixed private MAC address"
+msgstr "固定隐私 MAC 地址"
+
+msgid "Fixed private MAC for Ethernet"
+msgstr "有线固定隐私 MAC 地址"
+
+msgid "Fixed private MAC for Wi-Fi"
+msgstr "无线固定隐私 MAC 地址"
+
+msgid "Friday"
+msgstr "星期五"
+
+msgid "Fully initialize"
+msgstr "完全初始化"
+
+msgid "General settings"
+msgstr "常规设置"
+
+msgid "Generate"
+msgstr "生成"
+
+msgid "Generate MAC pool"
+msgstr "生成 MAC 地址池"
+
+msgid "Generate a new pool after the retries below fail; existing campus device records are not deleted"
+msgstr "下方设置的池内重试用完后生成一组新地址；不会删除校园网已有设备记录"
+
+msgid "Generate pool"
+msgstr "生成地址池"
+
+msgid "HTTP status returned when online"
+msgstr "联网时应返回的 HTTP 状态码"
+
+msgid "Hide"
+msgstr "隐藏"
+
+msgid "Hide entered password"
+msgstr "隐藏本次输入的密码"
+
+msgid "Huawei"
+msgstr "华为"
+
+msgid "Idle"
+msgstr "空闲"
+
+msgid "In use"
+msgstr "正在使用"
+
+msgid "Includes repeated checks when both internet and the login page are unreachable; wait for the configured cooldown after the limit is reached"
+msgstr "包括公网与登录页均不可达时的复查；达到上限后按设置的冷却时间等待"
+
+msgid "Includes switching back to the preferred connection; zero disables switching; counts reset after stable recovery"
+msgstr "包含切回首选线路；设为 0 禁用切换；持续联网后重置次数"
+
+msgid "Information"
+msgstr "信息"
+
+msgid "Initialization could not finish; check the router before trying again"
+msgstr "初始化未能完成；请检查路由器状态后再试"
+
+msgid "Initialization is taking longer than expected; check the status before trying again"
+msgstr "初始化耗时较长；请先检查状态再重试"
+
+msgid "Interface"
+msgstr "接口"
+
+msgid "Internet access"
+msgstr "公网连接"
+
+msgid "Internet access check"
+msgstr "公网连通性检测"
+
+msgid "Internet access verified"
+msgstr "公网连通性已确认"
+
+msgid "Internet and the login page are both reachable; keeping the connection online"
+msgstr "公网与登录页均可达；记录此异常并保持在线"
+
+msgid "Internet and the login page are both unreachable; waiting to check again"
+msgstr "公网与登录页均不可达，等待后重新检测"
+
+msgid "Internet check URL"
+msgstr "公网检测地址"
+
+msgid "Internet checks after a successful login"
+msgstr "认证成功后的公网复查次数"
+
+msgid "Internet request failed"
+msgstr "公网请求失败"
+
+msgid "Keep the backup connected"
+msgstr "始终保持连接"
+
+msgid "Keepalive was not confirmed; checking internet access"
+msgstr "保活未得到确认，正在检测公网"
+
+msgid "Last action"
+msgstr "上次操作"
+
+msgid "Leave blank to keep the saved password; enter and save a new password to replace it"
+msgstr "留空保留原密码；输入新密码并保存即可更新"
+
+msgid "Level"
+msgstr "级别"
+
+msgid "Log level"
+msgstr "日志级别"
+
+msgid "Log out and pause"
+msgstr "注销并暂停"
+
+msgid "Log out of the campus network before a scheduled MAC change"
+msgstr "定时更换 MAC 前退出校园网登录"
+
+msgid "Login attempts with the same MAC"
+msgstr "同一 MAC 的认证提交上限"
+
+msgid "Login succeeded, but internet access failed"
+msgstr "认证成功，但公网不通"
+
+msgid "Login succeeded; waiting for internet access or a new network address"
+msgstr "认证成功，等待网络放行或地址更新"
+
+msgid "Longest recovery retry delay (seconds)"
+msgstr "恢复重试的最长等待时间（秒）"
+
+msgid "MAC addresses"
+msgstr "MAC 地址"
+
+msgid "MAC pool"
+msgstr "MAC 地址池"
+
+msgid "MAC pool regenerated after repeated connection failures"
+msgstr "连续连接失败后已重建 MAC 地址池"
+
+msgid "MAC recovery limits reached"
+msgstr "已达到 MAC 恢复次数上限"
+
+msgid "MAC retries before rebuilding a pool"
+msgstr "重建前的池内换址重试次数"
+
+msgid "Manually"
+msgstr "手动返回"
+
+msgid "Maximum delay must be at least the initial delay"
+msgstr "最大重试间隔不能小于初始间隔"
+
+msgid "Minimum time between MAC changes (seconds)"
+msgstr "两次更换 MAC 的最短间隔（秒）"
+
+msgid "Monday"
+msgstr "星期一"
+
+msgid "More actions"
+msgstr "更多操作"
+
+msgid "More than one portal context was found"
+msgstr "发现了多个不同的门户上下文"
+
+msgid "Network interface"
+msgstr "网络接口"
+
+msgid "Next rotation"
+msgstr "下次轮换"
+
+msgid "No events yet"
+msgstr "暂无事件"
+
+msgid "No open networks found; you can enter a custom network"
+msgstr "没有发现开放网络；可以选择自定义网络"
+
+msgid "No password saved"
+msgstr "尚未保存密码"
+
+msgid "No portal redirect found"
+msgstr "没有发现门户跳转"
+
+msgid "No usable authentication response received"
+msgstr "未收到可用的认证响应"
+
+msgid "Not checked"
+msgstr "尚未检测"
+
+msgid "Not configured"
+msgstr "未配置"
+
+msgid "Not enabled"
+msgstr "未启用"
+
+msgid "Not generated"
+msgstr "尚未生成"
+
+msgid "Not monitored"
+msgstr "尚未检测"
+
+msgid "Not started"
+msgstr "尚未启动"
+
+msgid "Number of MAC addresses to generate"
+msgstr "生成的 MAC 地址数量"
+
+msgid "One successful check confirms internet access; repeated failures continue the recovery process"
+msgstr "任意一次检测成功即可确认联网；连续失败则继续恢复连接"
+
+msgid "Online"
+msgstr "在线"
+
+msgid "Optional access point BSSID"
+msgstr "可选的 AP BSSID"
+
+msgid "Outage confirmation"
+msgstr "故障确认"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "Password is saved"
+msgstr "已保存密码"
+
+msgid "Paused"
+msgstr "已暂停"
+
+msgid "Paused after manual logout"
+msgstr "手动注销后已暂停"
+
+msgid "Pool rebuilds per outage"
+msgstr "每次故障的地址池重建上限"
+
+msgid "Pool regenerations"
+msgstr "地址池重建次数"
+
+msgid "Portal is available"
+msgstr "认证门户可用"
+
+msgid "Portal request failed"
+msgstr "认证门户请求失败"
+
+msgid "Preferred"
+msgstr "首选"
+
+msgid "Preferred connection check interval (seconds)"
+msgstr "首选线路的恢复检测间隔（秒）"
+
+msgid "Preferred uplink"
+msgstr "优先使用的上联"
+
+msgid "Private MAC"
+msgstr "隐私 MAC"
+
+msgid "Queued"
+msgstr "已排队"
+
+msgid "Reachable"
+msgstr "可达"
+
+msgid "Reauthentication, MAC changes, switching and logout may interrupt this connection; logout pauses automatic recovery"
+msgstr "重新认证、更改 MAC、切换或注销可能中断该连接；注销后自动恢复将暂停"
+
+msgid "Rebuild the pool after MAC retries fail"
+msgstr "池内重试失败后重建地址池"
+
+msgid "Recent events"
+msgstr "最近事件"
+
+msgid "Recovery"
+msgstr "故障恢复"
+
+msgid "Recovery attempts before cooldown"
+msgstr "进入冷却前的恢复尝试次数"
+
+msgid "Recovery is paused"
+msgstr "自动恢复已暂停"
+
+msgid "Recovery rounds / MAC changes"
+msgstr "恢复轮数 / MAC 更换次数"
+
+msgid "Remove all plugin settings and saved data, then leave the service disabled"
+msgstr "清除插件的全部设置和已保存数据，并停用服务"
+
+msgid "Replaces the list above; save and apply to use it; existing campus device records are not removed"
+msgstr "替换上方列表，保存并应用后生效；校园网已有的设备记录不会被删除"
+
+msgid "Response text returned when online"
+msgstr "联网时应返回的正文"
+
+msgid "Resume recovery"
+msgstr "恢复自动处理"
+
+msgid "Resume recovery before this action"
+msgstr "请先恢复自动处理，再执行此操作"
+
+msgid "Resume recovery on the status page before authenticating"
+msgstr "请先在状态页恢复自动处理，再立即认证"
+
+msgid "Resuming"
+msgstr "正在恢复"
+
+msgid "Retry authentication"
+msgstr "重新尝试认证"
+
+msgid "Retry interval for login-page detection (seconds)"
+msgstr "登录页检测失败后的重试间隔（秒）"
+
+msgid "Rotate MAC and reconnect"
+msgstr "轮换 MAC 并重新连接"
+
+msgid "Saturday"
+msgstr "星期六"
+
+msgid "Save and apply the account settings before authenticating"
+msgstr "请先保存并应用账号设置，再立即认证"
+
+msgid "Scanning networks"
+msgstr "正在扫描网络"
+
+msgid "Schedule type"
+msgstr "计划类型"
+
+msgid "Scheduled MAC changes"
+msgstr "定时更换 MAC"
+
+msgid "Select a network"
+msgstr "选择网络"
+
+msgid "Select a network or enter a custom SSID"
+msgstr "请选择网络或填写自定义 SSID"
+
+msgid "Select a radio"
+msgstr "选择无线电"
+
+msgid "Select a radio first"
+msgstr "请先选择无线电"
+
+msgid "Select an existing network interface"
+msgstr "请选择已有的网络接口"
+
+msgid "Select an existing wireless client; Create one in Network → Wireless if needed"
+msgstr "选择已有无线客户端；如有需要，请在“网络 → 无线”中创建"
+
+msgid "Send login details only to this server; include the scheme and optional port, without a path"
+msgstr "仅向此服务器发送认证信息；填写协议、主机及可选端口，不含路径"
+
+msgid "Service is running"
+msgstr "服务正在运行"
+
+msgid "Service is stopped"
+msgstr "服务已停止"
+
+msgid "Service started"
+msgstr "服务已启动"
+
+msgid "Service status"
+msgstr "服务状态"
+
+msgid "Set the MAC retry count above zero before enabling automatic pool regeneration"
+msgstr "启用自动重建前，请将 MAC 重试次数设为大于 0"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Shared MAC pool"
+msgstr "共享 MAC 地址池"
+
+msgid "Show"
+msgstr "显示"
+
+msgid "Show entered password"
+msgstr "显示本次输入的密码"
+
+msgid "Some saved network settings could not be restored; review the restoration journal"
+msgstr "部分网络设置未能恢复，请检查配置恢复记录"
+
+msgid "Staff"
+msgstr "教职工"
+
+msgid "Starting"
+msgstr "正在启动"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Stopped"
+msgstr "已停止"
+
+msgid "Stopping the service and restoring network settings before clearing data"
+msgstr "正在停止服务并恢复网络设置，随后清除数据"
+
+msgid "Student"
+msgstr "学生"
+
+msgid "Sunday"
+msgstr "星期日"
+
+msgid "Switches this outage"
+msgstr "本次故障切换次数"
+
+msgid "The MAC policy, interval or rotation budget prevents this action"
+msgstr "MAC 策略、最短间隔或轮换次数限制阻止了此操作"
+
+msgid "The configuration is enabled, but the service is not running; save and apply to start it"
+msgstr "配置已启用，但服务未运行；请保存并应用以启动服务"
+
+msgid "The connection changed; the earlier private MAC session was not logged out"
+msgstr "线路已变化，未注销此前的隐私 MAC 会话"
+
+msgid "The discovered portal does not match the configured origin"
+msgstr "发现的认证门户与预期来源地址不符"
+
+msgid "The internet check was redirected to the configured login portal"
+msgstr "公网检测被重定向至已配置的登录门户"
+
+msgid "The portal IP and MAC match the current uplink"
+msgstr "门户中的 IP 和 MAC 与当前上联相符"
+
+msgid "The portal RSA mode does not support these password characters"
+msgstr "认证门户的 RSA 模式不支持这些密码字符"
+
+msgid "The portal confirmed logout of the private MAC session; restoring the network"
+msgstr "校园网接口已确认注销隐私 MAC 会话，随后恢复网络"
+
+msgid "The portal rejected authentication; check the account before resuming"
+msgstr "认证门户拒绝了登录，请检查账号后再恢复自动处理"
+
+msgid "The portal requires an additional authentication step"
+msgstr "认证门户要求额外的认证步骤"
+
+msgid "The saved configuration is invalid; review the settings before starting"
+msgstr "已保存的配置无效；请检查设置后再启动"
+
+msgid "The selected service is not offered by the portal"
+msgstr "认证门户未提供所选服务"
+
+msgid "The service could not start; check the configuration and preflight result"
+msgstr "服务未能启动，请检查配置和启动前检查结果"
+
+msgid "The service is enabled but is not running; check the status page for the startup result"
+msgstr "服务已启用但未运行；请到状态页查看启动结果"
+
+msgid "The shared pool needs at least %s addresses for these uplinks and the selected MAC policy"
+msgstr "按当前上联和 MAC 策略，共享池至少需要 %s 个地址"
+
+msgid "The uplink address changed; checking the new network path"
+msgstr "上联地址已更新，正在检查新的网络路径"
+
+msgid "The uplink has no usable IPv4 connection"
+msgstr "该上联没有可用的 IPv4 连接"
+
+msgid "This removes the campus account and password, private MAC addresses, schedules, runtime records and pending plugin changes; router network settings are preserved"
+msgstr "这会清除校园网账号密码、隐私 MAC、计划、运行记录及插件待应用修改；保留路由器网络设置"
+
+msgid "This uplink is not configured"
+msgstr "尚未配置该上联"
+
+msgid "Thursday"
+msgstr "星期四"
+
+msgid "Time"
+msgstr "时间"
+
+msgid "Time (router time zone)"
+msgstr "时间（路由器时区）"
+
+msgid "Time between scheduled changes (hours)"
+msgstr "定时更换的间隔（小时）"
+
+msgid "Timeout for each connectivity check (seconds)"
+msgstr "每次连通性检测的超时时间（秒）"
+
+msgid "Try another address from the same pool before rebuilding it; each new pool gets the same number of retries"
+msgstr "先换用当前池内的其他地址重试；重建后的新池也有相同的重试次数"
+
+msgid "Try to end the current connection login, then change MAC and sign in again"
+msgstr "先尝试退出当前上联的登录，再更换 MAC 并重新认证"
+
+msgid "Tuesday"
+msgstr "星期二"
+
+msgid "URL used to find the login page"
+msgstr "用于查找登录页的检测地址"
+
+msgid "Unexpected internet response; a redirect or replacement page may be blocking access"
+msgstr "公网响应异常；可能被重定向或替换页面拦截"
+
+msgid "Unknown authentication response"
+msgstr "未知的认证响应"
+
+msgid "Unreachable"
+msgstr "不可达"
+
+msgid "Unsupported portal authentication settings"
+msgstr "不支持此门户认证配置"
+
+msgid "Unsupported portal redirect"
+msgstr "不支持此门户跳转"
+
+msgid "Updated every 5 seconds"
+msgstr "每 5 秒更新"
+
+msgid "Uplink"
+msgstr "上联"
+
+msgid "Uplink firewall zone"
+msgstr "上联防火墙区域"
+
+msgid "Uplink networks"
+msgstr "上联网络"
+
+msgid "Use a private MAC address"
+msgstr "使用隐私 MAC"
+
+msgid "Use an existing wireless client"
+msgstr "使用已有无线客户端"
+
+msgid "Use at most 64 distinct MAC addresses"
+msgstr "最多使用 64 个互不重复的 MAC 地址"
+
+msgid "Use the status code normally returned by the check URL; 204 must have no body, other codes must also match the text below"
+msgstr "填写检测地址正常返回的状态码；204 不应有正文，其他状态码还需匹配下方正文"
+
+msgid "Use this uplink"
+msgstr "使用此上联"
+
+msgid "Username"
+msgstr "用户名"
+
+msgid "Uses the applied account settings on the active connection, or the preferred connection before one is active"
+msgstr "使用已应用的账号设置认证当前线路；尚未选定线路时使用首选线路"
+
+msgid "Verify this uplink before switching"
+msgstr "请先验证该上联，再进行切换"
+
+msgid "Verifying internet access"
+msgstr "正在验证公网"
+
+msgid "Wait after repeated recovery failures (seconds)"
+msgstr "连续恢复失败后的等待时间（秒）"
+
+msgid "Wait for a network address (seconds)"
+msgstr "等待获取网络地址的时间（秒）"
+
+msgid "Waiting for network availability"
+msgstr "等待网络恢复"
+
+msgid "Waiting for the minimum MAC rotation interval"
+msgstr "等待最短 MAC 轮换间隔"
+
+msgid "Waiting to retry MAC rotation"
+msgstr "等待重试 MAC 轮换"
+
+msgid "Warnings"
+msgstr "警告"
+
+msgid "Wednesday"
+msgstr "星期三"
+
+msgid "Weekly"
+msgstr "每周"
+
+msgid "When the current connection fails"
+msgstr "当前线路故障时"
+
+msgid "When the preferred connection is stable"
+msgstr "首选线路恢复稳定后"
+
+msgid "When to change the private MAC"
+msgstr "何时更换隐私 MAC"
+
+msgid "When to return to the preferred connection"
+msgstr "何时切回首选线路"
+
+msgid "Wi-Fi"
+msgstr "无线网络"
+
+msgid "Wireless client configuration"
+msgstr "无线客户端配置"
+
+msgid "Wireless configuration mode"
+msgstr "无线配置方式"
+
+msgid "Wireless radio"
+msgstr "无线电"
+
+msgid "Wireless scan failed; you can enter a custom network"
+msgstr "无线扫描失败；可以选择自定义网络"
+
+msgid "Xiaomi"
+msgstr "小米"
+
+msgid "vivo"
+msgstr "vivo"

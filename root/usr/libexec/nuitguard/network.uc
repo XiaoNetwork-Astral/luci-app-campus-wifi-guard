@@ -2,7 +2,7 @@ import { cursor } from 'uci';
 import { connect } from 'ubus';
 import * as fs from 'fs';
 import { create_owned_config } from './owned-config.uc';
-import { create_identities } from './identity.uc';
+import { create_identities, validate_pool, generate_pool, shared_pool, fixed_addresses } from './identity.uc';
 import { create_routes } from './routes.uc';
 import { atomic_json, read_json, private_dir, runtime_dir, ensure_directory, monotonic_seconds } from './common.uc';
 
@@ -16,7 +16,14 @@ export function create_network(settings, dependencies) {
 	let identities = deps.identities || create_identities();
 	let routes = deps.routes || create_routes();
 	let profiles = { wired: { ...settings.wired }, wifi: { ...settings.wifi } };
+	settings.main.mac_pool = shared_pool(settings);
+	let fixed = fixed_addresses(settings, { wired: identities.get('wired')?.mac, wifi: identities.get('wifi')?.mac });
 	let links = {}, connected = {};
+	function command(object, method, failure) {
+		bus.call(object, method, {});
+		// netifd commands can succeed without a response body
+		assert(!bus.error(), failure);
+	}
 	let route_cache = {};
 	let wireless_created = false;
 	let interface_journal = deps.interface_journal || private_dir + '/interfaces.json';
@@ -43,6 +50,15 @@ export function create_network(settings, dependencies) {
 			for (let config in ['network', 'wireless', 'firewall'])
 				assert(!length(keys(pending.changes(config) || {})), 'Apply or revert pending network configuration before starting');
 		}
+		let private_count = length(filter(['wired', 'wifi'], role => configured(role) && profiles[role].privacy_mac == '1'));
+		let minimum = private_count + (settings.main.rotation_mode == 'fixed' ? 0 : 1);
+		if (settings.main.rotation_mode == 'fixed') {
+			for (let role in ['wired', 'wifi'])
+				if (configured(role) && profiles[role].privacy_mac == '1')
+					assert(fixed[role], 'fixed_mac_missing');
+			if (private_count == 2) assert(fixed.wired != fixed.wifi, 'fixed_mac_conflict');
+		}
+		else if (private_count) assert(length(settings.main.mac_pool) >= minimum, 'Generate enough shared MAC addresses for the private uplinks and rotation');
 		assert(configured(settings.main.preferred_uplink), 'Preferred uplink is not configured');
 		for (let service in ['mwan3', 'pbr', 'vpn-policy-routing']) {
 			let state = bus.call('service', 'list', { name: service });
@@ -85,7 +101,12 @@ export function create_network(settings, dependencies) {
 	}
 
 	function reload() {
-		assert(bus.call('network', 'reload', {}) != null, 'Cannot reload managed network configuration');
+		command('network', 'reload', 'network_reload_failed');
+	}
+
+	function reserved_addresses(role) {
+		let other = role == 'wired' ? 'wifi' : 'wired';
+		return configured(other) && profiles[other].privacy_mac == '1' && identities.get(other)?.mac ? [identities.get(other).mac] : [];
 	}
 
 	function prepare(role, rotate) {
@@ -95,7 +116,11 @@ export function create_network(settings, dependencies) {
 			original_states[p.interface] = !!bus.call('network.interface.' + p.interface, 'status', {})?.up;
 			atomic_json(interface_journal, original_states);
 		}
-		let mac = p.privacy_mac == '1' ? identities.choose(role, rotate, settings.main.recent_mac_history) : null;
+		let fixed_mode = settings.main.rotation_mode == 'fixed';
+		let other = role == 'wired' ? 'wifi' : 'wired';
+		let mac = p.privacy_mac == '1' ? identities.choose(role, rotate,
+			fixed_mode ? [fixed[role]] : settings.main.mac_pool,
+			fixed_mode ? [fixed[other]] : reserved_addresses(role)) : null;
 		p.fresh_lease = role == 'wifi' || (mac && read_mac(p.device, role) != mac);
 		p.started_at = monotonic_seconds();
 		if (p.fresh_lease) bus.call('network.interface.' + p.interface, 'down', {});
@@ -126,16 +151,50 @@ export function create_network(settings, dependencies) {
 		// Apply the disabled STA and its private MAC together before enabling it.
 		reload();
 		if (role == 'wifi') { owned.set('wireless', p.wifi_section, 'disabled', '0'); reload(); }
-		assert(bus.call('network.interface.' + p.interface, 'up', {}) != null, 'Cannot start uplink');
+		command('network.interface.' + p.interface, 'up', 'uplink_start_failed');
 		connected[role] = true; delete route_cache[role];
 	}
 
+	function rotation_candidates(role) {
+		if (settings.main.rotation_mode == 'fixed' || !configured(role) || profiles[role].privacy_mac != '1') return 0;
+		let reserved = reserved_addresses(role), current = identities.get(role)?.mac;
+		return length(filter(settings.main.mac_pool, mac => mac != current && index(reserved, mac) < 0));
+	}
+
+	function can_rotate(role) { return rotation_candidates(role) > 0; }
+
+	function regenerate_pool(role) {
+		if (!can_rotate(role)) return false;
+		let pool_uci = deps.pool_uci;
+		if (!pool_uci) {
+			ensure_directory(runtime_dir + '/pool-uci');
+			pool_uci = cursor('/etc/config', runtime_dir + '/pool-uci', '');
+		}
+		pool_uci.unload('nuitguard');
+		let current = shared_pool({
+			main: { mac_pool: pool_uci.get('nuitguard', 'main', 'mac_pool') },
+			wired: { mac_pool: pool_uci.get('nuitguard', 'wired', 'mac_pool') },
+			wifi: { mac_pool: pool_uci.get('nuitguard', 'wifi', 'mac_pool') }
+		});
+		// Do not replace a pool edited by the user since the daemon started.
+		if (sprintf('%J', current) != sprintf('%J', settings.main.mac_pool)) return false;
+		let excluded = [...current];
+		for (let name in ['wired', 'wifi']) {
+			if (identities.get(name)?.mac) push(excluded, identities.get(name).mac);
+		}
+		let pool = (deps.generate_pool || generate_pool)(length(current), excluded);
+		assert(pool_uci.set('nuitguard', 'main', 'mac_pool', pool) && pool_uci.commit('nuitguard'), 'Cannot save replacement MAC pool');
+		settings.main.mac_pool = pool;
+		return true;
+	}
+
+
 	return {
-		profiles, identities, preflight, configured,
+		can_rotate, rotation_candidates, regenerate_pool, profiles, identities, preflight, configured,
+		pool: function() { return settings.main.mac_pool; },
 		connect: function(role) { if (!connected[role]) prepare(role, false); else bus.call('network.interface.' + profiles[role].interface, 'up', {}); },
 		rotate: function(role) {
-			if (profiles[role].privacy_mac != '1') return false;
-			bus.call('network.interface.' + profiles[role].interface, 'down', {});
+			if (!can_rotate(role)) return false;
 			prepare(role, true); return true;
 		},
 		disconnect: function(role) {
@@ -160,7 +219,7 @@ export function create_network(settings, dependencies) {
 			if (p.privacy_mac == '1' && read_mac(status.l3_device, role) != identities.get(role)?.mac) return null;
 			if (p.fresh_lease && (status.pending || int(status.uptime) > monotonic_seconds() - p.started_at + 2)) return null;
 			p.fresh_lease = false;
-			let link = { device: status.l3_device, address, gateway };
+			let link = { device: status.l3_device, address, gateway, mac: read_mac(status.l3_device, role) };
 			let signature = sprintf('%J', link);
 			if (route_cache[role] != signature) { routes.update(role, link); route_cache[role] = signature; }
 			links[role] = link;
@@ -174,9 +233,10 @@ export function create_network(settings, dependencies) {
 			if (index(result.changed, 'network') >= 0 || index(result.changed, 'wireless') >= 0) reload();
 			if (index(result.changed, 'firewall') >= 0)
 				assert((deps.execute || system)(['/etc/init.d/firewall', 'reload'], 15000) == 0, 'Cannot restore firewall zone');
-			assert(!length(result.conflicts), 'User changes overlap the saved network state; review the restoration journal');
+			assert(!length(result.conflicts), 'restoration_conflict');
 			for (let iface, up in original_states)
-				if (uci.get('network', iface)) assert(bus.call('network.interface.' + iface, up ? 'up' : 'down', {}) != null, 'Cannot restore interface state');
+				if (uci.get('network', iface) && !!bus.call('network.interface.' + iface, 'status', {})?.up != up)
+					command('network.interface.' + iface, up ? 'up' : 'down', 'interface_restore_failed');
 			fs.unlink(interface_journal); original_states = {};
 			return true;
 		}

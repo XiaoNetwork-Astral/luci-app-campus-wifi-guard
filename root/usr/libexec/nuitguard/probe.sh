@@ -7,7 +7,7 @@ ng_probe_error() {
 }
 
 ng_probe() (
-	local role="$1" interface mode status device address timeout expected probe_dir url name code rc internet_ok=0
+	local role="$1" interface mode status device address timeout expected expected_body portal_origin internet_state probe_dir url name code rc internet_ok=0
 	. /usr/share/libubox/jshn.sh
 	config_get interface "$role" interface
 	if [ "$role" = wifi ]; then
@@ -28,10 +28,13 @@ ng_probe() (
 	fi
 	config_get timeout main probe_timeout
 	config_get expected main internet_expected_status
+	config_get expected_body main internet_expected_body
+	config_get portal_origin main portal_origin
 	umask 077
 	probe_dir="$(mktemp -d /tmp/nuitguard-check.XXXXXX)" || exit 1
 	trap 'rm -rf -- "$probe_dir"' EXIT
 	trap 'exit 1' HUP INT TERM
+	printf '%s' "$expected_body" > "$probe_dir/internet.expected"
 	json_init
 	json_add_string uplink "$role"
 	json_add_string interface "$interface"
@@ -62,8 +65,10 @@ ng_probe() (
 			json_add_int curl_exit "$rc"
 			json_add_int http_status "$code"
 			[ "$name" != internet ] || json_add_int expected_status "$expected"
-			if [ "$name" = internet ] && [ "$rc" -eq 0 ] && [ "$code" = "$expected" ]; then
-				internet_ok=1
+			if [ "$name" = internet ]; then
+				internet_state="$(ucode /usr/libexec/nuitguard/probe-result.uc "$probe_dir" internet "$rc" "$code" "$expected" "$url" "$portal_origin")"
+				json_add_string state "$internet_state"
+				[ "$internet_state" != internet_verified ] || internet_ok=1
 			fi
 		fi
 		json_close_object

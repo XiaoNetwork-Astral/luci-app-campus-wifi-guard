@@ -1,0 +1,891 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: luci-app-campus-wlan-guard\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A configuration or network operation could not be completed"
+msgstr ""
+
+msgid "A network operation failed; the service stopped and attempted to restore its changes"
+msgstr ""
+
+msgid "A radio shared with a local access point may change channel and briefly disconnect its clients when the uplink connects"
+msgstr ""
+
+msgid "Accepted"
+msgstr ""
+
+msgid "Account type"
+msgstr ""
+
+msgid "Also wait up to this long after login for the campus network to assign an online address"
+msgstr ""
+
+msgid "Alternate"
+msgstr ""
+
+msgid "Alternate uplink attempt limit reached"
+msgstr ""
+
+msgid "Another action is already queued"
+msgstr ""
+
+msgid "Attempts to find the campus login page"
+msgstr ""
+
+msgid "Authenticate now"
+msgstr ""
+
+msgid "Authenticating"
+msgstr ""
+
+msgid "Authentication"
+msgstr ""
+
+msgid "Authentication attempt limit reached"
+msgstr ""
+
+msgid "Authentication portal"
+msgstr ""
+
+msgid "Authentication requested; check the status page for the result"
+msgstr ""
+
+msgid "Authentication retries"
+msgstr ""
+
+msgid "Automatic campus authentication and connection recovery with private MAC addresses"
+msgstr ""
+
+msgid "Automatically switch connections"
+msgstr ""
+
+msgid "Backup connection attempts"
+msgstr ""
+
+msgid "Backup connection mode"
+msgstr ""
+
+msgid "Campus WLAN Guard"
+msgstr ""
+
+msgid "Campus Wi-Fi SSID"
+msgstr ""
+
+msgid "Campus Wi-Fi network"
+msgstr ""
+
+msgid "Campus account"
+msgstr ""
+
+msgid "Campus credentials are missing"
+msgstr ""
+
+msgid "Campus login page"
+msgstr ""
+
+msgid "Campus login server address"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Change MAC during connection recovery"
+msgstr ""
+
+msgid "Change MAC on a schedule"
+msgstr ""
+
+msgid "Check interval while confirming an outage (seconds)"
+msgstr ""
+
+msgid "Check interval while online (seconds)"
+msgstr ""
+
+msgid "Check now"
+msgstr ""
+
+msgid "Checking internet access"
+msgstr ""
+
+msgid "Checking internet access after login"
+msgstr ""
+
+msgid "Choose Student or Staff, or enter the service identifier used by your campus"
+msgstr ""
+
+msgid "Choose a preset or enter a custom URL; presets use HTTP 204 with an empty response"
+msgstr ""
+
+msgid "Choose different interfaces for Ethernet and Wi-Fi"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Configure an internet check URL before enabling recovery"
+msgstr ""
+
+msgid "Configure uplink"
+msgstr ""
+
+msgid "Confirm initialization"
+msgstr ""
+
+msgid "Confirming an outage"
+msgstr ""
+
+msgid "Connect after a failure"
+msgstr ""
+
+msgid "Connecting"
+msgstr ""
+
+msgid "Connection switches per outage"
+msgstr ""
+
+msgid "Connectivity checks"
+msgstr ""
+
+msgid "Consecutive failed checks to confirm an outage"
+msgstr ""
+
+msgid "Consecutive successful checks before returning"
+msgstr ""
+
+msgid "Continuous online time before returning (seconds)"
+msgstr ""
+
+msgid "Continuous online time to reset retry counts (seconds)"
+msgstr ""
+
+msgid "Cooldown and limits"
+msgstr ""
+
+msgid "Cooling down"
+msgstr ""
+
+msgid "Could not apply the managed network settings"
+msgstr ""
+
+msgid "Could not bring up the uplink interface"
+msgstr ""
+
+msgid "Could not confirm logout of the private MAC session; network restoration continued"
+msgstr ""
+
+msgid "Could not finish restoring the network settings"
+msgstr ""
+
+msgid "Could not generate a private MAC address"
+msgstr ""
+
+msgid "Could not generate the MAC pool"
+msgstr ""
+
+msgid "Could not match the portal IP and MAC to the current uplink"
+msgstr ""
+
+msgid "Could not restore the original interface state"
+msgstr ""
+
+msgid "Could not save the password"
+msgstr ""
+
+msgid "Could not start initialization; another operation may be running"
+msgstr ""
+
+msgid "Could not stop the service or restore its network changes; plugin data was not cleared"
+msgstr ""
+
+msgid "Could not submit the action"
+msgstr ""
+
+msgid "Counted separately for Ethernet and Wi-Fi; reset after sustained internet access or a manual resume, not after cooldown"
+msgstr ""
+
+msgid "Create an open network client"
+msgstr ""
+
+msgid "Created when connected"
+msgstr ""
+
+msgid "Custom network"
+msgstr ""
+
+msgid "Daily"
+msgstr ""
+
+msgid "Day of the week"
+msgstr ""
+
+msgid "Debug"
+msgstr ""
+
+msgid "Enable Campus WLAN Guard"
+msgstr ""
+
+msgid "Enable scheduled MAC changes"
+msgstr ""
+
+msgid "Enable the service and apply the settings before authenticating"
+msgstr ""
+
+msgid "Enable the service in Settings and apply the configuration"
+msgstr ""
+
+msgid "Enter a locally administered unicast MAC address"
+msgstr ""
+
+msgid "Enter a time in HH:MM format"
+msgstr ""
+
+msgid "Enter a whole number from %s to %s"
+msgstr ""
+
+msgid "Enter an HTTP or HTTPS URL without credentials or a fragment"
+msgstr ""
+
+msgid "Enter an HTTP or HTTPS origin without a path"
+msgstr ""
+
+msgid "Enter an SSID of 1 to 32 bytes"
+msgstr ""
+
+msgid "Enter an address or generate one; it stays unchanged until you edit and apply it"
+msgstr ""
+
+msgid "Enter or generate a fixed private MAC for each private uplink"
+msgstr ""
+
+msgid "Enter the complete text normally returned by the check URL; only leading and trailing whitespace is ignored"
+msgstr ""
+
+msgid "Enter the expected response body before enabling a non-204 internet check"
+msgstr ""
+
+msgid "Enter the username, service and password before enabling recovery"
+msgstr ""
+
+msgid "Errors"
+msgstr ""
+
+msgid "Ethernet"
+msgstr ""
+
+msgid "Ethernet and Wi-Fi cycle through this list in order; skip the address used by the other connection"
+msgstr ""
+
+msgid "Ethernet and Wi-Fi must use different private MAC addresses"
+msgstr ""
+
+msgid "Event"
+msgstr ""
+
+msgid "Every N hours"
+msgstr ""
+
+msgid "Failed login-page checks before switching"
+msgstr ""
+
+msgid "Failover and return"
+msgstr ""
+
+msgid "Finding the portal"
+msgstr ""
+
+msgid "First recovery retry delay (seconds)"
+msgstr ""
+
+msgid "Fixed private MAC address"
+msgstr ""
+
+msgid "Fixed private MAC for Ethernet"
+msgstr ""
+
+msgid "Fixed private MAC for Wi-Fi"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Fully initialize"
+msgstr ""
+
+msgid "General settings"
+msgstr ""
+
+msgid "Generate"
+msgstr ""
+
+msgid "Generate MAC pool"
+msgstr ""
+
+msgid "Generate a new pool after the retries below fail; existing campus device records are not deleted"
+msgstr ""
+
+msgid "Generate pool"
+msgstr ""
+
+msgid "HTTP status returned when online"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Hide entered password"
+msgstr ""
+
+msgid "Huawei"
+msgstr ""
+
+msgid "Idle"
+msgstr ""
+
+msgid "In use"
+msgstr ""
+
+msgid "Includes repeated checks when both internet and the login page are unreachable; wait for the configured cooldown after the limit is reached"
+msgstr ""
+
+msgid "Includes switching back to the preferred connection; zero disables switching; counts reset after stable recovery"
+msgstr ""
+
+msgid "Information"
+msgstr ""
+
+msgid "Initialization could not finish; check the router before trying again"
+msgstr ""
+
+msgid "Initialization is taking longer than expected; check the status before trying again"
+msgstr ""
+
+msgid "Interface"
+msgstr ""
+
+msgid "Internet access"
+msgstr ""
+
+msgid "Internet access check"
+msgstr ""
+
+msgid "Internet access verified"
+msgstr ""
+
+msgid "Internet and the login page are both reachable; keeping the connection online"
+msgstr ""
+
+msgid "Internet and the login page are both unreachable; waiting to check again"
+msgstr ""
+
+msgid "Internet check URL"
+msgstr ""
+
+msgid "Internet checks after a successful login"
+msgstr ""
+
+msgid "Internet request failed"
+msgstr ""
+
+msgid "Keep the backup connected"
+msgstr ""
+
+msgid "Keepalive was not confirmed; checking internet access"
+msgstr ""
+
+msgid "Last action"
+msgstr ""
+
+msgid "Leave blank to keep the saved password; enter and save a new password to replace it"
+msgstr ""
+
+msgid "Level"
+msgstr ""
+
+msgid "Log level"
+msgstr ""
+
+msgid "Log out and pause"
+msgstr ""
+
+msgid "Log out of the campus network before a scheduled MAC change"
+msgstr ""
+
+msgid "Login attempts with the same MAC"
+msgstr ""
+
+msgid "Login succeeded, but internet access failed"
+msgstr ""
+
+msgid "Login succeeded; waiting for internet access or a new network address"
+msgstr ""
+
+msgid "Longest recovery retry delay (seconds)"
+msgstr ""
+
+msgid "MAC addresses"
+msgstr ""
+
+msgid "MAC pool"
+msgstr ""
+
+msgid "MAC pool regenerated after repeated connection failures"
+msgstr ""
+
+msgid "MAC recovery limits reached"
+msgstr ""
+
+msgid "MAC retries before rebuilding a pool"
+msgstr ""
+
+msgid "Manually"
+msgstr ""
+
+msgid "Maximum delay must be at least the initial delay"
+msgstr ""
+
+msgid "Minimum time between MAC changes (seconds)"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "More actions"
+msgstr ""
+
+msgid "More than one portal context was found"
+msgstr ""
+
+msgid "Network interface"
+msgstr ""
+
+msgid "Next rotation"
+msgstr ""
+
+msgid "No events yet"
+msgstr ""
+
+msgid "No open networks found; you can enter a custom network"
+msgstr ""
+
+msgid "No password saved"
+msgstr ""
+
+msgid "No portal redirect found"
+msgstr ""
+
+msgid "No usable authentication response received"
+msgstr ""
+
+msgid "Not checked"
+msgstr ""
+
+msgid "Not configured"
+msgstr ""
+
+msgid "Not enabled"
+msgstr ""
+
+msgid "Not generated"
+msgstr ""
+
+msgid "Not monitored"
+msgstr ""
+
+msgid "Not started"
+msgstr ""
+
+msgid "Number of MAC addresses to generate"
+msgstr ""
+
+msgid "One successful check confirms internet access; repeated failures continue the recovery process"
+msgstr ""
+
+msgid "Online"
+msgstr ""
+
+msgid "Optional access point BSSID"
+msgstr ""
+
+msgid "Outage confirmation"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Password is saved"
+msgstr ""
+
+msgid "Paused"
+msgstr ""
+
+msgid "Paused after manual logout"
+msgstr ""
+
+msgid "Pool rebuilds per outage"
+msgstr ""
+
+msgid "Pool regenerations"
+msgstr ""
+
+msgid "Portal is available"
+msgstr ""
+
+msgid "Portal request failed"
+msgstr ""
+
+msgid "Preferred"
+msgstr ""
+
+msgid "Preferred connection check interval (seconds)"
+msgstr ""
+
+msgid "Preferred uplink"
+msgstr ""
+
+msgid "Private MAC"
+msgstr ""
+
+msgid "Queued"
+msgstr ""
+
+msgid "Reachable"
+msgstr ""
+
+msgid "Reauthentication, MAC changes, switching and logout may interrupt this connection; logout pauses automatic recovery"
+msgstr ""
+
+msgid "Rebuild the pool after MAC retries fail"
+msgstr ""
+
+msgid "Recent events"
+msgstr ""
+
+msgid "Recovery"
+msgstr ""
+
+msgid "Recovery attempts before cooldown"
+msgstr ""
+
+msgid "Recovery is paused"
+msgstr ""
+
+msgid "Recovery rounds / MAC changes"
+msgstr ""
+
+msgid "Remove all plugin settings and saved data, then leave the service disabled"
+msgstr ""
+
+msgid "Replaces the list above; save and apply to use it; existing campus device records are not removed"
+msgstr ""
+
+msgid "Response text returned when online"
+msgstr ""
+
+msgid "Resume recovery"
+msgstr ""
+
+msgid "Resume recovery before this action"
+msgstr ""
+
+msgid "Resume recovery on the status page before authenticating"
+msgstr ""
+
+msgid "Resuming"
+msgstr ""
+
+msgid "Retry authentication"
+msgstr ""
+
+msgid "Retry interval for login-page detection (seconds)"
+msgstr ""
+
+msgid "Rotate MAC and reconnect"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Save and apply the account settings before authenticating"
+msgstr ""
+
+msgid "Scanning networks"
+msgstr ""
+
+msgid "Schedule type"
+msgstr ""
+
+msgid "Scheduled MAC changes"
+msgstr ""
+
+msgid "Select a network"
+msgstr ""
+
+msgid "Select a network or enter a custom SSID"
+msgstr ""
+
+msgid "Select a radio"
+msgstr ""
+
+msgid "Select a radio first"
+msgstr ""
+
+msgid "Select an existing network interface"
+msgstr ""
+
+msgid "Select an existing wireless client; Create one in Network → Wireless if needed"
+msgstr ""
+
+msgid "Send login details only to this server; include the scheme and optional port, without a path"
+msgstr ""
+
+msgid "Service is running"
+msgstr ""
+
+msgid "Service is stopped"
+msgstr ""
+
+msgid "Service started"
+msgstr ""
+
+msgid "Service status"
+msgstr ""
+
+msgid "Set the MAC retry count above zero before enabling automatic pool regeneration"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Shared MAC pool"
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "Show entered password"
+msgstr ""
+
+msgid "Some saved network settings could not be restored; review the restoration journal"
+msgstr ""
+
+msgid "Staff"
+msgstr ""
+
+msgid "Starting"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Stopped"
+msgstr ""
+
+msgid "Stopping the service and restoring network settings before clearing data"
+msgstr ""
+
+msgid "Student"
+msgstr ""
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Switches this outage"
+msgstr ""
+
+msgid "The MAC policy, interval or rotation budget prevents this action"
+msgstr ""
+
+msgid "The configuration is enabled, but the service is not running; save and apply to start it"
+msgstr ""
+
+msgid "The connection changed; the earlier private MAC session was not logged out"
+msgstr ""
+
+msgid "The discovered portal does not match the configured origin"
+msgstr ""
+
+msgid "The internet check was redirected to the configured login portal"
+msgstr ""
+
+msgid "The portal IP and MAC match the current uplink"
+msgstr ""
+
+msgid "The portal RSA mode does not support these password characters"
+msgstr ""
+
+msgid "The portal confirmed logout of the private MAC session; restoring the network"
+msgstr ""
+
+msgid "The portal rejected authentication; check the account before resuming"
+msgstr ""
+
+msgid "The portal requires an additional authentication step"
+msgstr ""
+
+msgid "The saved configuration is invalid; review the settings before starting"
+msgstr ""
+
+msgid "The selected service is not offered by the portal"
+msgstr ""
+
+msgid "The service could not start; check the configuration and preflight result"
+msgstr ""
+
+msgid "The service is enabled but is not running; check the status page for the startup result"
+msgstr ""
+
+msgid "The shared pool needs at least %s addresses for these uplinks and the selected MAC policy"
+msgstr ""
+
+msgid "The uplink address changed; checking the new network path"
+msgstr ""
+
+msgid "The uplink has no usable IPv4 connection"
+msgstr ""
+
+msgid "This removes the campus account and password, private MAC addresses, schedules, runtime records and pending plugin changes; router network settings are preserved"
+msgstr ""
+
+msgid "This uplink is not configured"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Time"
+msgstr ""
+
+msgid "Time (router time zone)"
+msgstr ""
+
+msgid "Time between scheduled changes (hours)"
+msgstr ""
+
+msgid "Timeout for each connectivity check (seconds)"
+msgstr ""
+
+msgid "Try another address from the same pool before rebuilding it; each new pool gets the same number of retries"
+msgstr ""
+
+msgid "Try to end the current connection login, then change MAC and sign in again"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "URL used to find the login page"
+msgstr ""
+
+msgid "Unexpected internet response; a redirect or replacement page may be blocking access"
+msgstr ""
+
+msgid "Unknown authentication response"
+msgstr ""
+
+msgid "Unreachable"
+msgstr ""
+
+msgid "Unsupported portal authentication settings"
+msgstr ""
+
+msgid "Unsupported portal redirect"
+msgstr ""
+
+msgid "Updated every 5 seconds"
+msgstr ""
+
+msgid "Uplink"
+msgstr ""
+
+msgid "Uplink firewall zone"
+msgstr ""
+
+msgid "Uplink networks"
+msgstr ""
+
+msgid "Use a private MAC address"
+msgstr ""
+
+msgid "Use an existing wireless client"
+msgstr ""
+
+msgid "Use at most 64 distinct MAC addresses"
+msgstr ""
+
+msgid "Use the status code normally returned by the check URL; 204 must have no body, other codes must also match the text below"
+msgstr ""
+
+msgid "Use this uplink"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Uses the applied account settings on the active connection, or the preferred connection before one is active"
+msgstr ""
+
+msgid "Verify this uplink before switching"
+msgstr ""
+
+msgid "Verifying internet access"
+msgstr ""
+
+msgid "Wait after repeated recovery failures (seconds)"
+msgstr ""
+
+msgid "Wait for a network address (seconds)"
+msgstr ""
+
+msgid "Waiting for network availability"
+msgstr ""
+
+msgid "Waiting for the minimum MAC rotation interval"
+msgstr ""
+
+msgid "Waiting to retry MAC rotation"
+msgstr ""
+
+msgid "Warnings"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Weekly"
+msgstr ""
+
+msgid "When the current connection fails"
+msgstr ""
+
+msgid "When the preferred connection is stable"
+msgstr ""
+
+msgid "When to change the private MAC"
+msgstr ""
+
+msgid "When to return to the preferred connection"
+msgstr ""
+
+msgid "Wi-Fi"
+msgstr ""
+
+msgid "Wireless client configuration"
+msgstr ""
+
+msgid "Wireless configuration mode"
+msgstr ""
+
+msgid "Wireless radio"
+msgstr ""
+
+msgid "Wireless scan failed; you can enter a custom network"
+msgstr ""
+
+msgid "Xiaomi"
+msgstr ""
+
+msgid "vivo"
+msgstr ""

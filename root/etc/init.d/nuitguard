@@ -9,7 +9,6 @@ start_service() {
 	config_load nuitguard
 	config_get_bool enabled main enabled 0
 	[ "$enabled" -eq 1 ] || return 0
-	/usr/sbin/nuitguard check-config || return 1
 	procd_open_instance
 	procd_set_param command /usr/sbin/nuitguard run
 	procd_set_param respawn 3600 60 3
@@ -22,10 +21,6 @@ start_service() {
 reload_service() {
 	stop
 	start
-}
-
-service_triggers() {
-	procd_add_reload_trigger nuitguard
 }
 
 service_stopped() {

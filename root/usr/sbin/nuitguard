@@ -1,9 +1,19 @@
 #!/bin/sh
 
 case "$1:$#:$2" in
-	check-config:1:|inspect:1:|probe:2:wired|probe:2:wifi|preflight:1:|run:1:|restore:1:|status:1:) ;;
-	*) printf '%s\n' 'Usage: nuitguard {check-config|inspect|probe wired|probe wifi|preflight|run|restore|status}' >&2; exit 2 ;;
+	reset:1:|reload:1:|check-config:1:|inspect:1:|probe:2:wired|probe:2:wifi|preflight:1:|run:1:|restore:1:|status:1:) ;;
+	*) printf '%s\n' 'Usage: nuitguard {reset|reload|check-config|inspect|probe wired|probe wifi|preflight|run|restore|status}' >&2; exit 2 ;;
 esac
+
+if [ "$1" = reset ]; then
+	exec ucode -e 'import {execute_reset} from "/usr/libexec/nuitguard/reset.uc"; exit(execute_reset());'
+fi
+if [ "$1" = run ]; then
+	ucode -e 'import {resetting} from "/usr/libexec/nuitguard/reset.uc"; exit(resetting() ? 1 : 0);' || exit 1
+fi
+if [ "$1" = reload ]; then
+	exec /etc/init.d/nuitguard reload
+fi
 
 if [ "$1" = status ]; then
 	exec ucode -e 'import {status} from "/usr/libexec/nuitguard/control.uc"; printf("%J\n", status());'
@@ -15,7 +25,12 @@ fi
 . /lib/functions.sh
 . /usr/libexec/nuitguard/config.sh
 config_load nuitguard || exit 1
-ng_config_validate || exit 1
+if ! ng_config_validate; then
+	if [ "$1" = run ]; then
+		ucode -e 'import {atomic_json, runtime_dir} from "/usr/libexec/nuitguard/common.uc"; atomic_json(runtime_dir + "/status.json", {reason:"configuration_invalid", paths:{}, updated:time()});'
+	fi
+	exit 1
+fi
 
 case "$1" in
 	check-config) printf '%s\n' 'Configuration is valid.' ;;

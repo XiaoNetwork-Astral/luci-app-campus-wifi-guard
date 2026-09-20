@@ -6,7 +6,10 @@ const account_errors = [ 'authentication_rejected', 'invalid_service',
 export function new_path(role) {
 	return { role, phase: 'idle', reason: 'not_started', due: 0, failures: 0,
 		portal_failures: 0, discoveries: 0, authentications: 0, cycles: 0,
-		rotations: 0, post_auth_rotations: 0, verifications: 0,
+		rotations: 0, auth_rotations: 0, recovery_rotations: 0,
+		post_auth_rotations: 0, pool_regenerations: 0, mac_changed: false,
+		internet_online: null, portal_reachable: null, both_reachable_reported: false,
+		internet_failure: null, response_mismatch_reported: false, verifications: 0, verify_deadline: 0,
 		last_rotation: null, online_since: null, successes: 0, session: null };
 };
 
@@ -14,7 +17,9 @@ export function public_path(path) {
 	return { role: path.role, phase: path.phase, reason: path.reason, due: path.due,
 		failures: path.failures, portal_failures: path.portal_failures,
 		discoveries: path.discoveries, authentications: path.authentications,
-		cycles: path.cycles, rotations: path.rotations, successes: path.successes,
+		cycles: path.cycles, rotations: path.rotations, pool_regenerations: path.pool_regenerations,
+		internet_online: path.internet_online, portal_reachable: path.portal_reachable,
+		internet_failure: path.internet_failure, successes: path.successes,
 		online_since: path.online_since, last_rotation: path.last_rotation };
 };
 
@@ -23,9 +28,15 @@ export function create_machine(settings, io) {
 	let state = { active: settings.preferred_uplink, switches: 0, alternate_attempts: 0,
 		blocked: false, reason: 'starting', candidate: null, stable_since: null, cooldown_until: 0, selected: false };
 	let c = settings;
+	// Pool retries and replacements determine the recovery budget; scheduled and
+	// manual changes do not consume it, and a shared-pool replacement cannot renew it
+	let retries_per_pool = c.auth_success_but_offline_rotation_limit || 0;
+	let pool_replacements = c.auto_regenerate_pool ? (c.max_pool_regenerations || 0) : 0;
+	let recovery_limit = retries_per_pool + (retries_per_pool + 1) * pool_replacements;
 
-	function reset_budget(p) {
-		p.cycles = p.rotations = p.post_auth_rotations = p.authentications = 0;
+	function reset_budget(p, new_incident) {
+		p.cycles = p.authentications = 0;
+		if (new_incident) p.rotations = p.auth_rotations = p.recovery_rotations = p.post_auth_rotations = p.pool_regenerations = 0;
 		p.failures = p.portal_failures = p.discoveries = p.verifications = 0;
 	}
 
@@ -41,34 +52,76 @@ export function create_machine(settings, io) {
 		p.online_since = null; p.successes = 0;
 	}
 
-	function retry(p, reason, now) {
-		p.cycles++;
-		p.reason = reason;
-		p.online_since = null; p.successes = 0;
-		if (p.cycles >= c.max_cycle_attempts) { cooldown(p, reason, now); return; }
-		p.phase = 'checking'; p.discoveries = 0;
-		p.due = now + min(c.retry_max_delay, c.retry_initial_delay * (2 ** min(p.cycles - 1, 20)));
-	}
-
 	function rotate(p, now, post_auth, manual) {
-		if ((c.rotation_mode == 'fixed' && !manual) || p.rotations >= c.max_rotations_per_incident ||
+		if ((c.rotation_mode == 'fixed' && !manual) ||
 			(p.last_rotation != null && now - p.last_rotation < c.min_rotation_interval)) return false;
+		if (io.can_rotate && !io.can_rotate(p.role)) return false;
 		if (!io.rotate(p.role)) return false;
-		p.last_rotation = now; p.rotations++;
+		p.last_rotation = now; p.rotations++; p.mac_changed = true;
 		if (post_auth) p.post_auth_rotations++;
-		p.authentications = p.discoveries = p.verifications = 0;
+		p.authentications = p.discoveries = p.verifications = p.cycles = 0;
 		p.session = null;
 		begin(p, now);
 		return true;
 	}
 
+	function recover_mac(p, now) {
+		if (c.rotation_mode == 'fixed' || !c.auth_success_but_offline_rotation_limit ||
+			p.recovery_rotations >= recovery_limit || (io.can_rotate && !io.can_rotate(p.role))) return false;
+		let regenerate = p.post_auth_rotations >= c.auth_success_but_offline_rotation_limit;
+		if (regenerate && (!c.auto_regenerate_pool || p.pool_regenerations >= c.max_pool_regenerations || !io.regenerate_pool)) return false;
+		if (p.last_rotation != null && now - p.last_rotation < c.min_rotation_interval) {
+			p.phase = 'waiting_rotation'; p.reason = 'waiting_for_mac_rotation';
+			p.due = min(now + c.probe_interval, p.last_rotation + c.min_rotation_interval);
+			return true;
+		}
+		if (regenerate) {
+			// Reserve the budget before the driver saves the replacement pool.
+			p.pool_regenerations++;
+			if (!io.regenerate_pool(p.role)) return false;
+			p.post_auth_rotations = 0;
+		}
+		let changed = rotate(p, now, !regenerate);
+		if (changed) p.recovery_rotations++;
+		return changed;
+	}
+
+	function retry(p, reason, now) {
+		p.cycles++;
+		p.reason = reason;
+		p.online_since = null; p.successes = 0;
+		if (p.cycles >= c.max_cycle_attempts) {
+			if ((p.mac_changed || p.internet_failure == 'internet_response_mismatch') && recover_mac(p, now)) return;
+			cooldown(p, reason, now); return;
+		}
+		p.phase = 'checking'; p.discoveries = 0;
+		p.due = now + min(c.retry_max_delay, c.retry_initial_delay * (2 ** min(p.cycles - 1, 20)));
+	}
+
+	function internet(p) {
+		let result = io.internet(p.role);
+		let online = type(result) == 'object' ? result.online === true : result === true;
+		p.internet_online = online;
+		p.portal_reachable = type(result?.portal_reachable) == 'bool' ? result.portal_reachable : null;
+		let both = online && p.portal_reachable === true;
+		if (both && !p.both_reachable_reported && io.event) io.event('warn', 'internet_and_portal_reachable', p.role);
+		p.both_reachable_reported = both;
+		p.internet_failure = online ? null : type(result) == 'object' ? result.reason : null;
+		if (p.internet_failure == 'internet_response_mismatch' && !p.response_mismatch_reported) {
+			p.response_mismatch_reported = true;
+			if (io.event) io.event('warn', 'internet_response_mismatch', p.role);
+		}
+		return online;
+	}
+
 	function healthy(p, now) {
-		p.phase = 'online'; p.reason = 'internet_verified';
+		p.phase = 'online'; p.reason = 'internet_verified'; p.mac_changed = false;
+		p.internet_failure = null; p.response_mismatch_reported = false;
 		p.online_since ??= now;
 		p.successes++;
 		p.failures = p.portal_failures = p.discoveries = p.verifications = 0;
 		p.due = now + (p.role == state.active ? c.probe_interval : c.primary_recovery_interval);
-		if (now - p.online_since >= c.incident_reset_time) reset_budget(p);
+		if (now - p.online_since >= c.incident_reset_time) reset_budget(p, true);
 	}
 
 	function tick_path(p, now) {
@@ -85,17 +138,33 @@ export function create_machine(settings, io) {
 			else p.due = now + 1;
 			return;
 		}
+		if (p.phase == 'waiting_rotation') {
+			if (internet(p)) { healthy(p, now); return; }
+			if (recover_mac(p, now)) return;
+			cooldown(p, 'mac_recovery_exhausted', now); return;
+		}
 		if (p.phase == 'connecting') p.phase = 'checking';
-		if (p.phase == 'checking' || p.phase == 'online' || p.phase == 'verifying') {
+		if (p.phase == 'checking' || p.phase == 'online' || p.phase == 'verifying' || p.phase == 'waiting_network') {
 			let verifying = p.phase == 'verifying';
-			if (io.internet(p.role)) { healthy(p, now); return; }
+			if (internet(p)) { healthy(p, now); return; }
 			p.online_since = null; p.successes = 0;
+			if (p.portal_reachable === false && (!verifying || now >= p.verify_deadline)) {
+				p.portal_failures++; p.cycles++;
+				if (p.cycles >= c.max_cycle_attempts) { cooldown(p, 'internet_and_portal_unreachable', now); return; }
+				p.phase = 'waiting_network'; p.reason = 'internet_and_portal_unreachable';
+				p.due = now + c.portal_fail_interval;
+				return;
+			}
+			if (p.phase == 'waiting_network') p.phase = 'checking';
 			if (verifying) {
 				p.verifications++;
 				if (p.verifications < c.max_post_auth_verify_failures) {
 					p.due = now + c.offline_confirm_interval; return;
 				}
-				if (c.auth_success_but_offline_rotation_limit > p.post_auth_rotations && rotate(p, now, true)) return;
+				if (now < p.verify_deadline) {
+					p.reason = 'waiting_for_post_auth_network'; p.due = p.verify_deadline; return;
+				}
+				if (recover_mac(p, now)) return;
 				cooldown(p, 'authenticated_but_offline', now); return;
 			}
 			p.failures++;
@@ -124,7 +193,12 @@ export function create_machine(settings, io) {
 		}
 		if (p.phase == 'authenticating') {
 			if (p.authentications >= c.max_auth_retries_per_mac) {
-				if (c.rotation_mode == 'offline' && rotate(p, now, false)) return;
+				// Try the other available pool addresses after repeated authentication
+					// failures; this budget survives cooldown until stable recovery
+					let available = io.rotation_candidates ? io.rotation_candidates(p.role) : max(0, length(c.mac_pool || []) - 1);
+					if (c.rotation_mode == 'offline' && p.auth_rotations < available && rotate(p, now, false)) {
+						p.auth_rotations++; return;
+					}
 				cooldown(p, 'authentication_budget_exhausted', now); return;
 			}
 			p.authentications++;
@@ -136,6 +210,7 @@ export function create_machine(settings, io) {
 			}
 			if (result.state == 'authenticated') {
 				p.session = result.session; p.phase = 'verifying'; p.verifications = 0;
+				p.verify_deadline = now + c.reconnect_timeout;
 				p.reason = 'verifying_authentication'; p.due = now + c.offline_confirm_interval;
 				return;
 			}
@@ -217,12 +292,21 @@ export function create_machine(settings, io) {
 			}
 		},
 
+		link_changed: function(role, now) {
+			let p = paths[role];
+			if (!p || state.blocked || p.phase == 'blocked' || p.phase == 'idle') return;
+			p.context = null;
+			if (p.phase != 'verifying') { p.phase = 'checking'; p.failures = 0; }
+			p.online_since = null; p.successes = 0;
+			p.reason = 'network_address_changed'; p.due = now;
+			// A DHCP change permits a fresh check, without resetting recovery limits
+		},
 		action: function(action, role, now) {
 			let p = paths[role];
 			if (!p || !io.configured(role)) return 'uplink_not_configured';
 			if (action == 'resume') {
 				state.blocked = false; state.cooldown_until = state.switches = state.alternate_attempts = 0;
-				for (let name, path in paths) { reset_budget(path); path.phase = 'idle'; path.due = now; }
+				for (let name, path in paths) { reset_budget(path, true); path.mac_changed = false; path.phase = 'idle'; path.due = now; }
 				state.reason = 'resuming'; return 'accepted';
 			}
 			if (action == 'logout') {
@@ -252,8 +336,9 @@ export function create_machine(settings, io) {
 		scheduled_rotation: function(now, logout_first) {
 			if (state.blocked || paths[state.active].phase != 'online') return 'deferred';
 			let p = paths[state.active];
-			if (c.rotation_mode != 'scheduled' || p.rotations >= c.max_rotations_per_incident ||
+			if (c.rotation_mode != 'scheduled' ||
 				(p.last_rotation != null && now - p.last_rotation < c.min_rotation_interval)) return 'rotation_limited';
+			if (io.can_rotate && !io.can_rotate(p.role)) return 'rotation_limited';
 			if (logout_first) io.logout(p.role, p.session);
 			return rotate(p, now, false) ? 'accepted' : 'rotation_limited';
 		},

@@ -1,13 +1,13 @@
 {
-	"luci-app-nuitguard": {
-		"description": "Configure NuitGuard",
+	"luci-app-campus-wlan-guard": {
+		"description": "Configure Campus WLAN Guard",
 		"read": {
 			"uci": [ "nuitguard", "network", "wireless", "firewall" ],
 			"ubus": { "nuitguard": [ "status" ], "iwinfo": [ "scan" ] }
 		},
 		"write": {
 			"uci": [ "nuitguard" ],
-			"ubus": { "nuitguard": [ "set_password", "action" ] }
+			"ubus": { "nuitguard": [ "set_password", "action", "generate_pool", "reset" ] }
 		}
 	}
 }

@@ -1,7 +1,7 @@
 import { read_json, atomic_json, private_dir } from './common.uc';
 import * as fs from 'fs';
 
-// Record only fields owned by NuitGuard. Never roll back an entire user config.
+// Record only fields owned by Campus WLAN Guard. Never roll back an entire user config.
 export function create_owned_config(cursor, path) {
 	path ||= private_dir + '/network-state.json';
 	let journal = read_json(path, { fields: [], sections: [] });
@@ -27,7 +27,7 @@ export function create_owned_config(cursor, path) {
 			else {
 				let entry = filter(journal.fields, e => e.config == config && e.section == section && e.key == key)[0];
 				if (entry) {
-					assert(same(previous, entry.value), 'Managed configuration changed outside NuitGuard');
+					assert(same(previous, entry.value), 'Managed configuration changed outside Campus WLAN Guard');
 					entry.prior_value = previous;
 					entry.value = value;
 				}

@@ -1,0 +1,4 @@
+{
+	"config": "nuitguard",
+	"exec": "/usr/sbin/nuitguard reload"
+}
