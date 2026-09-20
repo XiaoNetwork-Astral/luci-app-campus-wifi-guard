@@ -101,7 +101,7 @@ function publish() {
 	let summary = join('|', [view.active, view.reason, view.paths.wired.phase, view.paths.wired.reason,
 		view.paths.wifi.phase, view.paths.wifi.reason]);
 	if (summary != last_summary) {
-		for (let role, path in view.paths) event(path.phase == 'blocked' ? 'error' : path.phase == 'cooldown' ? 'warn' : 'info', path.reason, role);
+		for (let role, path in view.paths) if (path.reason != 'not_started') event(path.phase == 'blocked' ? 'error' : path.phase == 'cooldown' ? 'warn' : 'info', path.reason, role);
 		last_summary = summary;
 	}
 	atomic_json(runtime_dir + '/status.json', { ...view, updated: time(), monotonic: monotonic_seconds(),
@@ -138,10 +138,12 @@ let io = {
 		if (changed) clear_session(role);
 		return changed;
 	},
-	internet: function(role) {
+	internet: function(role, check_online_portal) {
 		let response = client(role).http(settings.main.internet_probe_url);
 		let internet = check_internet(response, settings.main.internet_expected_status, settings.main.internet_expected_body,
 			settings.main.internet_probe_url, settings.main.portal_origin);
+		// Offline recovery still needs the portal immediately; an online path waits for stability.
+		if (internet.online && !check_online_portal) return internet;
 		let portal = client(role).http(settings.main.portal_origin + '/eportal/index.jsp');
 		return { ...internet, portal_reachable: portal.curl_exit == 0 && portal.status >= 200 && portal.status < 400 };
 

@@ -530,6 +530,9 @@ return view.extend({
 				m.lookupOption('internet_expected_status', 'main')[0].formvalue('main') === '204' || String(value || '').trim().length > 0
 				? true : _('Enter the expected response body before enabling a non-204 internet check');
 		};
+		o = numberOption(checks, null, 'portal_check_delay', _('Online time before checking the login page (seconds)'), 1, 86400,
+			_('Wait for continuous internet access before checking the campus login page; a failed internet check restarts the timer'));
+		o.default = '30';
 		numberOption(checks, null, 'probe_interval', _('Check interval while online (seconds)'), 1, 86400);
 		numberOption(checks, null, 'probe_timeout', _('Timeout for each connectivity check (seconds)'), 1, 120);
 		var confirmation = group(main, 'checks', 'outage_confirmation', _('Outage confirmation'));

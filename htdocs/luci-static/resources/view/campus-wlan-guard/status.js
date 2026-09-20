@@ -15,7 +15,7 @@ function label(code) {
 		configuration_invalid: _('The saved configuration is invalid; review the settings before starting'),
 		waiting_network: _('Waiting for network availability'),
 		internet_and_portal_unreachable: _('Internet and the login page are both unreachable; waiting to check again'),
-		internet_and_portal_reachable: _('Internet and the login page are both reachable; keeping the connection online'),
+		internet_and_portal_reachable: _('The login page is still reachable after sustained internet access; keeping the connection online'),
 		portal_link_matches: _('The portal IP and MAC match the current uplink'),
 		portal_link_unconfirmed: _('Could not match the portal IP and MAC to the current uplink'),
 		network_address_changed: _('The uplink address changed; checking the new network path'),
@@ -37,12 +37,12 @@ function label(code) {
 		internet_response_mismatch: _('Unexpected internet response; a redirect or replacement page may be blocking access'),
 		internet_login_required: _('The internet check was redirected to the configured login portal'),
 		internet_transport_failure: _('Internet request failed'),
-		idle: _('Idle'), online: _('Online'), blocked: _('Paused'), cooldown: _('Cooling down'),
-		connecting: _('Connecting'), checking: _('Checking internet access'), discovering: _('Finding the portal'),
-		authenticating: _('Authenticating'), verifying: _('Verifying internet access'),
-		stopped: _('Stopped'), not_started: _('Not started'), starting: _('Starting'), resuming: _('Resuming'),
-		internet_verified: _('Internet access verified'), confirming_outage: _('Confirming an outage'),
-		portal_available: _('Portal is available'), verifying_authentication: _('Checking internet access after login'),
+		idle: _('Not authenticated'), online: _('Campus network connected'), blocked: _('Paused'), cooldown: _('Cooling down'),
+		connecting: _('Connecting'), checking: _('Confirming internet access'), discovering: _('Finding the portal'),
+		authenticating: _('Authenticating'), verifying: _('Confirming internet access'),
+		stopped: _('Stopped'), starting: _('Starting'), resuming: _('Resuming'),
+		internet_verified: _('Campus network connected'), confirming_outage: _('Confirming an outage'),
+		portal_available: _('Portal is available'), verifying_authentication: _('Confirming internet access'),
 		link_unavailable: _('The uplink has no usable IPv4 connection'),
 		authenticated_but_offline: _('Login succeeded, but internet access failed'),
 		authentication_rejected: _('The portal rejected authentication; check the account before resuming'),
@@ -174,14 +174,14 @@ function content(data) {
 		return E('article', { class: 'cwg-uplink' }, [
 			E('div', { class: 'cwg-card-heading' }, [E('h4', {}, roleName(role)), E('span', { class: 'cwg-badge' }, active ? _('In use') : preferred === role ? _('Preferred') : _('Alternate'))]),
 			E('div', { class: 'cwg-state' + (data.running && path.phase === 'online' ? ' cwg-online' : '') }, phase),
-			data.running && configured && path.reason && path.reason !== path.phase ? E('p', { class: 'cwg-description' }, label(path.reason)) : '',
+			data.running && configured && path.reason && path.reason !== 'not_started' && label(path.reason) !== label(path.phase) ? E('p', { class: 'cwg-description' }, label(path.reason)) : '',
 			E('dl', { class: 'cwg-details' }, details),
 			actions.length ? E('div', { class: 'cwg-actions' }, actions) : ''
 		]);
 	});
 	var eventTitles = [_('Time'), _('Level'), _('Uplink'), _('Event')];
 	var level = { error: _('Errors'), warn: _('Warnings'), info: _('Information'), debug: _('Debug') };
-	var events = (data.events || []).slice(-20).reverse().map(function(entry) {
+	var events = (data.events || []).filter(function(entry) { return entry.code !== 'not_started'; }).slice(-20).reverse().map(function(entry) {
 		return tableRow(eventTitles, [
 			new Date(entry.time * 1000).toLocaleString(), level[entry.level] || entry.level,
 			entry.role ? roleName(entry.role) : '—', label(entry.code)

@@ -8,31 +8,31 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "A configuration or network operation could not be completed"
-msgstr "配置或网络操作未能完成"
+msgstr "设置未能生效，或网络操作失败"
 
 msgid "A network operation failed; the service stopped and attempted to restore its changes"
-msgstr "网络操作失败；服务已停止，并已尝试恢复其修改"
+msgstr "网络操作失败，服务已停止并尝试恢复原有网络设置"
 
 msgid "A radio shared with a local access point may change channel and briefly disconnect its clients when the uplink connects"
-msgstr "上联关联时，与本地 AP 共用的无线电可能切换信道，导致该 AP 的客户端短暂断开"
+msgstr "如果与路由器热点共用无线网卡，连接校园 Wi-Fi 时可能切换信道，热点下的设备会短暂断网"
 
 msgid "Accepted"
-msgstr "已接受"
+msgstr "操作已提交"
 
 msgid "Account type"
 msgstr "账号类型"
 
 msgid "Also wait up to this long after login for the campus network to assign an online address"
-msgstr "认证成功后也等待此时长，以便校园网分配正式联网地址"
+msgstr "认证成功后，也会等待这段时间，让校园网完成地址分配"
 
 msgid "Alternate"
 msgstr "备用"
 
 msgid "Alternate uplink attempt limit reached"
-msgstr "已达到备用线路尝试次数上限"
+msgstr "备用线路多次连接失败，暂时停止重试"
 
 msgid "Another action is already queued"
-msgstr "已有操作正在排队"
+msgstr "已有操作等待执行，请稍后再试"
 
 msgid "Attempts to find the campus login page"
 msgstr "查找校园网登录页的尝试次数"
@@ -47,19 +47,19 @@ msgid "Authentication"
 msgstr "认证"
 
 msgid "Authentication attempt limit reached"
-msgstr "已达到认证尝试次数上限"
+msgstr "认证失败次数已达上限，暂时停止重试"
 
 msgid "Authentication portal"
-msgstr "认证门户"
+msgstr "校园网登录设置"
 
 msgid "Authentication requested; check the status page for the result"
-msgstr "已请求立即认证；请在状态页查看结果"
+msgstr "已提交认证，可在状态页查看进度"
 
 msgid "Authentication retries"
 msgstr "认证重试"
 
 msgid "Automatic campus authentication and connection recovery with private MAC addresses"
-msgstr "具备隐私 MAC 地址的校园网自动认证与断线恢复"
+msgstr "自动完成校园网认证、恢复断开的连接，并支持使用隐私 MAC 地址"
 
 msgid "Automatically switch connections"
 msgstr "自动切换线路"
@@ -71,13 +71,13 @@ msgid "Backup connection mode"
 msgstr "备用线路连接方式"
 
 msgid "Both actions stop the service and restore its network changes; only a complete reset removes the saved account"
-msgstr "两种操作都会停止服务并恢复插件修改的网络设置；仅彻底重置会清除已保存的账号"
+msgstr "两种重置都会停止服务并恢复原有网络设置；“彻底重置”还会删除已保存的账号"
 
 msgid "Campus WLAN Guard"
 msgstr "校园网守卫"
 
 msgid "Campus Wi-Fi SSID"
-msgstr "校园 Wi-Fi 的 SSID"
+msgstr "校园 Wi-Fi 名称（SSID）"
 
 msgid "Campus Wi-Fi network"
 msgstr "校园 Wi-Fi 网络"
@@ -86,13 +86,16 @@ msgid "Campus account"
 msgstr "校园网账号"
 
 msgid "Campus credentials are missing"
-msgstr "尚未配置校园网凭据"
+msgstr "请先填写校园网账号和密码"
 
 msgid "Campus login page"
 msgstr "校园网登录页"
 
 msgid "Campus login server address"
 msgstr "校园网登录服务器地址"
+
+msgid "Campus network connected"
+msgstr "校园网已连接"
 
 msgid "Cancel"
 msgstr "取消"
@@ -112,17 +115,11 @@ msgstr "在线时的检测间隔（秒）"
 msgid "Check now"
 msgstr "立即检测"
 
-msgid "Checking internet access"
-msgstr "正在检测公网"
-
-msgid "Checking internet access after login"
-msgstr "正在验证登录后的公网连通性"
-
 msgid "Choose Student or Staff, or enter the service identifier used by your campus"
-msgstr "选择学生或教职工；其他类型可填写学校使用的服务标识"
+msgstr "选择学生或教职工；如果学校使用其他账号类型，可填写对应的服务标识"
 
 msgid "Choose a preset or enter a custom URL; presets use HTTP 204 with an empty response"
-msgstr "选择预设或输入自定义地址；预设使用 HTTP 204 空响应"
+msgstr "可以选择预设，也可以填写自己的检测地址；预设地址正常联网时返回 204，正文为空"
 
 msgid "Choose different interfaces for Ethernet and Wi-Fi"
 msgstr "有线与无线网络请选择不同接口"
@@ -131,16 +128,19 @@ msgid "Close"
 msgstr "关闭"
 
 msgid "Configure an internet check URL before enabling recovery"
-msgstr "启用自动恢复前，请配置公网检测地址"
+msgstr "请先选择或填写公网检测地址，再启用自动恢复"
 
 msgid "Configure uplink"
-msgstr "配置此上联"
+msgstr "设置这条线路"
 
 msgid "Confirm reset"
 msgstr "确认重置"
 
 msgid "Confirming an outage"
 msgstr "正在确认断网"
+
+msgid "Confirming internet access"
+msgstr "正在确认公网连通性"
 
 msgid "Connect after a failure"
 msgstr "故障时再连接"
@@ -173,46 +173,46 @@ msgid "Cooling down"
 msgstr "冷却中"
 
 msgid "Could not apply the managed network settings"
-msgstr "无法应用插件管理的网络设置"
+msgstr "网络设置未能生效"
 
 msgid "Could not bring up the uplink interface"
-msgstr "无法启动上联网络接口"
+msgstr "这条线路的网络接口启动失败"
 
 msgid "Could not confirm logout of the private MAC session; network restoration continued"
-msgstr "未能确认隐私 MAC 会话已注销；继续恢复网络"
+msgstr "尚未确认校园网是否已注销，已继续恢复原有网络设置"
 
 msgid "Could not finish restoring the network settings"
-msgstr "网络设置未能全部恢复"
+msgstr "部分网络设置未能恢复，请检查路由器网络"
 
 msgid "Could not generate a private MAC address"
-msgstr "无法生成隐私 MAC 地址"
+msgstr "MAC 地址生成失败，请重试"
 
 msgid "Could not generate the MAC pool"
-msgstr "无法生成 MAC 地址池"
+msgstr "MAC 地址池生成失败，请重试"
 
 msgid "Could not match the portal IP and MAC to the current uplink"
-msgstr "未能确认门户中的 IP 和 MAC 与当前上联相符"
+msgstr "登录页中的 IP 或 MAC 与当前线路未能对应，请检查登录页是否属于这条线路"
 
 msgid "Could not restore the original interface state"
-msgstr "无法恢复接口原有的启用状态"
+msgstr "网络接口未能恢复到原来的状态"
 
 msgid "Could not save the password"
-msgstr "无法保存密码"
+msgstr "密码保存失败，请重试"
 
 msgid "Could not start initialization; another operation may be running"
-msgstr "无法开始初始化；可能有其他操作正在执行"
+msgstr "重置未能开始，可能有其他操作正在执行"
 
 msgid "Could not stop the service or restore its network changes; plugin data was not cleared"
-msgstr "未能停止服务或恢复网络修改；插件数据尚未清除"
+msgstr "服务未能停止，或原有网络设置未能恢复；尚未清除插件数据"
 
 msgid "Could not submit the action"
-msgstr "无法提交操作"
+msgstr "操作提交失败，请重试"
 
 msgid "Counted separately for Ethernet and Wi-Fi; reset after sustained internet access or a manual resume, not after cooldown"
-msgstr "有线和无线分别计数；持续联网或手动恢复后重置；冷却结束不重置"
+msgstr "有线和无线分别计数；稳定联网或手动恢复后重新计数，冷却结束不会清零"
 
 msgid "Create an open network client"
-msgstr "创建开放网络客户端"
+msgstr "连接无需密码的校园 Wi-Fi"
 
 msgid "Created when connected"
 msgstr "连接时创建"
@@ -236,10 +236,10 @@ msgid "Enable scheduled MAC changes"
 msgstr "启用定时更换 MAC"
 
 msgid "Enable the service and apply the settings before authenticating"
-msgstr "请先启用服务并保存应用，再立即认证"
+msgstr "请先启用服务，点击“保存并应用”后再认证"
 
 msgid "Enable the service in Settings and apply the configuration"
-msgstr "请在设置中启用服务并应用配置"
+msgstr "请先在设置中启用服务，再点击“保存并应用”"
 
 msgid "Enter a locally administered unicast MAC address"
 msgstr "请输入本地管理的单播 MAC 地址"
@@ -251,10 +251,10 @@ msgid "Enter a whole number from %s to %s"
 msgstr "请输入 %s 到 %s 之间的整数"
 
 msgid "Enter an HTTP or HTTPS URL without credentials or a fragment"
-msgstr "请输入不含用户名、密码或片段标识的 HTTP 或 HTTPS 地址"
+msgstr "请填写 http:// 或 https:// 开头的地址，不要包含账号、密码或 # 后面的内容"
 
 msgid "Enter an HTTP or HTTPS origin without a path"
-msgstr "请输入不含路径的 HTTP 或 HTTPS 来源地址"
+msgstr "请填写 http:// 或 https:// 开头的服务器地址，只保留主机和端口，不要添加路径"
 
 msgid "Enter an SSID of 1 to 32 bytes"
 msgstr "请输入长度为 1 至 32 字节的 SSID"
@@ -272,7 +272,7 @@ msgid "Enter the expected response body before enabling a non-204 internet check
 msgstr "使用非 204 检测时，请先填写预期响应正文"
 
 msgid "Enter the username, service and password before enabling recovery"
-msgstr "启用自动恢复前，请填写用户名、服务及密码"
+msgstr "请先填写校园网账号、账号类型和密码，再启用自动恢复"
 
 msgid "Errors"
 msgstr "错误"
@@ -299,7 +299,7 @@ msgid "Failover and return"
 msgstr "切换与回切"
 
 msgid "Finding the portal"
-msgstr "正在发现认证门户"
+msgstr "正在查找校园网登录页"
 
 msgid "First recovery retry delay (seconds)"
 msgstr "首次恢复重试的等待时间（秒）"
@@ -343,26 +343,23 @@ msgstr "隐藏本次输入的密码"
 msgid "Huawei"
 msgstr "华为"
 
-msgid "Idle"
-msgstr "空闲"
-
 msgid "In use"
 msgstr "正在使用"
 
 msgid "Includes repeated checks when both internet and the login page are unreachable; wait for the configured cooldown after the limit is reached"
-msgstr "包括公网与登录页均不可达时的复查；达到上限后按设置的冷却时间等待"
+msgstr "公网和登录页都无法访问时，复查也计入次数；达到上限后暂停一段时间，再重新尝试"
 
 msgid "Includes switching back to the preferred connection; zero disables switching; counts reset after stable recovery"
-msgstr "包含切回首选线路；设为 0 禁用切换；持续联网后重置次数"
+msgstr "切回首选线路也计入次数；设为 0 时不自动切换，稳定联网后重新计数"
 
 msgid "Information"
 msgstr "信息"
 
 msgid "Initialization could not finish; check the router before trying again"
-msgstr "初始化未能完成；请检查路由器状态后再试"
+msgstr "重置未能完成，请检查路由器状态后再试"
 
 msgid "Initialization is taking longer than expected; check the status before trying again"
-msgstr "初始化耗时较长；请先检查状态再重试"
+msgstr "重置还未完成，请先查看当前状态，不要重复提交"
 
 msgid "Interface"
 msgstr "接口"
@@ -373,14 +370,8 @@ msgstr "公网连接"
 msgid "Internet access check"
 msgstr "公网连通性检测"
 
-msgid "Internet access verified"
-msgstr "公网连通性已确认"
-
-msgid "Internet and the login page are both reachable; keeping the connection online"
-msgstr "公网与登录页均可达；记录此异常并保持在线"
-
 msgid "Internet and the login page are both unreachable; waiting to check again"
-msgstr "公网与登录页均不可达，等待后重新检测"
+msgstr "公网和校园网登录页都无法访问，稍后重试"
 
 msgid "Internet check URL"
 msgstr "公网检测地址"
@@ -389,19 +380,19 @@ msgid "Internet checks after a successful login"
 msgstr "认证成功后的公网复查次数"
 
 msgid "Internet request failed"
-msgstr "公网请求失败"
+msgstr "公网检测请求失败"
 
 msgid "Keep the backup connected"
 msgstr "始终保持连接"
 
 msgid "Keepalive was not confirmed; checking internet access"
-msgstr "保活未得到确认，正在检测公网"
+msgstr "未收到校园网的保活确认，正在检查公网连接"
 
 msgid "Last action"
 msgstr "上次操作"
 
 msgid "Leave blank to keep the saved password; enter and save a new password to replace it"
-msgstr "留空保留原密码；输入新密码并保存即可更新"
+msgstr "不修改请留空；填写新密码并保存后，会替换原密码"
 
 msgid "Level"
 msgstr "级别"
@@ -416,13 +407,13 @@ msgid "Log out of the campus network before a scheduled MAC change"
 msgstr "定时更换 MAC 前退出校园网登录"
 
 msgid "Login attempts with the same MAC"
-msgstr "同一 MAC 的认证提交上限"
+msgstr "同一 MAC 的认证次数上限"
 
 msgid "Login succeeded, but internet access failed"
-msgstr "认证成功，但公网不通"
+msgstr "认证已通过，但仍无法访问公网"
 
 msgid "Login succeeded; waiting for internet access or a new network address"
-msgstr "认证成功，等待网络放行或地址更新"
+msgstr "认证已通过，正在等待网络放行或分配新地址"
 
 msgid "Longest recovery retry delay (seconds)"
 msgstr "恢复重试的最长等待时间（秒）"
@@ -431,10 +422,10 @@ msgid "MAC addresses"
 msgstr "MAC 地址"
 
 msgid "MAC pool regenerated after repeated connection failures"
-msgstr "连续连接失败后已重建 MAC 地址池"
+msgstr "多次连接失败，已生成一组新的 MAC 地址"
 
 msgid "MAC recovery limits reached"
-msgstr "已达到 MAC 恢复次数上限"
+msgstr "更换 MAC 后仍未恢复连接，已停止重试"
 
 msgid "MAC retries before rebuilding a pool"
 msgstr "重建前的池内换址重试次数"
@@ -455,28 +446,31 @@ msgid "More actions"
 msgstr "更多操作"
 
 msgid "More than one portal context was found"
-msgstr "发现了多个不同的门户上下文"
+msgstr "发现多个不同的登录页面，无法确定该使用哪一个"
 
 msgid "Network interface"
 msgstr "网络接口"
 
 msgid "Next rotation"
-msgstr "下次轮换"
+msgstr "下次更换 MAC"
 
 msgid "No events yet"
 msgstr "暂无事件"
 
 msgid "No open networks found; you can enter a custom network"
-msgstr "没有发现开放网络；可以选择自定义网络"
+msgstr "未找到无需密码的 Wi-Fi，可以手动填写网络名称"
 
 msgid "No password saved"
 msgstr "尚未保存密码"
 
 msgid "No portal redirect found"
-msgstr "没有发现门户跳转"
+msgstr "未找到校园网登录页"
 
 msgid "No usable authentication response received"
-msgstr "未收到可用的认证响应"
+msgstr "未收到有效的认证结果"
+
+msgid "Not authenticated"
+msgstr "尚未认证"
 
 msgid "Not checked"
 msgstr "尚未检测"
@@ -490,20 +484,17 @@ msgstr "未启用"
 msgid "Not monitored"
 msgstr "尚未检测"
 
-msgid "Not started"
-msgstr "尚未启动"
-
 msgid "Number of MAC addresses to generate"
 msgstr "生成的 MAC 地址数量"
 
 msgid "One successful check confirms internet access; repeated failures continue the recovery process"
-msgstr "任意一次检测成功即可确认联网；连续失败则继续恢复连接"
+msgstr "检测成功一次即可确认联网；如果连续失败，会继续尝试恢复连接"
 
-msgid "Online"
-msgstr "在线"
+msgid "Online time before checking the login page (seconds)"
+msgstr "联网后检查登录页的等待时间（秒）"
 
 msgid "Optional access point BSSID"
-msgstr "可选的 AP BSSID"
+msgstr "接入点 BSSID（选填）"
 
 msgid "Outage confirmation"
 msgstr "故障确认"
@@ -518,7 +509,7 @@ msgid "Paused"
 msgstr "已暂停"
 
 msgid "Paused after manual logout"
-msgstr "手动注销后已暂停"
+msgstr "已执行注销操作，自动连接已暂停"
 
 msgid "Pool rebuilds per outage"
 msgstr "每次故障的地址池重建上限"
@@ -527,10 +518,10 @@ msgid "Pool regenerations"
 msgstr "地址池重建次数"
 
 msgid "Portal is available"
-msgstr "认证门户可用"
+msgstr "已找到校园网登录页"
 
 msgid "Portal request failed"
-msgstr "认证门户请求失败"
+msgstr "校园网登录页访问失败"
 
 msgid "Preferred"
 msgstr "首选"
@@ -539,19 +530,19 @@ msgid "Preferred connection check interval (seconds)"
 msgstr "首选线路的恢复检测间隔（秒）"
 
 msgid "Preferred uplink"
-msgstr "优先使用的上联"
+msgstr "首选线路"
 
 msgid "Private MAC"
 msgstr "隐私 MAC"
 
 msgid "Queued"
-msgstr "已排队"
+msgstr "等待执行"
 
 msgid "Reachable"
-msgstr "可达"
+msgstr "可访问"
 
 msgid "Reauthentication, MAC changes, switching and logout may interrupt this connection; logout pauses automatic recovery"
-msgstr "重新认证、更改 MAC、切换或注销可能中断该连接；注销后自动恢复将暂停"
+msgstr "重新认证、更换 MAC、切换线路或注销都可能导致短暂断网；注销后会暂停自动恢复"
 
 msgid "Rebuild the pool after MAC retries fail"
 msgstr "池内重试失败后重建地址池"
@@ -587,37 +578,37 @@ msgid "Response text returned when online"
 msgstr "联网时应返回的正文"
 
 msgid "Restore all plugin defaults and clear saved data, including the campus account and password"
-msgstr "将插件全部设置恢复默认，并清除包括校园网账号密码在内的已保存数据"
+msgstr "恢复全部默认设置，并删除已保存的校园网账号、密码和其他插件数据"
 
 msgid "Restore default settings and clear private MAC addresses, schedules, runtime records and pending changes; keep the campus account, password and account type"
-msgstr "恢复默认设置并清除隐私 MAC、计划、运行记录及待应用修改；保留校园网账号、密码及账号类型"
+msgstr "恢复默认设置，清除 MAC 地址、定时计划、运行记录和未应用的修改；保留校园网账号、密码和账号类型"
 
 msgid "Resume recovery"
-msgstr "恢复自动处理"
+msgstr "恢复自动连接"
 
 msgid "Resume recovery before this action"
-msgstr "请先恢复自动处理，再执行此操作"
+msgstr "请先恢复自动连接，再执行此操作"
 
 msgid "Resume recovery on the status page before authenticating"
-msgstr "请先在状态页恢复自动处理，再立即认证"
+msgstr "请先在状态页点击“恢复自动连接”，再进行认证"
 
 msgid "Resuming"
 msgstr "正在恢复"
 
 msgid "Retry authentication"
-msgstr "重新尝试认证"
+msgstr "重新认证"
 
 msgid "Retry interval for login-page detection (seconds)"
 msgstr "登录页检测失败后的重试间隔（秒）"
 
 msgid "Rotate MAC and reconnect"
-msgstr "轮换 MAC 并重新连接"
+msgstr "更换 MAC 并重新连接"
 
 msgid "Saturday"
 msgstr "星期六"
 
 msgid "Save and apply the account settings before authenticating"
-msgstr "请先保存并应用账号设置，再立即认证"
+msgstr "账号设置已修改，请先点击“保存并应用”，再进行认证"
 
 msgid "Scanning networks"
 msgstr "正在扫描网络"
@@ -635,19 +626,19 @@ msgid "Select a network or enter a custom SSID"
 msgstr "请选择网络或填写自定义 SSID"
 
 msgid "Select a radio"
-msgstr "选择无线电"
+msgstr "选择无线网卡"
 
 msgid "Select a radio first"
-msgstr "请先选择无线电"
+msgstr "请先选择无线网卡"
 
 msgid "Select an existing network interface"
 msgstr "请选择已有的网络接口"
 
 msgid "Select an existing wireless client; Create one in Network → Wireless if needed"
-msgstr "选择已有无线客户端；如有需要，请在“网络 → 无线”中创建"
+msgstr "选择已配置的无线客户端；如果还没有，请先到“网络 → 无线”中添加"
 
 msgid "Send login details only to this server; include the scheme and optional port, without a path"
-msgstr "仅向此服务器发送认证信息；填写协议、主机及可选端口，不含路径"
+msgstr "账号密码只发送到这个服务器；请填写协议、主机和端口，不要添加路径"
 
 msgid "Service is running"
 msgstr "服务正在运行"
@@ -677,7 +668,7 @@ msgid "Show entered password"
 msgstr "显示本次输入的密码"
 
 msgid "Some saved network settings could not be restored; review the restoration journal"
-msgstr "部分网络设置未能恢复，请检查配置恢复记录"
+msgstr "部分网络设置未能恢复，请查看恢复记录"
 
 msgid "Staff"
 msgstr "教职工"
@@ -692,7 +683,7 @@ msgid "Stopped"
 msgstr "已停止"
 
 msgid "Stopping the service and restoring network settings before clearing data"
-msgstr "正在停止服务并恢复网络设置，随后清除数据"
+msgstr "正在停止服务、恢复原有网络设置，完成后会清除相应数据"
 
 msgid "Student"
 msgstr "学生"
@@ -704,58 +695,61 @@ msgid "Switches this outage"
 msgstr "本次故障切换次数"
 
 msgid "The MAC policy, interval or rotation budget prevents this action"
-msgstr "MAC 策略、最短间隔或轮换次数限制阻止了此操作"
+msgstr "暂时无法更换 MAC，请检查更换策略、最短间隔和次数限制"
 
 msgid "The configuration is enabled, but the service is not running; save and apply to start it"
-msgstr "配置已启用，但服务未运行；请保存并应用以启动服务"
+msgstr "服务已勾选启用，但还没有运行；请点击“保存并应用”启动"
 
 msgid "The connection changed; the earlier private MAC session was not logged out"
-msgstr "线路已变化，未注销此前的隐私 MAC 会话"
+msgstr "线路已经变化，未注销之前的校园网连接"
 
 msgid "The discovered portal does not match the configured origin"
-msgstr "发现的认证门户与预期来源地址不符"
+msgstr "找到的登录服务器与设置不一致，已停止认证"
 
 msgid "The internet check was redirected to the configured login portal"
-msgstr "公网检测被重定向至已配置的登录门户"
+msgstr "公网检测跳转到了校园网登录页，需要认证"
+
+msgid "The login page is still reachable after sustained internet access; keeping the connection online"
+msgstr "公网已稳定连接，但校园网登录页仍可访问；继续保持连接"
 
 msgid "The portal IP and MAC match the current uplink"
-msgstr "门户中的 IP 和 MAC 与当前上联相符"
+msgstr "登录页中的 IP 和 MAC 与当前线路一致"
 
 msgid "The portal RSA mode does not support these password characters"
-msgstr "认证门户的 RSA 模式不支持这些密码字符"
+msgstr "校园网的密码加密方式不支持密码中的部分字符"
 
 msgid "The portal confirmed logout of the private MAC session; restoring the network"
-msgstr "校园网接口已确认注销隐私 MAC 会话，随后恢复网络"
+msgstr "校园网已确认注销，正在恢复原有网络设置"
 
 msgid "The portal rejected authentication; check the account before resuming"
-msgstr "认证门户拒绝了登录，请检查账号后再恢复自动处理"
+msgstr "校园网拒绝了认证，请检查账号和密码后再恢复自动连接"
 
 msgid "The portal requires an additional authentication step"
-msgstr "认证门户要求额外的认证步骤"
+msgstr "校园网要求额外验证，请先完成验证"
 
 msgid "The saved configuration is invalid; review the settings before starting"
-msgstr "已保存的配置无效；请检查设置后再启动"
+msgstr "当前设置有误，请修改后再启动服务"
 
 msgid "The selected service is not offered by the portal"
-msgstr "认证门户未提供所选服务"
+msgstr "校园网不支持所选的账号类型，请检查账号设置"
 
 msgid "The service could not start; check the configuration and preflight result"
-msgstr "服务未能启动，请检查配置和启动前检查结果"
+msgstr "服务启动失败，请检查设置和启动检查结果"
 
 msgid "The service is enabled but is not running; check the status page for the startup result"
-msgstr "服务已启用但未运行；请到状态页查看启动结果"
+msgstr "服务已启用，但没有运行；请到状态页查看原因"
 
 msgid "The shared pool needs at least %s addresses for these uplinks and the selected MAC policy"
-msgstr "按当前上联和 MAC 策略，共享池至少需要 %s 个地址"
+msgstr "按当前线路和更换策略，MAC 地址池至少需要 %s 个地址"
 
 msgid "The uplink address changed; checking the new network path"
-msgstr "上联地址已更新，正在检查新的网络路径"
+msgstr "这条线路的网络地址已变化，正在重新检测"
 
 msgid "The uplink has no usable IPv4 connection"
-msgstr "该上联没有可用的 IPv4 连接"
+msgstr "这条线路尚未获得可用的 IPv4 地址"
 
 msgid "This uplink is not configured"
-msgstr "尚未配置该上联"
+msgstr "请先配置这条线路"
 
 msgid "Thursday"
 msgstr "星期四"
@@ -776,7 +770,7 @@ msgid "Try another address from the same pool before rebuilding it; each new poo
 msgstr "先换用当前池内的其他地址重试；重建后的新池也有相同的重试次数"
 
 msgid "Try to end the current connection login, then change MAC and sign in again"
-msgstr "先尝试退出当前上联的登录，再更换 MAC 并重新认证"
+msgstr "先尝试注销当前校园网连接，再更换 MAC 并重新认证"
 
 msgid "Tuesday"
 msgstr "星期二"
@@ -785,19 +779,19 @@ msgid "URL used to find the login page"
 msgstr "用于查找登录页的检测地址"
 
 msgid "Unexpected internet response; a redirect or replacement page may be blocking access"
-msgstr "公网响应异常；可能被重定向或替换页面拦截"
+msgstr "公网检测结果与预期不符，可能跳转到了其他页面，或返回内容被替换"
 
 msgid "Unknown authentication response"
-msgstr "未知的认证响应"
+msgstr "无法识别校园网返回的认证结果"
 
 msgid "Unreachable"
-msgstr "不可达"
+msgstr "无法访问"
 
 msgid "Unsupported portal authentication settings"
-msgstr "不支持此门户认证配置"
+msgstr "暂不支持校园网使用的认证方式"
 
 msgid "Unsupported portal redirect"
-msgstr "不支持此门户跳转"
+msgstr "无法处理这个登录页跳转"
 
 msgid "Updated every 5 seconds"
 msgstr "每 5 秒更新"
@@ -824,19 +818,16 @@ msgid "Use the status code normally returned by the check URL; 204 must have no 
 msgstr "填写检测地址正常返回的状态码；204 不应有正文，其他状态码还需匹配下方正文"
 
 msgid "Use this uplink"
-msgstr "使用此上联"
+msgstr "切换到这条线路"
 
 msgid "Username"
 msgstr "用户名"
 
 msgid "Uses the applied account settings on the active connection, or the preferred connection before one is active"
-msgstr "使用已应用的账号设置认证当前线路；尚未选定线路时使用首选线路"
+msgstr "使用已保存并应用的账号认证当前线路；还未连接时使用首选线路"
 
 msgid "Verify this uplink before switching"
-msgstr "请先验证该上联，再进行切换"
-
-msgid "Verifying internet access"
-msgstr "正在验证公网"
+msgstr "请先确认这条线路可以联网，再切换"
 
 msgid "Wait after repeated recovery failures (seconds)"
 msgstr "连续恢复失败后的等待时间（秒）"
@@ -844,14 +835,17 @@ msgstr "连续恢复失败后的等待时间（秒）"
 msgid "Wait for a network address (seconds)"
 msgstr "等待获取网络地址的时间（秒）"
 
+msgid "Wait for continuous internet access before checking the campus login page; a failed internet check restarts the timer"
+msgstr "公网持续可达一段时间后，再检查校园网登录页；期间检测失败会重新计时"
+
 msgid "Waiting for network availability"
 msgstr "等待网络恢复"
 
 msgid "Waiting for the minimum MAC rotation interval"
-msgstr "等待最短 MAC 轮换间隔"
+msgstr "距离上次更换 MAC 时间太短，正在等待"
 
 msgid "Waiting to retry MAC rotation"
-msgstr "等待重试 MAC 轮换"
+msgstr "正在等待下一次更换 MAC"
 
 msgid "Warnings"
 msgstr "警告"
@@ -884,10 +878,10 @@ msgid "Wireless configuration mode"
 msgstr "无线配置方式"
 
 msgid "Wireless radio"
-msgstr "无线电"
+msgstr "无线网卡"
 
 msgid "Wireless scan failed; you can enter a custom network"
-msgstr "无线扫描失败；可以选择自定义网络"
+msgstr "Wi-Fi 扫描失败，可以手动填写网络名称"
 
 msgid "Xiaomi"
 msgstr "小米"

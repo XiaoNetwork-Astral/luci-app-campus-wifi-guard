@@ -92,6 +92,9 @@ msgstr ""
 msgid "Campus login server address"
 msgstr ""
 
+msgid "Campus network connected"
+msgstr ""
+
 msgid "Cancel"
 msgstr ""
 
@@ -108,12 +111,6 @@ msgid "Check interval while online (seconds)"
 msgstr ""
 
 msgid "Check now"
-msgstr ""
-
-msgid "Checking internet access"
-msgstr ""
-
-msgid "Checking internet access after login"
 msgstr ""
 
 msgid "Choose Student or Staff, or enter the service identifier used by your campus"
@@ -138,6 +135,9 @@ msgid "Confirm reset"
 msgstr ""
 
 msgid "Confirming an outage"
+msgstr ""
+
+msgid "Confirming internet access"
 msgstr ""
 
 msgid "Connect after a failure"
@@ -341,9 +341,6 @@ msgstr ""
 msgid "Huawei"
 msgstr ""
 
-msgid "Idle"
-msgstr ""
-
 msgid "In use"
 msgstr ""
 
@@ -369,12 +366,6 @@ msgid "Internet access"
 msgstr ""
 
 msgid "Internet access check"
-msgstr ""
-
-msgid "Internet access verified"
-msgstr ""
-
-msgid "Internet and the login page are both reachable; keeping the connection online"
 msgstr ""
 
 msgid "Internet and the login page are both unreachable; waiting to check again"
@@ -476,6 +467,9 @@ msgstr ""
 msgid "No usable authentication response received"
 msgstr ""
 
+msgid "Not authenticated"
+msgstr ""
+
 msgid "Not checked"
 msgstr ""
 
@@ -488,16 +482,13 @@ msgstr ""
 msgid "Not monitored"
 msgstr ""
 
-msgid "Not started"
-msgstr ""
-
 msgid "Number of MAC addresses to generate"
 msgstr ""
 
 msgid "One successful check confirms internet access; repeated failures continue the recovery process"
 msgstr ""
 
-msgid "Online"
+msgid "Online time before checking the login page (seconds)"
 msgstr ""
 
 msgid "Optional access point BSSID"
@@ -716,6 +707,9 @@ msgstr ""
 msgid "The internet check was redirected to the configured login portal"
 msgstr ""
 
+msgid "The login page is still reachable after sustained internet access; keeping the connection online"
+msgstr ""
+
 msgid "The portal IP and MAC match the current uplink"
 msgstr ""
 
@@ -833,13 +827,13 @@ msgstr ""
 msgid "Verify this uplink before switching"
 msgstr ""
 
-msgid "Verifying internet access"
-msgstr ""
-
 msgid "Wait after repeated recovery failures (seconds)"
 msgstr ""
 
 msgid "Wait for a network address (seconds)"
+msgstr ""
+
+msgid "Wait for continuous internet access before checking the campus login page; a failed internet check restarts the timer"
 msgstr ""
 
 msgid "Waiting for network availability"
