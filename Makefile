@@ -7,7 +7,9 @@ LUCI_MAINTAINER:=BlueFunny19
 LUCI_DEPENDS:=+luci-base +rpcd-mod-iwinfo +jshn +jsonfilter +curl +ucode +ucode-mod-fs +ucode-mod-uci +ucode-mod-ubus +openssl-util +ip-full
 LUCI_PKGARCH:=all
 
+PKG_VERSION:=0.1.0
 PKG_RELEASE:=1
+PKG_PO_VERSION:=$(PKG_VERSION)-r$(PKG_RELEASE)
 
 define Package/luci-app-campus-wlan-guard/conffiles
 /etc/config/nuitguard

@@ -4,7 +4,7 @@ English | [中文](README.zh.md)
 
 A LuCI app for OpenWrt with Ruijie ePortal authentication, Ethernet/Wi-Fi failover, a shared MAC pool and scheduled rotation.
 
-Development preview. Campus validation is ongoing; the service is disabled by default.
+Download packages from [Releases](https://github.com/XiaoNetwork-Astral/luci-app-nuitguard/releases). The service is disabled by default; configure your account and uplinks before enabling it.
 
 Fixed mode uses a separate persistent private MAC for each uplink. Rotation modes share one MAC pool and cycle through it without using the same address simultaneously. Optional recovery retries can regenerate the pool within configured limits; regeneration does not remove existing campus device records.
 

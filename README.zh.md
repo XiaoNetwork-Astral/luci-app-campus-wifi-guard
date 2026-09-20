@@ -4,7 +4,7 @@
 
 面向 OpenWrt 的 LuCI 应用，支持锐捷 ePortal 认证、有线／Wi-Fi 故障切换、共享 MAC 地址池与计划轮换
 
-开发预览版本，校园网实测仍在进行，服务默认关闭
+安装包见 [Releases](https://github.com/XiaoNetwork-Astral/luci-app-nuitguard/releases)；服务默认关闭，填写账号并配置上联网络后再启用
 
 固定模式为每条上联单独保存一个隐私 MAC；轮换模式共用一个持久地址池，按顺序循环使用并避免同时使用相同地址；可选的恢复重试可在设定次数内重新生成地址池；重新生成不会删除校园网已有的设备记录
 
